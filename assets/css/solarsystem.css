@@ -1,0 +1,102 @@
+﻿#solarMapBox {
+	width: 1220px;
+	height: 300px;
+	background-image:url('assets/images/stardust.jpg');
+}
+
+
+#solarsystem {
+    font-size: 0.1px;
+    min-width: 400px;
+    text-align: center;
+}
+
+#solarsystem div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#solarsystem:after {
+    width: 100%;
+    display: inline-block;
+}
+
+.sun:before {
+    content: url('assets/images/sun.png');
+    margin-left: -10px; /* Sun starts a bit off frame */
+}
+
+.mercury:before {
+    content: url('assets/images/mercury.png');
+}
+
+.venus:before {
+    content: url('assets/images/venus.png');
+}
+
+.earth:before {
+    content: url('assets/images/earth.png');
+}
+
+.earthmoon:before {
+    content: url('assets/images/earthmoon.png');
+    margin-left: -50px;
+    margin-right: -10px;
+}
+
+.mars:before {
+    content: url('assets/images/mars.png');
+}
+
+.asteroid:before {
+    content: url('assets/images/asteroid.png');
+}
+
+.jupiter:before {
+    content: url('assets/images/jupiter.png');
+}
+
+.saturn:before {
+    content: url('assets/images/saturn.png');
+    margin-left: 40px; /* Optional use 25%  - After Big Planet*/
+    padding-left: -40px;
+}
+
+.neptune:before {
+    content: url('assets/images/neptune.png');
+}
+
+.uranus:before {
+    content: url('assets/images/uranus.png');
+}
+
+.pluto:before {
+    content: url('assets/images/pluto.png');
+}
+
+/* HOVER INFO */
+
+.planet:hover {
+	text-decoration:none; 
+	color:#fff;
+} 
+
+.planet span {
+    z-index:0;
+    display:none; 
+    padding:14px 20px;
+    margin-top:60px; 
+    margin-left:-160px;
+    width:240px; 
+    line-height:16px;
+    font-size:12px;
+}
+.planet:hover span{
+    display:inline; position:absolute; 
+    border:2px solid #333;  
+    background:#000;
+}
+
+.info {
+	z-index:0;border:0;left:-520px;font color:#fff
+}

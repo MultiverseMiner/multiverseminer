@@ -1,0 +1,112 @@
+.craftingInfo .qtip-content {
+		background-color: #444;
+		font-family: overpassregular,Arial,sans-serif;
+		color: #FFF;
+		padding:15px;
+		font-size: 12px;
+		width: 200px;
+}
+
+.craft1, .craft10, .craft100, .craftMax {
+/*	width:13%;
+	min-width: 4em;
+	cursor: hand; */
+	box-shadow:0 1px 2px #000, 0 -1px 1px #000, inset 0 -1px 1px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.8);
+	background-color:#444;
+	text-align: middle;
+	min-width: 300px;
+	cursor: pointer;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-top:10px;
+}
+
+.craftingIcon {
+	vertical-align:middle;
+	width:30px;
+	height:30px;
+	cursor: hand;
+	margin:10px;
+}
+
+.craftEnabled .craftingText {
+}
+
+/* Item Display Panel */
+.craftingItemPanel {
+    background-color: #2B2B2B;
+    font-size: 11px;
+    margin-bottom: 2px;
+    text-align: left;
+    width: 98%;
+	padding-left: 5px;
+}
+
+/* Outer Container */
+#playerCraftingContent .ui-accordion {
+    width: 320px;
+	border-bottom: 4px solid #656659;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+    display:block;
+	margin-top: 10px;
+}
+
+/* Category Name Closed */
+#playerCraftingContent .ui-state-default {
+	background: #363636;
+	font-family: overpassregular,Arial,sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding-left: 15px;
+	text-align: left;
+	margin-top: 5px;
+    display:block;
+	border: 1px solid #828282;
+	width: 95%;
+}
+
+/* Headers */
+#playerCraftingContent .ui-accordion-header p {
+    background-color: #242424;
+	font-family: overpassregular,Arial,sans-serif;
+    font-weight: bold;
+	display: block;
+    margin: 1px;
+    cursor: pointer;
+    padding: 5 5 5 7px;
+    list-style: circle;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    display:block;
+}
+
+/* Content of Panels */
+#playerCraftingContent .ui-accordion-content {
+	margin: 0px;
+	padding: 0px;
+	border-left: 1px solid #5c5c5c;
+	border-right: 1px solid #5c5c5c;
+	border-bottom: 1px solid #5c5c5c;
+	background: none;
+	background-color: #1C1C1C;
+	width: 99%;
+}
+
+#playerCraftingContent .ui-icon {
+	display: none;
+}
+#formdiv {
+    display: block;
+    padding-right:5px;
+    width:auto;
+    height:25px;
+}
+.filterinput {
+    display: block;
+    padding-right:5px;
+    width:auto;
+    height:25px;
+}

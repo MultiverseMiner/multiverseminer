@@ -1,0 +1,27 @@
+.buildingsContent {
+    clear: left;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    width: 100%;
+}
+.buildingsSlotText {
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    margin-right: 0;
+    margin-top: -9px;
+    position: relative;
+}
+.buildingsPanelContent {
+    background-color: rgba(125, 125, 125, 0.5);
+    border: 1px solid #9b9b9b;
+}
+.buildingSlot {
+    background-color: #474747;
+    cursor: pointer;
+    float: left;
+    height: 50px;
+    margin: 1px;
+    width: 50px;
+}

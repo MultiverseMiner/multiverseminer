@@ -1,0 +1,251 @@
+html {
+}
+.body {
+    background: url("assets/images/bg.png") no-repeat fixed center center / cover rgba(0, 0, 0, 0);
+    color: #ffffff;
+    height: 95%;
+    margin-top: 41px;
+    padding-left: 0;
+    position: static;
+}
+a {
+    color: white;
+    font-size: 12px;
+    text-decoration: inherit;
+}
+.questionMark{
+	content:url("assets/images/questions.png");
+}
+.lootFloating {
+    position: absolute;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px #000;
+    font-size: 18px;
+}
+.categoryContent {
+    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.opaque {
+    opacity: 0.7;
+}
+.craftEnabled {
+    opacity: 1.0;
+}
+.craftDisabled {
+    opacity: 0.4;
+}
+.logo {
+    height: 33px;
+    margin-right: 50px;
+    max-width: 600px;
+    left: auto;
+    right: auto;
+    position: static;
+    overflow: hidden;
+}
+.screen {
+    width: 100%;
+    height: 100%;
+}
+.floatingArea {
+    bottom: 47%;
+    display: block;
+    height: 33%;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    width: 100%;
+}
+.panelContent {
+    background-color: rgba(125,125,125,.5);
+    border: 1px solid #9b9b9b;
+    height: 410px;
+    width: 49%;
+    float: left;
+    display: block;
+    position: relative;
+}
+.panelBottom {
+    border-top: 1px none #000000;
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    letter-spacing: 1px;
+    margin-bottom: 39px;
+    outline: 1px solid #8a8a8a;
+    padding-bottom: 5px;
+    position: absolute;
+    text-align: center;
+    top: 2px;
+    width: calc(99% - 1px);
+}
+.panelBottomLeft {
+    float: left;
+    margin-left: 2px;
+}
+.panelBottomCenter {
+    display: inline-block;
+    margin: 0 auto;
+}
+.panelBottomRight {
+    float: right;
+    margin-right: 4px;
+}
+.hidden {
+    display: none;
+}
+.combatText {
+    height: 200;
+    max-height: 200px;
+    width: 300px;
+    overflow: scroll;
+}
+.fightDialog {
+    width: 300px;
+}
+.attackButton {
+    -moz-box-shadow: 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow: 0px 1px 0px 0px #ffffff;
+    box-shadow: 0px 1px 0px 0px #ffffff;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    background-color: #ededed;
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+    text-indent: 0;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    color: #777777;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    height: 32px;
+    line-height: 32px;
+    width: 85px;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0px #ffffff;
+}
+.attackButton:hover {
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+    background-color: #dfdfdf;
+}
+.attackButton:active {
+    position: relative;
+    top: 1px;
+}
+.idk, .yes, .no {
+    color: #FFFFFF;
+    float: left;
+    font-size: 12px;
+    margin: 18px 0 0 20px;
+    padding: 8px 18px;
+    text-align: center;
+    text-decoration: none;
+}
+.yes {
+    background: none repeat scroll 0 0 rgba(71, 186, 255, 0.8);
+}
+.no {
+    background: none repeat scroll 0 0 rgba(241, 118, 122, 0.8);
+}
+.idk {
+    background: none repeat scroll 0 0 rgba(83, 83, 83, 0.8);
+}
+.minerStats {
+    display: block;
+    float: left;
+    font-size: 14px;
+    left: 87%;
+    padding-left: 0;
+    position: inherit;
+    text-align: left;
+    width: 49%;
+    padding-left: 1%;
+    padding-top: 2%;
+}
+.minerGearStats {
+    display: block;
+    float: right;
+    font-size: 12px;
+    position: absolute;
+    right: 85px;
+    text-align: left;
+    top: 60px;
+    width: 180px;
+}
+.statsContent {
+    font-size: 12px;
+    text-align: left;
+    padding-right: 5px;
+    height: 533px;
+    overflow-x: hidden;
+}
+.statsContentPlayer {
+    font-size: 12px;
+    text-align: left;
+    padding-right: 5px;
+    height: 533px;
+    width: 50%;
+    overflow-x: hidden;
+}
+.notifications {
+    text-align: left;
+    width: 120px;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    height: 30px;
+    top: 10px;
+}
+.notifications > .messages {
+    display: block;
+    margin-top: 5px;
+}
+.notifications > .new-message a {
+    background: none repeat scroll 0 0 #c00;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 60px;
+    bottom: 22px;
+    color: #f5f5f5;
+    float: right;
+    font-size: 9px;
+    font-weight: 700;
+    height: auto;
+    margin-right: 5px;
+    padding: 0 2px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    z-index: 1;
+}
+.hide-left {
+    display: none;
+    position: relative;
+    left: 0px;
+    bottom: 26px;
+    background-color: rgba(37, 37, 37, 0.75);
+}
+.ui-menu {
+    display: block;
+    list-style: none outside none;
+    min-width: 100px;
+    padding: 5px 10px 10px;
+}

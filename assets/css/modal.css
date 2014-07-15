@@ -1,0 +1,473 @@
+/* -------------------------- */
+/* Changelog Styling Begin */
+/* -------------------------- */
+#changesLog {
+    font-family: Lucida Console;
+    font-size: 14px;
+    text-align: center;
+    height: 260px;
+    width: 504px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 12px;
+}
+
+#changesLog a {
+    color: #ddd;
+}
+
+#changesLog a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#changesLog h3 {
+    color: #84b8d9;
+}
+
+/* Changelog Dialog Styling End */
+
+/* -------------------------- */
+/* SolarSystem Styling Begin */
+/* -------------------------- */
+
+/* Container */
+#spaceTravelMap {
+	font-family: overpassregular,Arial,sans-serif;
+    font-size: 14px;
+    display: none;
+    height: 300px;
+    width: 1220px;
+    color: #bbb;
+	background-image:url(assets/images/stardust.jpg) no-repeat;
+    /* background-color: #333; */
+    /* border: 1px solid #444; */
+    padding: 1px;
+    word-wrap: break-word;
+    overflow-x: none;
+    overflow-y: none;
+}
+
+#spaceTravelMap a.modalCloseImg {
+    /* background: url(assets/images/x.png) no-repeat; */
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    cursor: pointer;
+}
+
+/* -------------------------- */
+/* Import Box Styling Begin */
+/* -------------------------- */
+
+/* Container */
+#importBox {
+    font-family: Lucida Console;
+    font-size: 14px;
+    display: none;
+    height: 400px;
+    width: 410px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 20px;
+    word-wrap: break-word;
+    overflow-x: none;
+    overflow-y: none;
+}
+
+#importBox a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+.selectImportGame {
+    font: #E8E8E8;
+    padding: 5px;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+}
+
+/*
+#exportBox a {
+    color: #ddd;
+}
+*/
+
+/*
+#exportBox h3 {
+    color: #84b8d9;
+}
+*/
+/*
+#importBox .textarea {
+    display: block;
+    white-space: pre;
+    word-wrap: normal;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+*/
+/* Import Box Styling End */
+
+/* -------------------------- */
+/* Export Box Styling Begin */
+/* -------------------------- */
+/*
+#exportBox {
+}
+*/
+
+/* Container */
+#exportBox {
+    font-family: Lucida Console;
+    font-size: 14px;
+    display: none;
+    height: 400px;
+    width: 410px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 20px;
+    word-wrap: break-word;
+    overflow-x: none;
+    overflow-y: none;
+}
+
+#exportBox a {
+    color: #ddd;
+}
+
+#exportBox a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#exportBox h3 {
+    color: #84b8d9;
+}
+
+#exportbox .textarea {
+    display: block;
+    white-space: pre;
+    word-wrap: normal;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+/* Export Box Styling End */
+
+
+/* -------------------------- */
+/* Decompose Box Styling Begin */
+/* -------------------------- */
+#decompBox {
+    font-family: Lucida Console;
+    font-size: 14px;
+}
+
+/* Container */
+#decompBox {
+    display: none;
+    height: 200px;
+    width: 400px;
+    color: #bbb;
+    background-color: #333;
+    /* border: 4px solid #444; */
+    border: 4px solid #FAFAFA;
+	padding: 12px;
+}
+
+#decompBox a {
+    color: #ddd;
+}
+
+#decompBox a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#decompBox h3 {
+    color: #84b8d9;
+}
+
+/* Decompose Styling End */
+
+.resetButtons {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* -------------------------- */
+/* Reset Dialog Styling Begin */
+/* -------------------------- */
+#resetModal {
+    font-family: Lucida Console;
+    font-size: 14px;
+    text-align: center;
+}
+
+#resetDialog {
+    display: none;
+}
+
+/* Container */
+#resetDialog {
+    height: 200px;
+    width: 400px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 12px;
+}
+
+#resetDialog {
+    padding: 8px;
+}
+
+#resetDialog a {
+    color: #ddd;
+}
+
+#resetDialog a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#resetDialog h3 {
+    color: #84b8d9;
+}
+
+/* Reset Dialog Styling End */
+
+.resetButtons {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------------------------- */
+/* Mining Box Begin */
+/* ---------------------------- */
+#miningBox {
+    font-family: Lucida Console;
+    font-size: 14px;
+    text-align: center;
+    min-height: 210px;
+    width: 346px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 2px;
+}
+
+#miningBox a {
+    color: #ddd;
+}
+
+
+#miningBox a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#miningBox h3 {
+    color: #84b8d9;
+}
+
+/* Dig Box Styling End */
+
+/* ---------------------------- */
+/* Gathering Styling Begin */
+/* ---------------------------- */
+#gatheringBox {
+    font-family: Lucida Console;
+    font-size: 14px;
+    text-align: center;
+    min-height: 210px;
+    width: 346px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 2px;
+}
+
+#gatheringBox a {
+    color: #ddd;
+}
+
+#gatheringBox a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#gatheringBox h3 {
+    color: #84b8d9;
+}
+
+/* Gathering Dialog Styling End */
+
+/* ---------------------------- */
+/* Scavenge Quest Styling Begin */
+/* ---------------------------- */
+#scavengingBox {
+    font-family: Lucida Console;
+    font-size: 14px;
+    text-align: center;
+    min-height: 210px;
+    width: 346px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 2px;
+}
+
+#scavengingBox a {
+    color: #ddd;
+}
+
+#scavengingBox a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#scavengingBox h3 {
+    color: #84b8d9;
+}
+/* Scavenge Quest Dialog Styling End */
+
+.resetButtons {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.resetYes {
+    padding-right: 20px;
+}
+
+.resetNo {
+}
+
+.selectExportGame {
+    font: #E8E8E8;
+    padding: 0px 20px 0px 20px;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+}
+
+#gatheringActionText, #miningActionText, #scavengingActionText {
+    width: 342px;
+    background-color: #444;
+    color: #fff;
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 0.8em;
+    padding: 2px;
+    height: 10%;
+    position: absolute;
+    letter-spacing: 0.19em;
+}
+#gatheringResultsText, #miningResultsText, #scavengingResultsText {
+    width: 342px;
+    background-color: #444;
+    color: #fff;
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 0.85em;
+    padding: 1px;
+    height: 70.4%;
+    position: absolute;
+    bottom: 32px;
+    letter-spacing: 0.19em;
+}
+#planetLootModal {
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 14px;
+    text-align: left;
+    min-height: inherit;
+    width: auto;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 0px;
+}
+#planetLootModal a {
+    color: #ddd;
+}
+#planetLootModal a.modalCloseImg {
+    background: url(assets/images/x.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+#planetLootModal h3 {
+    color: #84b8d9;
+}

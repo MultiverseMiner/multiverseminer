@@ -1,0 +1,23 @@
+# Eclipse stuff
+.settings
+.project
+
+# system stuff
+Thumbs.db
+.DS_Store
+.~lock*
+
+# grunt and node.js stuff
+bin
+tmp
+node_modules
+npm-debug.log
+src/data/items.js
+src/data/npc.js
+src/data/planets_autogen.js
+src/data/races.js
+src/data/actors.js
+.idea/
+multiverseminer.iml
+scripts
+

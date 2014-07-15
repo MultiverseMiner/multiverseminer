@@ -1,0 +1,13 @@
+.panelTravelBackground {
+position:absolute;
+width:100%;
+height:100%;
+}
+
+.panelTravelDisplay {
+position:absolute;
+margin-left:20px;
+margin-top:20px;
+font-size:22px;
+font-family:overpassregular, Arial, sans-serif;
+}

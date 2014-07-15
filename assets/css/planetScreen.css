@@ -1,0 +1,139 @@
+.panelPlanetLeft {
+    background-color: rgba(37,37,37,.75);
+    border: 5px solid #000;
+    float: left;
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    height: 600px;
+    letter-spacing: 1px;
+    min-width: 300px;
+    outline: 1px solid #8A8A8A;
+    text-align: center;
+    width: 410px;
+    /* overflow-y: scroll; */
+}
+.panelPlanetDisplay {
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-align: center;
+    position: absolute;
+    left: 35%;
+}
+
+.panelPlanetRight {
+	background-color: rgba(37,37,37,.75);
+	border: 5px solid #000;
+	float: right;
+	font-family: overpassregular,Arial,sans-serif;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	height: 600px;
+	letter-spacing: 1px;
+	min-width: 300px;
+	outline: 1px solid #8A8A8A;
+	text-align: center;
+	width: 410px;
+	/* overflow-y: hidden; */
+	position: static;
+}
+
+/* Wrapper for Planet Information */
+.planetDisplay {
+height: 400px;
+}
+
+.planetImage {
+	margin-top: 50px;
+	height: 100px;
+}
+
+.planetBigEarth {
+    height: 150px;
+    margin-top: 20%;
+}
+
+/* Frame to hold planet image
+.planetDisplayBackground {
+    margin-top: 5px;
+	height: 30px;
+	width: auto;
+}
+*/
+
+.planetDisplayNameFrame {
+    height: 91px;
+    /* position: inherit; */
+    /* top: 60%; */
+	margin-top: 2px;
+    width: 100%;
+}
+
+.planetDisplayNameTitle {
+    color: #CCCCCC;
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.planetDisplayName {
+	background:url(assets/images/planetTitleBackground.png) no-repeat center; 
+	background-size: 295px 61px;
+}
+
+.planetDisplayNameText {
+    font-family: overpassregular,Arial,sans-serif;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 15px;
+}
+
+.buildingsPanel {
+    height: 100px;
+    margin: 10px 10px 1px;
+}
+
+.buildingsContent {
+    clear: left;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    width: 100%;
+}
+.gearPanel {
+    margin: 1px 10px;
+}
+
+.empirePanel {
+}
+
+.statsPanel {
+	overflow-y: hidden;
+}
+
+.craftingPanel {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.planetPanel {
+	margin: 0px;
+}
+.planetContains {
+    width: 400px;
+    font-size: 10px;
+    text-align: left;
+	text-transform: capitalize;
+}
+.planetMinerals,.planetGems,.planetScavenge,.planetGases {
+    padding-bottom: 6px;
+}

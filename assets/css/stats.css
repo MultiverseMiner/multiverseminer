@@ -1,0 +1,111 @@
+.statTable {
+-moz-border-radius-bottomleft:0;
+-moz-border-radius-bottomright:0;
+-moz-border-radius-topleft:0;
+-moz-border-radius-topright:0;
+-webkit-border-bottom-left-radius:0;
+-webkit-border-bottom-right-radius:0;
+-webkit-border-top-left-radius:0;
+-webkit-border-top-right-radius:0;
+margin:0;
+padding:0;
+width:calc(100%+4px)
+}
+
+.statTable #panel {
+border: 1px solid #000 !important;
+border-radius: 0;
+display: block;
+margin-top: 60px;
+padding: 0;
+position: absolute;
+line-height: 2.2px;
+width: 252px;
+}
+
+.statTable table {
+border-collapse:collapse;
+border-spacing:0;
+height:100%;
+margin:0;
+padding:0;
+width:100%
+}
+
+.statTable table tr:first-child td:first-child {
+-moz-border-radius-topleft:0;
+-webkit-border-top-left-radius:0;
+border-top-left-radius:0;
+width:320px
+}
+
+.statTable table tr:first-child td:last-child {
+-moz-border-radius-topright:0;
+-webkit-border-top-right-radius:0;
+border-top-right-radius:0
+}
+
+.statTable td {
+border:1px solid #000;
+border-width:0 1px 1px 0;
+color:#000;
+font-family:Arial;
+font-size:10px;
+font-weight:400;
+padding:7px;
+text-align:left;
+text-transform:capitalize;
+vertical-align:middle
+}
+
+.statTable tr td:last-child,.statTable tr:first-child td:first-child {
+border-width:0 0 1px
+}
+
+.statTable tr:first-child td {
+background:0;
+background-color:#666;
+border:0 solid #000;
+border-width:0 0 1px 1px;
+color:#fff;
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#666666",endColorstr="#000000");
+font-family:Arial;
+font-size:14px;
+font-weight:700;
+text-align:center
+}
+
+.statTable tr:first-child td:last-child {
+border-width:0 0 1px 1px
+}
+
+.statTable tr:first-child:hover td {
+background:0;
+background-color:#666;
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#666666",endColorstr="#000000")
+}
+
+.statTable tr:last-child td {
+border-width:0 1px 0 0
+}
+
+.statTable tr:last-child td:first-child {
+-moz-border-radius-bottomleft:0;
+-webkit-border-bottom-left-radius:0;
+border-bottom-left-radius:0
+}
+
+.statTable tr:last-child td:last-child {
+-moz-border-radius-bottomright:0;
+-webkit-border-bottom-right-radius:0;
+border-bottom-right-radius:0;
+border-width:0
+}
+
+.statTable tr:nth-child(even) {
+background-color:#ccc
+}
+
+.statTable tr:nth-child(odd) {
+background-color:#7f7f7f
+}

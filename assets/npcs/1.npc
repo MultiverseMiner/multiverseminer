@@ -1,0 +1,55 @@
+{
+	name: "Qui Gon Jin",
+	description: "A lonely Jedi who is currently teaching Obi Wan Kenobi into the art of the Force",
+	avatar: 'npc/avatar.png',
+	sprite32: 'npc/sprite32.png',
+	sprite128: 'npc/sprite128.png',
+	location: "earth",
+	dialogs: [
+		{storyPiece1: "Hey, I'm glad you are here, please let me explain you what we need to do now."},
+		{questGive: "I've got a quest here for you."},
+		{noMoreQuests: "You can't help me with anything else."},
+		{welcome: "Hello again. How may I help you?"}
+		{talk: "Earth is very interesting, for being so undeveloped"},
+		{quit: "See you soon. May the force be with you."}
+	],
+	commands: ['talk', 'quest', 'shop', 'exit'],
+	storyQuests: [1],
+	sideQuests: [1],
+	storyline: [
+		{
+			condition: function(Game, Player){
+				// test out conditions for this part of the story
+				// ex: Player.completedQuests.questById(45).completed == true --> this.content();
+			},
+			content: function(Game, Player){
+				// Proceed with script showing proper dialogs and adding to quest tracker w/e is required.
+				// ex: Game.showDialog('storyPiece1'); Player.questTracker.add(storyQuests[0]);
+			}
+		},
+		{
+			condition: function(Game, Player){
+				// test out conditions for this part of the story
+			},
+			content: function(Game, Player){
+				// Proceed with script showing proper dialogs and adding to quest tracker w/e is required.
+			}
+		}
+	],
+	shop: [
+		{
+			id: ironBar,
+			quantity: 1,
+			left: 10,
+			price: copperBar,
+			priceQuantity: 50
+		},
+		{
+			id: copperChest,
+			quantity: 1,
+			left: 1,
+			price: ironBar,
+			priceQuantity: 5
+		}
+	]
+}

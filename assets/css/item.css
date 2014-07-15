@@ -1,0 +1,35 @@
+.itemGrid {
+	overflow: hidden;
+}
+
+.itemSlot {
+	width: 50px;
+	height: 50px;
+	float: left;
+	margin: 1px;
+	border: 1px dotted #474747;
+	background-color: #474747;
+	cursor: pointer;
+}
+
+.itemSlotIcon {
+	width: 30px;
+	height: 30px;
+	margin-left: 10px;
+	margin-top: 6px;
+	pointer-events: none;
+}
+.itemSlotText {
+    cursor: pointer;
+    font-size: 10px;
+    margin-right: 0;
+    margin-top: -9px;
+    position: relative;
+    text-align: right;
+}
+.itemSlot img {
+      display: block;
+      height: 32px;
+      margin: 6px;
+      width: 32px;
+}

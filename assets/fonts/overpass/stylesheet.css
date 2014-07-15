@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'overpassregular';
+    src: url('overpass.eot');
+    src: url('overpass.eot?#iefix') format('embedded-opentype'),
+         url('overpass.woff') format('woff'),
+         url('overpass.ttf') format('truetype'),
+         url('overpass.svg#overpassregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+

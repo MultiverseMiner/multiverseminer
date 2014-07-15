@@ -1,0 +1,47 @@
+#questsContent {
+margin-top: 20px;
+width: 80%;
+height: 300px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+font-size: 12px;
+border: 1px solid #D1D1D1;
+background-color: #5C5C5C;
+text-align: left;
+padding: 24px;
+position: relative;
+}
+
+/* CSS to modify title of quest */
+.questTitle {
+	margin-left: 5px;
+}
+
+/* CSS to modify task button */
+.expandQuest {
+	border: 1px solid #5C5C5C;
+	background: red;
+	margin-left: 15px;
+}
+
+/* CSS to modify task title */
+.questDescription {
+	margin-left: 20px;
+}
+
+.taskItem {
+	margin-left: 10px;
+}
+
+.taskCurrent {
+	margin-left: 10px;
+}
+
+.taskList {
+	margin-left: 10px;
+}
+
+.taskCompleted {
+	color: green;
+}

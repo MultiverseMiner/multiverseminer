@@ -1,0 +1,129 @@
+.gearText {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 10px;
+    bottom: 0px;
+    position: static;
+}
+.playerGearPaperdoll {
+clear: left;
+height: 300px;
+overflow: hidden;
+display: block;
+position: relative;
+padding-right: -134px;
+margin-right: 9;
+margin-top: 10px;
+}
+
+.gearSlot {
+width:50px;
+height:50px;
+background:gray;
+box-shadow:inset 0 0 15px #000;
+}
+
+.gearSlot.head {
+position:absolute;
+left:75px;
+top:10px;
+}
+
+.gearSlot.chest {
+position:absolute;
+left:75px;
+top:80px;
+}
+
+.gearSlot.mainHand {
+position:absolute;
+left:10px;
+top:80px;
+}
+
+.gearSlot.secondHand {
+display:none;
+}
+
+.gearSlot.legs {
+position:absolute;
+left:75px;
+top:150px;
+}
+
+.gearSlot.feet {
+position:absolute;
+left:75px;
+top:220px;
+}
+
+.gearSlot.miningGear {
+position:absolute;
+left:10px;
+top:10px;
+}
+.gearSlot.head img {
+    height:50px;
+    width:50px;
+    margin-left:0px;
+    margin-top:0px;
+}
+.gearSlot.chest img {
+    height:50px;
+    width:50px;
+    margin-left:0px;
+    margin-top:0px;
+}
+.gearSlot.mainHand img {
+    height:50px;
+    width:50px;
+    margin-left:0px;
+    margin-top:0px;
+}
+.gearSlot.secondHand img {
+    height:50px;
+    width:50px;
+    margin-left:0px;
+    margin-top:0px;
+}
+.gearSlot.legs img {
+    height:50px;
+    width:50px;
+    margin-left:0px;
+    margin-top:0px;
+}
+.gearSlot.feet img {
+    height:50px;
+    width:50px;
+    margin-left:0px;
+    margin-top:0px;
+}
+.gearSlot.miningGear img {
+    height:50px;
+    width:50px;
+    margin-left:0px;
+    margin-top:0px;
+}
+
+.gearSlot.head div {
+    display:none;
+}
+.gearSlot.chest div {
+    display:none;
+}
+.gearSlot.mainHand div {
+    display:none;
+}
+.gearSlot.secondHand div {
+    display:none;
+}
+.gearSlot.legs div {
+    display:none;
+}
+.gearSlot.feet div {
+    display:none;
+}
+.gearSlot.miningGear div {
+    display:none;
+}

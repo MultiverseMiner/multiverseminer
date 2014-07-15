@@ -1,0 +1,97 @@
+.genericButton {
+    box-shadow: 0 1px 2px #000, 0 -1px 1px #000, inset 0 -1px 1px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.8);
+    background-color: #444;
+    float: left;
+    margin-left: 1px;
+}
+
+.genericButtonSelected {
+    box-shadow: 0 1px 2px #000, 0 -1px 1px #000, inset 0 -1px 1px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.8);
+    background-color: #737373;
+    float: left;
+    margin-left: 1px;
+}
+
+.genericButtonLast {
+    margin-right: 0;
+}
+
+.mainButton {
+    font-size: 14px;
+    font-family: overpassregular,Arial,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    letter-spacing: 1px;
+    border: solid 1px #000;
+    color: #FFF;
+    box-shadow: 0 1px 2px #000,0 -1px 1px #000,inset 0 -1px 1px rgba(0,0,0,.5),inset 0 1px 1px rgba(255,255,255,.8);
+    background-color: #444;
+    height: 75px;
+    width: 125px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-bottom: 10px;
+    margin-top: 7px;
+}
+
+.bottomBarButton {
+    margin-top: 4px;
+    height: 30px;
+    width: 75px;
+    text-align: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+    margin-bottom: -10px;
+}
+.bottomBarButton2 {
+    bottom: 0;
+    padding: 5px;
+    right: 0;
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 0;
+    font-family:overpassregular,Arial,sans-serif;
+}
+.bottomBarButtonText {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.categoryButton {
+    height: 65px;
+    width: calc(25% - 1px);
+    text-align: center;
+    float: left;
+    cursor: pointer;
+}
+
+.categoryButtonIcon {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    width: 30px;
+    height: 30px;
+}
+.categoryButtonIcon img {
+    height: 100px;
+    width: 100px;
+}
+
+.categoryButtonText {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+.genericButton:hover,.mainButton:hover {
+    background-color: #737373;
+}
+
+.genericButton:active,.mainButton:active {
+    background-color: #444;
+}

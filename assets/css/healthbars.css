@@ -1,0 +1,103 @@
+/* Don't change these */
+@keyframes damage_taken {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    width: 0;
+  }
+  22.5% {
+    width: 50%;
+  }
+  35% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 50%;
+  }
+}
+@keyframes healing_taken {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  70% {
+    width: 0;
+  }
+  72.5% {
+    width: 50%;
+  }
+  85% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 50%;
+  }
+}
+@keyframes health {
+  0% {
+    width: 90%;
+    background: #82ff00;
+  }
+  20% {
+    width: 90%;
+    background: #82ff00;
+  }
+  22.5% {
+    width: 40%;
+    background: #ffff00;
+  }
+  70% {
+    width: 40%;
+    background: #ffff00;
+  }
+  72.5% {
+    width: 90%;
+    background: #82ff00;
+  }
+  100% {
+    width: 90%;
+    background: #82ff00;
+  }
+}
+#playerHP {
+  border: 1px solid #000;
+  height: 3px;
+  position: relative;
+}
+#health {
+  animation: health 8s infinite;
+  height: 3px;
+  background: #080;
+  position: absolute;
+  box-shadow: 0 0 4px 0 #050;
+}
+#lost {
+  animation: damage_taken 8s infinite;
+  position: absolute;
+  height: 3px;
+  right: 10%;
+  background: #f00;
+  box-shadow: 0 0 20px #f00, 0 0 5px #f00;
+  transition: width 0.5s;
+  opacity: 0;
+}
+#heal {
+  animation: healing_taken 8s infinite;
+  position: absolute;
+  left: 40%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 20px #0af, 0 0 5px #0af;
+  transition: width 0.5s;
+  opacity: 0;
+}

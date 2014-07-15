@@ -1,0 +1,19 @@
+.selectNext {
+	float:right;
+	margin-right:20px;
+	margin-top:3px;
+	cursor: pointer;
+}
+.selectPrevious {
+	float:left;
+	margin-left:20px;
+	margin-top:3px;
+	cursor: pointer;
+}
+.selectionText {
+	text-align:center;
+	font-size:20px;
+}
+.selectPrevious:hover,.selectNext:hover {
+    transform: scale(1.5);
+}
