@@ -1,4 +1,4 @@
-require(["game", "gameminer", "gamestorage", "ui", "uiplanetscreen", "gamesettings", "noty", "simplemodal"]);
+require(["game", "gameminer", "gamestorage", "ui", "uiplanetscreen", "gamesettings", "simplemodal"]);
 
 function Player() {
     this.id = 'player';
@@ -272,8 +272,9 @@ function Player() {
         if (!this.storage.getItemsOfCategory("scavenge")) {
             return noty({
                 text: "You don't have anything to decompose.",
-                type: "information",
-                timeout: 3500
+                type: "error",
+				layout: "bottomCenter",
+                timeout: 500
             });
         };
         var tmpItems = this.storage.getItemsOfCategory("scavenge");

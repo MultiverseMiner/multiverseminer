@@ -130,7 +130,7 @@ function onDocumentReady() {
                                         noty({
                                             layout: 'bottomCenter',
                                             type: 'error',
-                                            timeout: 1500,
+                                            timeout: 750,
                                             text: "An error was encountered when trying to move the building."
                                         });
                                         return;
@@ -410,7 +410,8 @@ function toggleAudio() {
         noty({
             text: "Audio muted.",
             type: "notification",
-            timeout: 1000
+			layout: "bottomCenter",
+            timeout: 500
         });
     } else {
         document.getElementById('audioDig').muted = false;
@@ -418,7 +419,8 @@ function toggleAudio() {
         noty({
             text: "Audio unmuted.",
             type: "notification",
-            timeout: 1000
+			layout: "bottomCenter",
+            timeout: 500
         });
     }
 };
@@ -430,13 +432,15 @@ function togglePopup() {
         noty({
             text: "Loot text disabled.",
             type: "information",
-            timeout: 2000
+			layout: "bottomCenter",
+            timeout: 500
         });
     } else {
         noty({
             text: "Loot text enabled.",
             type: "information",
-            timeout: 2000
+			layout: "bottomCenter",
+            timeout: 500
         });
     }
 };
@@ -628,6 +632,7 @@ function onSave() {
     noty({
         text: "Auto-saved.",
         type: "notification",
+		layout: "bottomCenter",
         timeout: 500
     });
 };
