@@ -419,30 +419,6 @@
     -webkit-user-select: text;
     -ms-user-select: text;
 }
-
-#gatheringActionText, #miningActionText, #scavengingActionText {
-    width: 342px;
-    background-color: #444;
-    color: #fff;
-    font-family: overpassregular,Arial,sans-serif;
-    font-size: 0.8em;
-    padding: 2px;
-    height: 10%;
-    position: absolute;
-    letter-spacing: 0.19em;
-}
-#gatheringResultsText, #miningResultsText, #scavengingResultsText {
-    width: 342px;
-    background-color: #444;
-    color: #fff;
-    font-family: overpassregular,Arial,sans-serif;
-    font-size: 0.85em;
-    padding: 1px;
-    height: 70.4%;
-    position: absolute;
-    bottom: 32px;
-    letter-spacing: 0.19em;
-}
 #planetLootModal {
     font-family: overpassregular,Arial,sans-serif;
     font-size: 14px;

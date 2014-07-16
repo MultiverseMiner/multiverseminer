@@ -180,7 +180,6 @@ function Player() {
         if (!game.currentPlanet) {
             return false;
         };
-        $("#miningActionText").html("You enter the mine.");
         var items = this.miner.mine(game.currentPlanet, this.totalPower, this.miningLuck);
         if (items.length > 0) {
 			this.gainMiningXP(items.length);
@@ -205,18 +204,8 @@ function Player() {
                 for (var i = 0; i < results.length; i++) {
                     x.push(game.getItemName(results[i]));
                 };
-                $("#miningResultsText").html("You take a rest, having found:<br>" + x.sort().join(', ') + ".");
-            } else {
-                $("#miningResultsText").html("You take a rest, having found:<br>" + game.getItemName(items) + ".");
             }
             return true;
-        } else {
-            resultsNothingChoices = [
-                'You lose your grip on the pickaxe, and it goes flying.',
-                'You\'ve unearthered nothing of value.'
-            ];
-            var choice = resultsNothingChoices[Math.floor(Math.random() * resultsNothingChoices.length)];
-            $("#miningResultsText").html(choice);
         };
         return false;
     };
@@ -225,7 +214,6 @@ function Player() {
         if (!game.currentPlanet) {
             return false;
         }
-        $("#gatheringActionText").html("You power on your atmospheric concentrator.");
         var items = this.miner.gather(game.currentPlanet);
         if (items.length > 0) {
 			this.gainGatheringXP(items.length);
@@ -235,48 +223,18 @@ function Player() {
                 for (var i = 0; i < results.length; i++) {
                     x.push(game.getItemName(results[i]));
                 };
-                $('#gatheringResultsText').html('After a cycle, the machine powers down and you collect:<br>' + x.sort().join(', ') + ".");
-            } else {
-                $('#gatheringResultsText').html('After a cycle, the machine powers down and you collect:<br>' + game.getItemName(items) + ".");
-            }
+            };
             this.storage.addItems(items);
             return true;
-        } else {
-            resultsNothingChoices = [
-                "There was a kink in the cog; your machine shut off prematurely.",
-                "Your battery died, and the machine shut off."
-            ];
-            var choice = resultsNothingChoices[Math.floor(Math.random() * resultsNothingChoices.length)];
-            $("#gatheringResultsText").html(choice);
         };
         return false;
     };
-
-    this.generateActionText = function() {
-        choices = [
-            "house",
-            "office",
-            "pizzaria",
-            "store",
-            "van",
-            "supermarket"
-        ];
-        var choice = choices[Math.floor(Math.random() * choices.length)];
-        return choice;
-    };
     
-    this.cap = function(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    };
-    
-    this.scavenge = function() {
+	this.scavenge = function() {
         if (!game.currentPlanet) {
             return false;
         }
         // TODO - Add stat for whatever items you found.
-        actionText = this.generateActionText();
-        actionTextUpper = this.cap(actionText);
-        $("#scavengingActionText").html('Location: ' + actionTextUpper);
         var items = this.miner.scavenge(game.currentPlanet);
         if (items.length > 0) {
 			this.gainScavengingXP(items.length);
@@ -286,19 +244,9 @@ function Player() {
                 for (var i = 0; i < results.length; i++) {
                     x.push(game.getItemName(results[i]));
                 };
-                $('#scavengingResultsText').html('After a thorough inspection of the ' + actionText + ' you return home with: <br>' + x.sort().join(', ') + ".");
-            } else {
-                $('#scavengingResultsText').html('After a thorough inspection of the ' + actionText + ' you return home with: <br>' + game.getItemName(items) + ".");
-            }
+            };
             this.storage.addItems(items);
             return true;
-        } else {
-            resultsNothingChoices = [
-                "a loud noise spooks you.<br>You run away empty handed.",
-                "after thorough examination,<br>you determine there is nothing useful.<br>You go home empty-handed."
-            ];
-            var choice = resultsNothingChoices[Math.floor(Math.random() * resultsNothingChoices.length)];
-            $("#scavengingResultsText").html('You enter the ' + actionText + ', but ' + choice);
         };
         return false;
     };
