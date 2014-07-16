@@ -237,6 +237,7 @@ function onDocumentReady() {
 		});
 	};
 	this.hasTips = false;
+	$("#playerCraftingContent").sieve({itemSelector: "div div"});
 	$( "input" ).on( "click", function() {
 	  $("#playerCraftingContent div").show();
 	});
@@ -246,7 +247,6 @@ function onDocumentReady() {
 			collapsible: true            
 		});
 	});
-	$("#playerCraftingContent").sieve({itemSelector: "div div"});
 };
 
 function selectClass(playerClass) {
