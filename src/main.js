@@ -241,12 +241,13 @@ function onDocumentReady() {
 	$( "input" ).on( "click", function() {
 	  $("#playerCraftingContent div").show();
 	});
-	$("input").on("blur", function() {
-		if ($("input").val() == "") $('#playerCraftingContent').accordion({
+	$("input").on("focusout", function() {
+		if ($("input").val() === "") {
+			$('#playerCraftingContent').accordion({
 			active: false,
 			collapsible: true            
 		});
-	});
+	}});
 };
 
 function selectClass(playerClass) {
