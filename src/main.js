@@ -544,6 +544,7 @@ function onGather() {
             return false;
         };
     };
+	$("#audioGas").trigger('play');
     game.player.gather();
     game.settings.addStat('manualGatherCount');
     if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
