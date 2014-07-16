@@ -41,7 +41,6 @@ module.exports = function(grunt) {
 
                         ui: 'ui/ui',
                         uicomponent: 'ui/controls/uiComponent',
-                        uifloating: 'ui/controls/uiFloating',
                         uiinventory: 'ui/controls/uiInventory',
                         uiselection: 'ui/controls/uiSelection',
                         uislot: 'ui/controls/uiSlot',

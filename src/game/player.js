@@ -187,7 +187,6 @@ function Player() {
             if (game.settings.showPopups) {
                 for (var i = 0; i < items.length; i++) {
                     var name = game.getItemName(items[i]);
-                    var _float = ui.createFloat('+1 ' + name, 'lootFloating', utils.getRandomInt(-100, 100), utils.getRandomInt(-100, 0));
                 }
             }
             // TODO - Add stat for whatever items you found.

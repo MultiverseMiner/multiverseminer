@@ -49,27 +49,4 @@ function UIFloating(content, classes) {
 	this.remove = function() {
 		this.mainDiv.fadeOut(sys.floatFadeDelay, function() { $(this.mainDiv).remove(); });
 	};
-
-	// ---------------------------------------------------------------------------
-	// float functions
-	// ---------------------------------------------------------------------------
-	this.offset = function(x, y) {
-		var position = this.mainDiv.position();
-		this.mainDiv.offset({ top: position.top + y, left: position.left + x});
-	};
-
-	this.moveTo = function(x, y) {
-		if (this.center) {
-			var p = this.parent[0];
-			y += this.parent.height() / 2;
-			x += this.parent.width() / 2;
-		}
-		var pStyle = this.mainDiv[0].style;
-		pStyle.left = x + "px";
-		pStyle.top = y + "px";
-	};
-
-	this.setContent = function(content) {
-		this.mainDiv.html(content);
-	};
 };

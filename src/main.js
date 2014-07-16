@@ -520,61 +520,47 @@ function goScavenging() {
 // Mining, Gathering, Scavenging Modals End
 
 function onMine() {
-    if (!$("#miningModal").is(':visible')) {
-        $.modal.close();
-        goMining();
-    };
     if (game.playerDied > 0) return false;
     if (this.lastRun !== "undefined") {
-        if (this.lastRun >= ~~new Date() / 200 | 0) {
+        if (this.lastRun >= ~~Date.now() / 200 | 0) {
             return false;
         };
     };
-    game.settings.addStat('manualDigCount');
-    if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
     result = game.player.mine();
     if (result) {
         $('#audioDigSuccess').trigger('play');
     } else {
         $('#audioDig').trigger('play');
     }
-    this.lastRun = ~~new Date() / 200 | 0;
+    game.settings.addStat('manualDigCount');
+    if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
+    this.lastRun = ~~Date.now() / 200 | 0;
 };
 
 function onGather() {
-    if (!$("#gatheringModal").is(':visible')) {
-        $.modal.close();
-        goGathering();
-    };
     if (game.playerDied > 0) return false;
     if (this.lastRun !== "undefined") {
-        if (this.lastRun >= ~~new Date() / 200 | 0) {
+        if (this.lastRun >= ~~Date.now() / 200 | 0) {
             return false;
         };
     };
+    game.player.gather();
     game.settings.addStat('manualGatherCount');
     if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
-    game.player.gather();
-    this.lastRun = ~~new Date() / 200 | 0;
+    this.lastRun = ~~Date.now() / 200 | 0;
 };
 
 function onScavenge() {
-    if (!$("#scavengingModal").is(':visible')) {
-        if (game.playerDied > 0 || game.currentPlanet.data.id != "1") {
-            return false;
-        };
-        $.modal.close();
-        goScavenging();
-    };
+	if (game.playerDied > 0 || game.currentPlanet.data.id != "1") return false;
     if (this.lastRun !== "undefined") {
-        if (this.lastRun >= ~~new Date() / 200 | 0) {
+        if (this.lastRun >= ~~Date.now() / 200 | 0) {
             return false;
         };
     };
+    game.player.scavenge();
     game.settings.addStat('manualScavengeCount');
     if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
-    game.player.scavenge();
-    this.lastRun = ~~new Date() / 200 | 0;
+    this.lastRun = ~~Date.now() / 200 | 0;
 };
 
 function onActivatePlayerInventory() {

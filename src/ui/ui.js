@@ -1,4 +1,4 @@
-require(["uiplanetscreen", "uitravelscreen", "uifloating", "jquery", "jqueryui", "jgrowl", "tooltipster"]);
+require(["uiplanetscreen", "uitravelscreen", "jquery", "jqueryui", "jgrowl", "tooltipster"]);
 
 // ---------------------------------------------------------------------------
 // Some const values used in ui code
@@ -82,17 +82,6 @@ function UI() {
 		this.screenPlanet.update(currentTime);
 		this.screenTravel.update(currentTime);
 
-		// Update floating components
-		for (var i = 0; i < this.activeFloats.length; i++) {
-			var _float = this.activeFloats[i];
-			_float.update(currentTime);
-			if (_float.timedOut) {
-				// Remove the float
-				_float.remove();
-				this.activeFloats.splice(i, 1);
-			}
-		}
-
 		// Check if we are starting a drag operation
 		//if (this.pendingDragElement && currentTime - this.pendingDragElementTime > sys.dragDelay) {
 		//	this.enterDrag(this.pendingDragElement);
@@ -157,20 +146,6 @@ function UI() {
 		$.jGrowl(message, {
 			header: 'Error'
 		});
-	};
-
-	this.createFloat = function(content, classes, x, y) {
-		var _float = new UIFloating(content, classes || "genericFloating");
-		_float.parent = $('#floatingArea');
-		_float.init();
-		_float.moveTo(x, y);
-
-		// Todo: use something else as default i guess
-		_float.timeOut = Date.now() + 2;
-
-		this.activeFloats.push(_float);
-
-		return _float;
 	};
 
 	this.beginDrag = function(source) {

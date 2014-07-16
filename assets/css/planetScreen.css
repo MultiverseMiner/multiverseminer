@@ -21,9 +21,9 @@
     font-weight: 400;
     letter-spacing: 1px;
     text-align: center;
-    position: relative;
+    overflow-x: hidden;
+    width: auto;
 }
-
 .panelPlanetRight {
 	background-color: rgba(37,37,37,.75);
 	border: 5px solid #000;
