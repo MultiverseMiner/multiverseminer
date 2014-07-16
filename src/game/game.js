@@ -372,7 +372,6 @@ function Game() {
         this.planetChanged = true;
         //this.save();
         //this.currentPlanet.load();
-
     };
 
     this.getDefaultItemIcon = function(item) {

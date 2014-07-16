@@ -660,20 +660,29 @@ function doReset() {
     onActivatePlayerGear();
 };
 
+// What happens after you decide a planet 
 function onTravelToPlanet(target) {
     if (!game.canTravelTo(target)) {
         return;
     }
-    //$("#solarsystem").modal.close();
+    // Space Modal Closes
     $.modal.close();
-    $(".panelBottom").hide();
     $(window).one("scroll", function() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
-    ui.screenPlanet.hide();
-    ui.screenTravel.show();
+
+	// Top Panels and Entire Screen Hidden for Travel
+	$(".panelBottom").hide();
+ 	//$("#panelBottomLeft").hide();
+	//$("#panel-bottom").hide();	
+	ui.screenPlanet.hide();
+	ui.screenTravel.show();
     game.travelTo(target);
-    $(".panelBottom").show();
+	$(document).ready(function () {
+    setTimeout(function(){
+        $('.panelBottom').fadeIn(500);
+    }, 2000);
+});
 };
 
 function onSetInventoryFilter(filter) {
