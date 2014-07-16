@@ -21,8 +21,7 @@
     font-weight: 400;
     letter-spacing: 1px;
     text-align: center;
-    position: absolute;
-    left: 35%;
+    position: relative;
 }
 
 .panelPlanetRight {
@@ -57,15 +56,6 @@ height: 400px;
     height: 150px;
     margin-top: 20%;
 }
-
-/* Frame to hold planet image
-.planetDisplayBackground {
-    margin-top: 5px;
-	height: 30px;
-	width: auto;
-}
-*/
-
 .planetDisplayNameFrame {
     height: 91px;
     /* position: inherit; */
