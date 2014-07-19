@@ -556,6 +556,7 @@ function UIPlanetScreen() {
 
 	// Questing Section (650-704)
 	this.updateQuestsDisplay = function() {
+		return;
 		// TODO
 		$('#questsContent').empty();
 		for (var i = 0; i < game.QuestTable.length; i++) {
@@ -611,6 +612,7 @@ function UIPlanetScreen() {
 	};
 
 	this.activateQuests = function() {
+		return;
 		this.hideLeftSideComponents();
 		this.componentQuestsPanel.show();
 	};
