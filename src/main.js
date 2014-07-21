@@ -191,7 +191,7 @@ function onDocumentReady() {
    	game.player.updateUI();
 	$('#settings').toolbar({
         content: '#user-toolbar-options',
-        position: "bottom",
+        position: "top",
         hideOnClick: true
     });
     $(".tooltip").tooltipster({

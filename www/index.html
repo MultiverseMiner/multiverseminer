@@ -18,6 +18,44 @@
 		<source src="assets/sound/Gas.mp3" type="audio/mp3">
 	</audio>
   <div class="screen" id="planetScreen">
+	 	<div class="panelBottom">
+	 		<img alt="logo" class="logo" src="assets/images/logo.png" />
+		
+	         <!-- Header Right Side -->
+	 		<div class="panelBottomRight">
+	                 <div class="genericButton bottomBarButton clickable noselect" style="text-decoration: none;">
+	                   <a href="http://webchat.freenode.net?channels=%23multiverseminer&amp;uio=d4" target="_new">
+	                       <div class="bottomBarButton noSelect">Chat</div>
+	                   </a>
+	               </div>
+
+	             <div class="genericButton bottomBarButton clickable noselect" onclick="spaceTravel()";>  
+	                 <div class="bottomBarButtonText noSelect">Travel</div>
+	             </div>
+
+	             <div class="genericButton bottomBarButton clickable noselect" id="changeLog" onclick="showChangeLog()">
+	                 <div class="bottomBarButtonText noSelect">Changelog</div>
+	             </div>
+	         </div>
+        
+	 		<!-- Header Left Side -->
+	 		<div class="panelBottomLeft">
+	             <div class="genericButton bottomBarButton clickable" onclick="tutorial()">
+	                 <div class="bottomBarButtonText noSelect">Tutorial</div>
+	             </div>
+
+	             <div class="genericButton bottomBarButton clickable">
+	                 <div id="settings" class="bottomBarButtonText noSelect">Settings</div>
+	             </div>
+
+	             <div class="genericButton bottomBarButton clickable" onclick="exportStorage()">
+	                 <div id="exportSave" class="bottomBarButtonText noSelect">Export</div>
+	             </div>
+	             <div class="genericButton bottomBarButton clickable" onclick="importStorage()">
+	 		        <div id="importSave" class="bottomBarButtonText noSelect">Import</div>
+	             </div>
+	 		</div>
+	  </div>
     <div class="panelPlanetLeft" id="panelPlanetLeft">
       <div id="leftCategory">
         <div class="genericButton categoryButton clickable" id="leftCategory0" onclick="onActivatePlayerInventory()">
@@ -365,45 +403,6 @@
     <p>
         <input style="display:none;" id="hidden-input" name="itemId" /></p>
   </div>
-	
-	<div class="panelBottom">
-		<img alt="logo" class="logo" src="assets/images/logo.png" />
-		
-        <!-- Header Right Side -->
-		<div class="panelBottomRight">
-                <div class="genericButton bottomBarButton clickable noselect" style="text-decoration: none;">
-                  <a href="http://webchat.freenode.net?channels=%23multiverseminer&amp;uio=d4" target="_new">
-                      <div class="bottomBarButton noSelect">Chat</div>
-                  </a>
-              </div>
-
-            <div class="genericButton bottomBarButton clickable noselect" onclick="spaceTravel()";>  
-                <div class="bottomBarButtonText noSelect">Travel</div>
-            </div>
-
-            <div class="genericButton bottomBarButton clickable noselect" id="changeLog" onclick="showChangeLog()">
-                <div class="bottomBarButtonText noSelect">Changelog</div>
-            </div>
-        </div>
-        
-		<!-- Header Left Side -->
-		<div class="panelBottomLeft">
-            <div class="genericButton bottomBarButton clickable" onclick="tutorial()">
-                <div class="bottomBarButtonText noSelect">Tutorial</div>
-            </div>
-
-            <div class="genericButton bottomBarButton clickable">
-                <div id="settings" class="bottomBarButtonText noSelect">Settings</div>
-            </div>
-
-            <div class="genericButton bottomBarButton clickable" onclick="exportStorage()">
-                <div id="exportSave" class="bottomBarButtonText noSelect">Export</div>
-            </div>
-            <div class="genericButton bottomBarButton clickable" onclick="importStorage()">
-		        <div id="importSave" class="bottomBarButtonText noSelect">Import</div>
-            </div>
-		</div>
- </div>
 	
   <div class="hidden" id="get-a-ship" title="Thou shall not travel!">
     You need to craft a ship in order to travel away from Earth<br />

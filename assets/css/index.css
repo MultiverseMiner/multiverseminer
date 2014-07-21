@@ -3,8 +3,6 @@ html {
 .body {
     background: url("assets/images/bg.png") no-repeat fixed center center / cover rgba(0, 0, 0, 0);
     color: #ffffff;
-    height: 95%;
-    margin-top: 41px;
     padding-left: 0;
     position: static;
 }
@@ -62,12 +60,12 @@ a {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    height: auto;
     letter-spacing: 1px;
     position: absolute;
     text-align: center;
-    top: 0;
-    width: 100%;
+    bottom: 8px;
+    width: 99%;
+	height:auto;
 }
 .panelBottomLeft {
     float: left;
