@@ -1,17 +1,19 @@
 Multiverse Miner
 ====
 
-This game is open source, however some of the art is not.
+This game is open source, however the icons (art) are not.
 
 Please message antlong on irc.freenode.net for license details.
 
 ### Running
 
 ```shell
-npm install # installs dependencies
-npm start # compiles miner and opens a server (open in the browser)
+npm install # installs project dependencies
+npm install grunt-cli -g
+grunt
 ```
 
+Now just open bin/index.html with your preferred browser.
 ---
 Since unlocking the true potential of the elements, wormholes have been created and mastered, space travel occurs at the speed of light, and the elements in the universe can be manipulated at your whim.
 
