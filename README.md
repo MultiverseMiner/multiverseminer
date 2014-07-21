@@ -9,7 +9,7 @@ Please message antlong on irc.freenode.net for license details.
 
 ```shell
 npm install # installs project dependencies
-npm install grunt-cli -g
+sudo npm install grunt-cli -g
 grunt
 ```
 
