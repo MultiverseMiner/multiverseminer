@@ -205,7 +205,7 @@ function onDocumentReady() {
 	$(".tooltip").tooltipster({
 		theme: 'tooltipster-multi',
 		contentAsHTML: true,
-		position: "left",
+		position: "bottom",
 		onlyOne: true,
 		interactiveTolerance: 10,
 		speed: 1,
@@ -671,6 +671,7 @@ function onTravelToPlanet(target) {
 
 	// Top Panels and Entire Screen Hidden for Travel
 	$(".panelBottom").hide();
+	$("#planetDisplay").hide();
 	//$("#panelBottomLeft").hide();
 	//$("#panel-bottom").hide();	
 	ui.screenPlanet.hide();
@@ -679,6 +680,7 @@ function onTravelToPlanet(target) {
 	$(document).ready(function() {
 		setTimeout(function() {
 			$('.panelBottom').fadeIn(500);
+			$('#planetDisplay').fadeIn(500);
 		}, 2000);
 	});
 };
