@@ -3,8 +3,14 @@ html {
 .body {
     background: url("assets/images/bg.png") no-repeat fixed center center / cover rgba(0, 0, 0, 0);
     color: #ffffff;
+<<<<<<< HEAD
     padding-left: 0;
+=======
+    height: 95%;
+    margin: 41px 5px 0px 5px;
+>>>>>>> f53e560ddeac580579a63b7f65bb2d0d044fcc09
     position: static;
+	overflow-x: hidden;
 }
 a {
     color: white;
@@ -70,6 +76,7 @@ a {
 .panelBottomLeft {
     float: left;
     margin-left: 2px;
+	margin-right: 2px;
 }
 .panelBottomCenter {
     display: inline-block;
@@ -77,7 +84,7 @@ a {
 }
 .panelBottomRight {
     float: right;
-    margin-right: 4px;
+    padding-right: 20px;
 }
 .hidden {
     display: none;

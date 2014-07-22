@@ -41,7 +41,7 @@
 
 /* Wrapper for Planet Information */
 .planetDisplay {
-height: 400px;
+	height: 550px;
 }
 
 .planetImage {
@@ -51,7 +51,7 @@ height: 400px;
 
 .planetBigEarth {
     height: 150px;
-    margin-top: 20%;
+    margin-top: 150px;
 }
 .planetDisplayNameFrame {
     height: 91px;
@@ -68,6 +68,7 @@ height: 400px;
     font-style: normal;
     font-weight: 400;
     letter-spacing: 1px;
+	margin-top: 115px;
 }
 
 .planetDisplayName {
