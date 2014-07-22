@@ -299,6 +299,7 @@ function onUpdate() {
 			if (key == "totalPower") tipContent = "Total Power is a combination of Mining Luck, and Power, and allows you to find more elements.";
 			if (typeof tipContent !== "undefined") {
 				$("." + key).tooltipster({
+					contentAsHTML: true,
 					content: tipContent,
 					theme: 'tooltipster-multi',
 					position: "left",
@@ -306,12 +307,11 @@ function onUpdate() {
 					delay: 0,
 					interactiveTolerance: 10,
 					speed: 1,
-					maxWidth: 225
+					maxWidth: 300
 				});
 			};
 		};
 		this.hasTips = true;
-		delete stats;
 		game.player.updateUI();
 	};
 };

@@ -136,7 +136,7 @@ function UISlot(id, parent) {
     this.generateItemTooltip = function(item) {
         content = "<strong>" + item.name + "</strong><br>";
 		content += "<div style='font-size:11px;text-transform:capitalize;'>";
-		if (item.description) content += "<strong>Description: </strong>" + item.description;
+		if (item.description) content += "<strong>Description: </strong><div style='text-transform:none;'>" + item.description + "</div>";
         switch (item.category) {
             case "rawMaterial":
 				if (item.craftCost) {
@@ -247,10 +247,10 @@ function UISlot(id, parent) {
             content: this.generateItemTooltip(item),
             theme: 'tooltipster-multi',
             contentAsHTML: true,
-            position: "bottom",
+            position: "left",
             onlyOne: true,
             speed: 1,
-			maxWidth: 380,
+			maxWidth: 300,
 			positionTracker: true
 			//offsetX: -10,
 			//offsetY: 5
