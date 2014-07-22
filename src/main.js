@@ -188,6 +188,24 @@ function onDocumentReady() {
 			});
 		}
 	});
+	$(document).on('focusout', '.craftingFilter', function(e) {
+		if ($(".craftingFilter").val() == "") {
+			$("#playerCraftingContent").accordion("refresh");
+		};
+	});
+	$(document).on('blur', '.craftingFilter', function(e) {
+		if ($(".craftingFilter").val() == "") {
+			$("#playerCraftingContent").accordion("refresh");
+		};
+	});
+	$(document).on('mouseleave', '.craftingFilter', function(e) {
+		if ($(".craftingFilter").val() == "") {
+			$("#playerCraftingContent").accordion("refresh");
+		};
+	});
+	$("#playerCraftingContent").sieve({
+		itemSelector: "div"
+	});
 	game.player.updateUI();
 	$('#settings').toolbar({
 		content: '#user-toolbar-options',
@@ -244,16 +262,6 @@ function onDocumentReady() {
 		});
 	};
 	this.hasTips = false;
-	$("#playerCraftingContent").sieve({itemSelector: "div div"});
-	$("input").on("click", function() {
-		$("#playerCraftingContent div").show();
-	});
-	$("input").on("blur", function() {
-		if ($("input").val() == "") $('#playerCraftingContent').accordion({
-			active: false,
-			collapsible: true
-		});
-	});
 };
 
 function selectClass(playerClass) {
