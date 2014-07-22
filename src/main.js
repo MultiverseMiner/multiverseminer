@@ -188,23 +188,13 @@ function onDocumentReady() {
 			});
 		}
 	});
-	$(document).on('focusout', '.craftingFilter', function(e) {
-		if ($(".craftingFilter").val() == "") {
-			$("#playerCraftingContent").accordion("refresh");
-		};
-	});
-	$(document).on('blur', '.craftingFilter', function(e) {
-		if ($(".craftingFilter").val() == "") {
-			$("#playerCraftingContent").accordion("refresh");
-		};
-	});
-	$(document).on('mouseleave', '.craftingFilter', function(e) {
-		if ($(".craftingFilter").val() == "") {
-			$("#playerCraftingContent").accordion("refresh");
-		};
-	});
 	$("#playerCraftingContent").sieve({
 		itemSelector: "div"
+	});
+	$(document).on('keyup', '.craftingFilter', function(e) {
+		if ($(".craftingFilter").val() == "") {
+			$("#playerCraftingContent").accordion("refresh");
+		};
 	});
 	game.player.updateUI();
 	$('#settings').toolbar({
