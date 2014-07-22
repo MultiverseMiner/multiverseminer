@@ -6,13 +6,12 @@
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
-    height: 600px;
+    height: 650px;
     letter-spacing: 1px;
-    min-width: 300px;
+    min-width: 410px;
     outline: 1px solid #8A8A8A;
     text-align: center;
     width: 410px;
-    /* overflow-y: scroll; */
 }
 .panelPlanetDisplay {
     font-family: overpassregular,Arial,sans-serif;
@@ -32,14 +31,12 @@
 	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;
-	height: 600px;
+	height: 650px;
 	letter-spacing: 1px;
-	min-width: 300px;
+	min-width: 410px;
 	outline: 1px solid #8A8A8A;
 	text-align: center;
 	width: 410px;
-	/* overflow-y: hidden; */
-	position: static;
 }
 
 /* Wrapper for Planet Information */
@@ -100,7 +97,7 @@ height: 400px;
     width: 100%;
 }
 .gearPanel {
-    margin: 1px 10px;
+    margin: 1px 5px;
 }
 
 .empirePanel {

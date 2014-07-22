@@ -130,6 +130,7 @@ a {
     text-align: left;
     top: 60px;
     width: 180px;
+	padding-right:3px;
 }
 .statsContent {
     font-size: 12px;

@@ -247,7 +247,7 @@ function UISlot(id, parent) {
             content: this.generateItemTooltip(item),
             theme: 'tooltipster-multi',
             contentAsHTML: true,
-            position: "right",
+            position: "bottom",
             onlyOne: true,
             speed: 1,
 			maxWidth: 380,

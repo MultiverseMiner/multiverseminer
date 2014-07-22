@@ -17,150 +17,88 @@
 	<audio id="audioGas" preload="none">
 		<source src="assets/sound/Gas.mp3" type="audio/mp3">
 	</audio>
+	
   <div class="screen" id="planetScreen">
-	 	<div class="panelBottom">
-	 		<img alt="logo" class="logo" src="assets/images/logo.png" />
-		
-	         <!-- Header Right Side -->
-	 		<div class="panelBottomRight">
-	                 <div class="genericButton bottomBarButton clickable noselect" style="text-decoration: none;">
-	                   <a href="http://webchat.freenode.net?channels=%23multiverseminer&amp;uio=d4" target="_new">
-	                       <div class="bottomBarButton noSelect">Chat</div>
-	                   </a>
-	               </div>
 
-	             <div class="genericButton bottomBarButton clickable noselect" onclick="spaceTravel()";>  
-	                 <div class="bottomBarButtonText noSelect">Travel</div>
-	             </div>
-
-	             <div class="genericButton bottomBarButton clickable noselect" id="changeLog" onclick="showChangeLog()">
-	                 <div class="bottomBarButtonText noSelect">Changelog</div>
-	             </div>
-	         </div>
-        
-	 		<!-- Header Left Side -->
-	 		<div class="panelBottomLeft">
-	             <div class="genericButton bottomBarButton clickable" onclick="tutorial()">
-	                 <div class="bottomBarButtonText noSelect">Tutorial</div>
-	             </div>
-
-	             <div class="genericButton bottomBarButton clickable">
-	                 <div id="settings" class="bottomBarButtonText noSelect">Settings</div>
-	             </div>
-
-	             <div class="genericButton bottomBarButton clickable" onclick="exportStorage()">
-	                 <div id="exportSave" class="bottomBarButtonText noSelect">Export</div>
-	             </div>
-	             <div class="genericButton bottomBarButton clickable" onclick="importStorage()">
-	 		        <div id="importSave" class="bottomBarButtonText noSelect">Import</div>
-	             </div>
-	 		</div>
-	  </div>
     <div class="panelPlanetLeft" id="panelPlanetLeft">
-      <div id="leftCategory">
-        <div class="genericButton categoryButton clickable" id="leftCategory0" onclick="onActivatePlayerInventory()">
-          <img alt="backpack" class="categoryButtonIcon" src="assets/images/itemIcons/backpack.png" />
 
-          <div class="categoryButtonText" style="font-size:8px;">
-            PLAYER
-            <br />
-            INVENTORY
-          </div>
-        </div>
+	  	<div id="leftCategory">
+        	<div class="genericButton categoryButton clickable" id="leftCategory0" onclick="onActivatePlayerInventory()">
+				<img alt="backpack" class="categoryButtonIcon" src="assets/images/itemIcons/backpack.png" />
+				<div class="categoryButtonText" style="font-size:8px;">PLAYER<br>INVENTORY</div>
+        	</div>
+        	<div class="genericButton categoryButton clickable" id="leftCategory1" onclick="onActivateEmpire()">
+				<img alt="empire" class="categoryButtonIcon" src="assets/images/empire.png" />
+				<div class="categoryButtonText">EMPIRE</div>
+			</div>
+        	<div class="genericButton categoryButton clickable" id="leftCategory2" onclick="onActivateStats()">
+				<img alt="stats" class="categoryButtonIcon" src="assets/images/stats.png" />
+				<div class="categoryButtonText">STATS</div>
+			</div>
+	        <div class="genericButton categoryButton clickable" id="leftCategory3" onclick="onActivateQuests()">
+				<img alt="quests" class="categoryButtonIcon" src="assets/images/quests.png" />
+				<div class="categoryButtonText">QUESTS</div>
+			</div>
+		</div>
 
-        <div class="genericButton categoryButton clickable" id="leftCategory1" onclick="onActivateEmpire()">
-          <img alt="empire" class="categoryButtonIcon" src="assets/images/empire.png" />
+		<div id="leftCategoryContent" class="categoryContent clearLeftFloat">
+			<div class="inventoryPanel" id="playerInventoryPanel">
+				<div id="playerInventoryContent">
+					<div class="inventoryFilter" id="playerInventoryFilter"></div>
+					<div class="inventoryContentPlayer panelContent" id="playerInventorySlots"></div>
+				</div>
+			</div>
+			<div class="empirePanel" id="empirePanel">
+				<div id="empireContent"></div>
+			</div>
+			<div class="statsPanel" id="statsPanel">
+				<div class="statsContent" id="statsContent"></div>
+			</div>
+			<div class="questsPanel" id="questsPanel">
+				<div class="questsContent" id="questsContent"></div>
+			</div>
+		</div>
 
-          <div class="categoryButtonText">
-            EMPIRE
-          </div>
-        </div>
-
-        <div class="genericButton categoryButton clickable" id="leftCategory2" onclick="onActivateStats()">
-          <img alt="stats" class="categoryButtonIcon" src="assets/images/stats.png" />
-
-          <div class="categoryButtonText">
-            STATS
-          </div>
-        </div>
-
-        <div class="genericButton categoryButton clickable" id="leftCategory3" onclick="onActivateQuests()">
-          <img alt="quests" class="categoryButtonIcon" src="assets/images/quests.png" />
-
-          <div class="categoryButtonText">
-            QUESTS
-          </div>
-        </div>
-      </div>
-
-      <div class="categoryContent clearLeftFloat" id="leftCategoryContent">
-        <div class="inventoryPanel" id="playerInventoryPanel">
-          <div id="playerInventoryContent">
-            <div class="inventoryFilter" id="playerInventoryFilter"></div>
-
-            <div class="inventoryContentPlayer panelContent" id="playerInventorySlots">
-            </div>
-          </div>
-        </div>
-
-        <div class="empirePanel" id="empirePanel">
-          <div id="empireContent"></div>
-        </div>
-
-        <div class="statsPanel" id="statsPanel">
-          <div class="statsContent" id="statsContent"></div>
-        </div>
-
-        <div class="questsPanel" id="questsPanel">
-          <div class="questsContent" id="questsContent"></div>
-        </div>
-      </div>
     </div>
 
     <div class="panelPlanetRight" id="panelPlanetRight">
-      <div id="rightCategory">
-        <div class="genericButton categoryButton clickable" id="rightCategory0" onclick="onActivatePlayerGear()">
-          <img alt="swordGear" class="categoryButtonIcon" src="assets/images/itemIcons/swordGear.png" />
-
-          <div class="categoryButtonText">
-            GEAR
-          </div>
-        </div>
-
-        <div class="genericButton categoryButton clickable" id="rightCategory1" onclick="onActivateShip()">
-          <img alt="ship" class="categoryButtonIcon" src="assets/images/itemIcons/ship.png" />
-
-          <div class="categoryButtonText">
+		
+		<div id="rightCategory">
+			<div class="genericButton categoryButton clickable" id="rightCategory0" onclick="onActivatePlayerGear()">
+				<img alt="swordGear" class="categoryButtonIcon" src="assets/images/itemIcons/swordGear.png" />
+				<div class="categoryButtonText">
+					GEAR
+				</div>
+			</div>
+			<div class="genericButton categoryButton clickable" id="rightCategory1" onclick="onActivateShip()">
+          	  <img alt="ship" class="categoryButtonIcon" src="assets/images/itemIcons/ship.png" />
+			  <div class="categoryButtonText">
             SHIP
           </div>
-        </div>
-
-        <div class="genericButton categoryButton clickable" id="rightCategory2" onclick="onActivatePlanet()">
-          <img alt="earth" class="categoryButtonIcon" src="assets/images/earth2.png" />
-
-          <div class="categoryButtonText" style="font-size:8px;">
+        	</div>
+			<div class="genericButton categoryButton clickable" id="rightCategory2" onclick="onActivatePlanet()">
+          	  	<img alt="earth" class="categoryButtonIcon" src="assets/images/earth2.png" />
+          			<div class="categoryButtonText" style="font-size:8px;">
             PLANET
             <br />
             INVENTORY
           </div>
-        </div>
-
-        <div class="genericButton categoryButton clickable" id="rightCategory3" onclick="onActivateCrafting()">
-          <img alt="crafting" class="categoryButtonIcon" src="assets/images/crafting.png" />
-
-          <div class="categoryButtonText">
-            CRAFTING
-          </div>
-        </div>
-      </div>
+	  		</div>
+			<div class="genericButton categoryButton clickable" id="rightCategory3" onclick="onActivateCrafting()">
+				<img alt="crafting" class="categoryButtonIcon" src="assets/images/crafting.png" />
+				<div class="categoryButtonText">
+					CRAFTING
+				</div>
+			</div>
+		</div>
 
         <div class="categoryContent clearLeftFloat" id="rightCategoryContent">
-            <div class="gearPanel" id="playerGearPanel">
-                <div id="playerGearContent" style="overflow-x:none;">
-                    <div class="playerGearPaperdoll" id="playerGearSlots"></div>
-                    <div class="minerGearStats" id="minerGearStats"></div>
-                </div>
-                <div class="gearText">
+			<div class="gearPanel" id="playerGearPanel">
+				<div id="playerGearContent">
+					<div class="playerGearPaperdoll" id="playerGearSlots"></div>
+					<div class="minerGearStats" id="minerGearStats"></div>
+				</div>
+				<div class="gearText">
                     <div id="miningLevel"></div>
 					<div id="miningXP"></div>
 					<div id="gatheringLevel"></div>
@@ -169,45 +107,43 @@
 					<div id="scavengingXP"></div>
                 </div>
             </div>
-        </div>
 
+        	<div class="shipPanel" id="playerShipPanel"></div>
 
-        <div class="shipPanel" id="playerShipPanel"></div>
+			<div class="planetPanel" id="planetPanel">
 
-        <div class="planetPanel" id="planetPanel">
-          <div class="inventoryPanel" id="planetInventoryPanel">
-            <div id="planetInventoryContent">
-              <div class="planetInventoryFilter" id="planetInventoryFilter"></div>
-              <div class="inventoryContentPlanet panelContent" id="planetInventorySlots">
-              </div>
-            </div>
-          </div>
+			<div class="inventoryPanel" id="planetInventoryPanel">
+				<div id="planetInventoryContent">
+					<div class="inventoryFilter" id="planetInventoryFilter"></div>
+					<div class="inventoryContentPlanet panelContent" id="planetInventorySlots"></div>
+				</div>
+			</div>
 
-          <div class="clickable" onclick="onMovePlanetItemsToPlayer()" style="font-size:13px;margin-top:10px;display:inline-table">
-            Move all to your inventory
-          </div>
-        </div>
+	          <div class="clickable" onclick="onMovePlanetItemsToPlayer()" style="font-size:13px;margin-top:10px;display:inline-table">
+	            Move all to your inventory
+	          </div>
+		  </div>
 
         <div class="craftingPanel" id="playerCraftingPanel">
           <div id="playerCraftingContent" style="height:520px;overflow-y:auto;"></div>
         </div>
       </div>
+	 </div>
     </div>
-
     <div class="panelPlanetDisplay" id="planetDisplay">
-      <div>
-        <button class="a_demo_two tooltip" id="mineButton" title="Click to mine." onClick="onMine()" style="cursor: pointer">
-            <div class="categoryButtonText">MINE</div>
-        </button>
+		<div>
+	        <button class="a_demo_two tooltip" id="mineButton" title="Click or press M to mine." onClick="onMine()" style="cursor: pointer">
+	            <div class="categoryButtonText">MINE</div>
+	        </button>
         
-        <button class="a_demo_two tooltip" id="gatherButton" title="Click to gather atmosphere." onClick="onGather()" style="cursor: pointer">
-            <div class="categoryButtonText">GATHER</div>
-        </button>
+	        <button class="a_demo_two tooltip" id="gatherButton" title="Click or press G to gather atmosphere." onClick="onGather()" style="cursor: pointer">
+	            <div class="categoryButtonText">GATHER</div>
+	        </button>
         
-		<button class="a_demo_two tooltip" id="scavengeButton" title="Click to scavenge." onClick="onScavenge()" style="cursor: pointer">
-            <div class="categoryButtonText">SCAVENGE</div>
-        </button>
-      </div>
+			<button class="a_demo_two tooltip" id="scavengeButton" title="Click or press S to scavenge." onClick="onScavenge()" style="cursor: pointer">
+	            <div class="categoryButtonText">SCAVENGE</div>
+	        </button>
+		</div>
 
       <div class="planetDisplay">
 	  
@@ -409,6 +345,44 @@
   </div>
   
   <div id="itemInfo"></div>
+ 	<div class="panelBottom">
+ 		<img alt="logo" class="logo" src="assets/images/logo.png" />
+	
+         <!-- Header Right Side -->
+ 		<div class="panelBottomRight">
+                 <div class="genericButton bottomBarButton clickable noselect" style="text-decoration: none;">
+                   <a href="http://webchat.freenode.net?channels=%23multiverseminer&amp;uio=d4" target="_new">
+                       <div class="bottomBarButton noSelect">Chat</div>
+                   </a>
+               </div>
+
+             <div class="genericButton bottomBarButton clickable noselect" onclick="spaceTravel()";>  
+                 <div class="bottomBarButtonText noSelect">Travel</div>
+             </div>
+
+             <div class="genericButton bottomBarButton clickable noselect" id="changeLog" onclick="showChangeLog()">
+                 <div class="bottomBarButtonText noSelect">Changelog</div>
+             </div>
+         </div>
+    
+ 		<!-- Header Left Side -->
+ 		<div class="panelBottomLeft">
+             <div class="genericButton bottomBarButton clickable" onclick="tutorial()">
+                 <div class="bottomBarButtonText noSelect">Tutorial</div>
+             </div>
+
+             <div class="genericButton bottomBarButton clickable">
+                 <div id="settings" class="bottomBarButtonText noSelect">Settings</div>
+             </div>
+
+             <div class="genericButton bottomBarButton clickable" onclick="exportStorage()">
+                 <div id="exportSave" class="bottomBarButtonText noSelect">Export</div>
+             </div>
+             <div class="genericButton bottomBarButton clickable" onclick="importStorage()">
+ 		        <div id="importSave" class="bottomBarButtonText noSelect">Import</div>
+             </div>
+ 		</div>
+  </div>
 <script src="require.js" type="text/javascript"></script>
 <script src="MultiverseMiner.min.js" type="text/javascript"></script>
 <script>
