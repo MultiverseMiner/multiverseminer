@@ -11,6 +11,12 @@ a {
     font-size: 12px;
     text-decoration: inherit;
 }
+.ui-menu {
+	display: block;
+	list-style: none outside none;
+	min-width: 100px;
+	padding: 5px 10px 10px;
+}
 .questionMark{
 	content:url("assets/images/questions.png");
 }

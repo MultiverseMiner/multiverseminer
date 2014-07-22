@@ -196,7 +196,6 @@ function onDocumentReady() {
 			$("#playerCraftingContent").accordion("refresh");
 		};
 	});
-	game.player.updateUI();
 	$('#settings').toolbar({
 		content: '#user-toolbar-options',
 		position: "top",
@@ -251,6 +250,7 @@ function onDocumentReady() {
 			maxWidth: 300
 		});
 	};
+	game.player.updateUI();	
 	this.hasTips = false;
 };
 
