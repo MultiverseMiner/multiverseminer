@@ -14,7 +14,7 @@ a {
 .ui-menu {
 	display: block;
 	list-style: none outside none;
-	min-width: 100px;
+	min-width: 125px;
 	padding: 5px 10px 10px;
 }
 .questionMark{

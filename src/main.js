@@ -60,6 +60,7 @@ function onDocumentReady() {
 	// Right Click Menus
 	$(document).on('mousedown', '.hasMenu', function(e) {
 		e.preventDefault();
+		$('.tooltipstered.itemSlotHover').tooltipster("hide");
 		var item = game.getItem($("div:last-child", this).attr("id"));
 		if (e.which === 3 && item !== undefined) {
 			$(this).contextmenu({
