@@ -59,30 +59,29 @@ function onDocumentReady() {
 
 	// Right Click Menus
 	$(document).on('mousedown', '.hasMenu', function(e) {
+		try {
+			$(".tooltipstered.hasMenu.itemSlotHover").tooltipster('hide');
+		} catch (e) {};
 		e.preventDefault();
-		$('.tooltipstered.itemSlotHover').tooltipster("hide");
 		var item = game.getItem($("div:last-child", this).attr("id"));
 		if (e.which === 3 && item !== undefined) {
 			$(this).contextmenu({
 				menu: function() {
+					// Info
 					var menu = [{
 						title: "Info",
 						action: function(event, ui) {
 							var itemName = item.name,
 								itemDescription = item.description,
 								dialogDiv = $("#itemInfo");
-
 							dialogDiv.dialog({
 								title: "Item Info: " + itemName,
 								autoOpen: true
 							});
-
 							dialogDiv.html("<p>Name: " + itemName + "</p>");
-
 							if (itemDescription === undefined) {
 								itemDescription = "A mysterious item.";
 							}
-
 							dialogDiv.append("<p>Description: " + itemDescription + "</p>");
 						}
 					}];
@@ -99,8 +98,7 @@ function onDocumentReady() {
 						if (currentEquip === undefined || currentEquip.id !== item.id) {
 							equipText = "Equip";
 						}
-
-						if (typeof item.minimumMiningLevel !== "undefined" && item.minimumMiningLevel <= game.player.miningLevel) {
+						if (item.minimumMiningLevel <= game.player.miningLevel) {
 							menu.push({
 								title: equipText,
 								action: function(event, ui) {
@@ -117,10 +115,10 @@ function onDocumentReady() {
 
 					// Buildings
 					// If the planet limit is less than the total that exists on the planet
-					if (~item.category.indexOf('building')) {
-						if (~e.target.id.indexOf('planet')) {
+					if (item.category.indexOf('building') > -1) {
+						if (e.target.id.indexOf('planet') > -1) {
 							menu.push({
-								title: "Remove from planet",
+								title: "Deconstruct",
 								action: function(event, ui) {
 									try {
 										game.moveItems(item.id, game.currentPlanet.storage, game.player.storage, 1);
@@ -131,7 +129,7 @@ function onDocumentReady() {
 										noty({
 											layout: 'bottomCenter',
 											type: 'error',
-											timeout: 750,
+											timeout: 1500,
 											text: "An error was encountered when trying to move the building."
 										});
 										return;
@@ -139,9 +137,9 @@ function onDocumentReady() {
 								}
 							});
 						}
-						if (~e.target.id.indexOf('player') && parseInt(item.planetLimit, 10) > parseInt(game.currentPlanet.storage.getItemCount(item.id), 10)) {
+						if (e.target.id.indexOf('player') > -1 && parseInt(item.planetLimit, 10) > parseInt(game.currentPlanet.storage.getItemCount(item.id), 10)) {
 							menu.push({
-								title: "Construct on planet",
+								title: "Construct",
 								action: function(event, ui) {
 									try {
 										game.moveItems(item.id, game.player.storage, game.currentPlanet.storage, 1);
@@ -176,10 +174,10 @@ function onDocumentReady() {
 						menu.push({
 							title: "Trash",
 							action: function(event, ui) {
-								if (e.target.id.slice(0, 6) == "planet") {
+								if (e.target.id.indexOf("player") > -1) {
 									game.player.storage.removeItem(item.id, game.player.storage.getItemCount(item.id));
 								} else {
-									game.currentPlanet.storage.removeItem(item.id, game.currentPlanet.storage.getItemCount(item.id));
+									game.currentPlanet.storage.removeItems(item.id, game.currentPlanet.storage.getItemCount(item.id));
 								}
 							}
 						});
