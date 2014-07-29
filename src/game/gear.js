@@ -113,11 +113,11 @@ function Gear(id) {
     this.getStats = function() {
         // Todo: calculate all the stats for the current gear and return it
         var statNames = ["accuracy","attackSpeed","counter","defense","evasion","experience",
-            "health","lootLuck","miningLuck","perception","regeneration","resillience","scavengeLuck",
+            "health","lootLuck","miningLuck","perception","regeneration","resilience","scavengeLuck",
             "strength","travelSpeed"];
         var stats = {
 			"accuracy": 0, "attackSpeed": 0, "counter": 0, "defense": 0, "evasion": 0,
-			"experience": 0, "health": 0, "lootLuck": 0, "miningLuck": 0, "perception": 0,
+			"experience": 1, "health": 0, "lootLuck": 0, "miningLuck": 0, "perception": 0,
 			"regeneration": 0, "resilience": 0, "scavengeLuck": 0, "strength": 0, "travelSpeed": 0
 		};
         for (var type in this.slots) {

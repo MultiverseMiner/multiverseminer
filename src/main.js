@@ -250,8 +250,7 @@ function onDocumentReady() {
 			maxWidth: 300
 		});
 	};
-	game.player.updateUI();	
-	this.hasTips = false;
+	game.player.updateUI();
 	$('#joyRideTipContent').joyride({
 		autoStart: true,
 		postStepCallback: function(index, tip) {
@@ -287,43 +286,6 @@ function onUpdate() {
 	var currentTime = Date.now();
 	game.update(currentTime);
 	ui.update(currentTime);
-	if (!this.hasTips) {
-		var stats = uiplanetscreen.listStats();
-		for (var key in stats) {
-			tipContent = undefined;
-			if (key == "accuracy") tipContent = "Accuracy increases your chance to hit your opponent.";
-			if (key == "attackSpeed") tipContent = "Attack speed determines how times per round you attack.";
-			if (key == "counter") tipContent = "Counter allows you a free strike after being attacked.";
-			if (key == "defense") tipContent = "Defense negates some damage you take from enemies.";
-			if (key == "evasion") tipContent = "Evasion will sometimes allow you to dodge an attack.";
-			if (key == "experience") tipContent = "Experience will multiply any xp you gain from mining.";
-			if (key == "health") tipContent = "This is how many health points you currently have. When it hits 0 you die.";
-			if (key == "lootLuck") tipContent = "Increases the quality, or quantity of loot found.";
-			if (key == "miningLuck") tipContent = "Increases your chance to find loot.";
-			if (key == "perception") tipContent = "Decreases your chance to be attacked while performing actions, like scavenge, or flying.";
-			if (key == "regeneration") tipContent = "Regeneration determines how much health you restore per second.";
-			if (key == "resilience") tipContent = "resilience will lower the effect time of negative statuses, like Shrink, or Slow.";
-			if (key == "scavengeLuck") tipContent = "Scavenge Luck increases your chat to find multiple items at once, and increases quality";
-			if (key == "strength") tipContent = "Strength is factored in to damage, and actions like mining.";
-			if (key == "travelSpeed") tipContent = "Travel Speed modifies the amount of time it takes you to travel between planets.";
-			if (key == "totalPower") tipContent = "Total Power is a combination of Mining Luck, and Power, and allows you to find more elements.";
-			if (typeof tipContent !== "undefined") {
-				$("." + key).tooltipster({
-					contentAsHTML: true,
-					content: tipContent,
-					theme: 'tooltipster-multi',
-					position: "left",
-					onlyOne: true,
-					delay: 0,
-					interactiveTolerance: 10,
-					speed: 1,
-					maxWidth: 300
-				});
-			};
-		};
-		this.hasTips = true;
-		game.player.updateUI();
-	};
 };
 
 function openNotifications() {

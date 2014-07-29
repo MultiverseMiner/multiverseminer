@@ -32,13 +32,13 @@
 .gearSlot.secondHand {
 	display:none;
 }
-.gearSlot.chest img, .gearSlot.miningGear img, .gearSlot.legs img, .gearSlot.feet img, .gearSlot.miningGear img {
+.gearSlot.head img, .gearSlot.chest img, .gearSlot.mainHand img, .gearSlot.miningGear img, .gearSlot.legs img, .gearSlot.feet img {
 	height: 40px;
 	margin-left:auto;
 	margin-top: 3px;
 	width: 40px;
 }
 
-.gearSlot.head div, .gearSlot.miningGear div, .gearSlot.legs div, .gearSlot.feet div, .gearSlot.miningGear div, .gearSlot.secondHand div {
+.gearSlot.head div, .gearSlot.chest div, .gearSlot.mainHand div, .gearSlot.legs div, .gearSlot.feet div, .gearSlot.miningGear div {
     display:none;
 }
