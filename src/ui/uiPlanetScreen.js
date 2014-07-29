@@ -6,7 +6,6 @@ UIPlanetScreen.prototype.constructor = UIPlanetScreen;
 
 function UIPlanetScreen() {
 	this.id = 'planetScreen';
-
 	this.parent = undefined;
 
 	this.playerInventoryFilter = undefined;
@@ -43,8 +42,8 @@ function UIPlanetScreen() {
 	// ---------------------------------------------------------------------------
 	this.init = function() {
 		this.baseInit();
-
 		this.updateWhenNeededOnly = false;
+		this.lastLevel = game.player.miningLevel;
 
 		this.playerInventoryFilter = new UISelection('playerInventoryFilter');
 		this.playerInventoryFilter.values = ItemCategory;
@@ -146,14 +145,13 @@ function UIPlanetScreen() {
 				"divId": "planetScavenge"
 			},
 			"Gems": {
-			    "dictionaryIndex": [102, 103],
-			    "divId": "planetGems"
+				"dictionaryIndex": [102, 103],
+				"divId": "planetGems"
 			}
 		};
 
 		for (var name in divs) {
 			var html = name + ': ';
-
 			for (var i = 0; i < divs[name]['dictionaryIndex'].length; i++) {
 				var index = divs[name]['dictionaryIndex'][i];
 				for (var j = 0; j < game.lootTableDictionary[index].entries.length; j++) {
@@ -315,7 +313,7 @@ function UIPlanetScreen() {
 	};
 
 	this.buildCraftingTooltip = function(item) {
-        content = "<strong>" + item.name + "</strong><br>";
+		content = "<strong>" + item.name + "</strong><br>";
 		content += "<div style='font-size:11px;text-transform:capitalize;'>";
 		if (item.description) content += "<strong>Description: </strong>" + item.description + "<br>";
 		switch (item.category) {
@@ -383,8 +381,8 @@ function UIPlanetScreen() {
 				if (item.autoMine || item.autoGather || item.autoRefine || item.autoScavenge) {
 					content += "<br><strong>Effects:</strong><br>";
 					content += "Auto Digs Per Second: " + item.autoMine + "<br>";
-                	content += "Auto Gathers Per Second: " + item.autoGather + "<br>";
-                	content += "Auto Decomposes Per Second: " + item.autoRefine + "<br>";
+					content += "Auto Gathers Per Second: " + item.autoGather + "<br>";
+					content += "Auto Decomposes Per Second: " + item.autoRefine + "<br>";
 					content += "Auto Scavenges Per Second: " + item.autoScavenge;
 				};
 				if (item.autoProduce) content += "<br><br>Auto Produce: <b>5 " + item.autoProduce + " per minute.</b>";
@@ -395,7 +393,7 @@ function UIPlanetScreen() {
 					});
 					content += "<br><strong>Droprate Increase: </strong>" + x;
 				}
-                content += "<br><strong>Planet Limit:</strong> " + item.planetLimit + "<br>";
+				content += "<br><strong>Planet Limit:</strong> " + item.planetLimit + "<br>";
 				break;
 
 				/* Spaceship */
@@ -414,6 +412,37 @@ function UIPlanetScreen() {
 		return content;
 	};
 
+	this.filterItems = function(filters, items, fn) {
+		var flagged;
+		if (typeof items === 'function') {
+			fn = items;
+			items = null;
+		};
+		return filters.map(function(filter) {
+			if (null == items || flagged) {
+				items = game.getItemsByCategory(filter);
+				flagged = true;
+			};
+			return items.filter(function(item) {
+				var res = false;
+				if (fn) {
+					res = fn(item);
+				} else if (null == item.minimumMiningLevel) {
+					res = true;
+				} else {
+					res = item.minimumMiningLevel <= game.player.miningLevel;
+				};
+				return item.category === filter && res;
+			});
+		}).reduce(function(l, r) {
+			return l.concat(r);
+		});
+	};
+	
+	this.clearCraftingPanel = function() {
+		$("#playerCraftingContent").empty();
+	};
+	
 	this.updateCraftingPanel = function() {
 		function addTooltip(element, item) {
 			element.tooltipster({
@@ -466,21 +495,18 @@ function UIPlanetScreen() {
 				}
 				craftableContent.find(".craftDisabled").remove();
 			}
-			// Skip re-building this for now
 			return;
 		}
 		parent.append('<p>Available</p>').append($('<div/>'));
 
 		for (var key in ItemCategory) {
-			// Todo: remove this when scavenging items no longer have craftCost as their attribute
 			if (key === 'scavenge') {
 				continue;
-			}
-
-			var items = game.getItemsByCategory(key);
+			};
+			items = this.filterItems([key]);
 			if (!items || items.length <= 0) {
 				continue;
-			}
+			};
 
 			var craftableItems = [];
 			for (var i = 0; i < items.length; i++) {
@@ -556,8 +582,8 @@ function UIPlanetScreen() {
 
 	// Questing Section (650-704)
 	this.updateQuestsDisplay = function() {
-		return;
 		// TODO
+		return;
 		$('#questsContent').empty();
 		for (var i = 0; i < game.QuestTable.length; i++) {
 			var quest = game.QuestTable[i];
@@ -612,11 +638,9 @@ function UIPlanetScreen() {
 	};
 
 	this.activateQuests = function() {
-		return;
 		this.hideLeftSideComponents();
 		this.componentQuestsPanel.show();
 	};
-
 
 	this.updatePlanetDisplay = function() {
 		$('#planetDisplayBackground').empty();
