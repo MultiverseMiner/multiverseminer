@@ -418,9 +418,12 @@ function toggleAudio() {
 	//pause playing
 	if (!document.getElementById('audioDig').muted) {
 		document.getElementById('audioDig').muted = true;
+		document.getElementById('audioGas').muted = true;
 		document.getElementById('audioDigSuccess').muted = true;
 		$("#audioDig").trigger('stop');
 		$("#audioDigSuccess").trigger('stop');
+		$("#audioGas").trigger('stop');
+		$("#audioScavenge").trigger('stop');
 		noty({
 			text: "Audio muted.",
 			type: "notification",
@@ -430,29 +433,11 @@ function toggleAudio() {
 	} else {
 		document.getElementById('audioDig').muted = false;
 		document.getElementById('audioDigSuccess').muted = false;
+		document.getElementById('audioGas').muted = false;
+		document.getElementById('audioScavenge').muted = false;
 		noty({
 			text: "Audio unmuted.",
 			type: "notification",
-			layout: "bottomCenter",
-			timeout: 500
-		});
-	}
-};
-
-function togglePopup() {
-	//pause playing
-	game.settings.togglePopups();
-	if (!game.settings.showPopups) {
-		noty({
-			text: "Loot text disabled.",
-			type: "information",
-			layout: "bottomCenter",
-			timeout: 500
-		});
-	} else {
-		noty({
-			text: "Loot text enabled.",
-			type: "information",
 			layout: "bottomCenter",
 			timeout: 500
 		});
@@ -552,34 +537,35 @@ function onMine() {
 		$('#audioDig').trigger('play');
 	}
 	game.settings.addStat('manualDigCount');
-	if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
+	if ($('#leftCategory2').hasClass('genericButtonSelected')) uiplanetscreen.updateStatsPanel();
 	this.lastRun = ~~Date.now() / 200 | 0;
 };
 
 function onGather() {
 	if (game.playerDied > 0) return false;
-	if (this.lastRun !== "undefined") {
+	if (this.lastRun !== 'undefined') {
 		if (this.lastRun >= ~~Date.now() / 200 | 0) {
 			return false;
 		};
 	};
-	$("#audioGas").trigger('play');
+	$('#audioGas').trigger('play');
 	game.player.gather();
 	game.settings.addStat('manualGatherCount');
-	if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
+	if ($('#leftCategory2').hasClass('genericButtonSelected')) uiplanetscreen.updateStatsPanel();
 	this.lastRun = ~~Date.now() / 200 | 0;
 };
 
 function onScavenge() {
-	if (game.playerDied > 0 || game.currentPlanet.data.id != "1") return false;
-	if (this.lastRun !== "undefined") {
+	if (game.playerDied > 0 || game.currentPlanet.data.id != '1') return false;
+	if (this.lastRun !== 'undefined') {
 		if (this.lastRun >= ~~Date.now() / 200 | 0) {
 			return false;
 		};
 	};
 	game.player.scavenge();
+	$("#audioScavenge").trigger('play');
 	game.settings.addStat('manualScavengeCount');
-	if ($("#leftCategory2").hasClass("genericButtonSelected")) uiplanetscreen.updateStatsPanel();
+	if ($('#leftCategory2').hasClass('genericButtonSelected')) uiplanetscreen.updateStatsPanel();
 	this.lastRun = ~~Date.now() / 200 | 0;
 };
 
