@@ -33,7 +33,15 @@ function Gear(id) {
 
         if (!this.slots[itemInfo.gearType]) return false;
 		
-		if (game.player.miningLevel < itemId.minimumMiningLevel) return false;
+		if (game.player.miningLevel < itemId.minimumMiningLevel) {
+			noty({
+				layout: 'bottomCenter',
+				type: 'error',
+				timeout: 1000,
+				text: "You are too low level to equip this."
+			});
+			return false;
+		};
         return true;
     };
 
