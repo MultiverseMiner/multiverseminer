@@ -57,7 +57,7 @@ function Player() {
 	//};
 	
 	this.gainMiningXP = function(value) {
-		this.miningXP += value;
+		this.miningXP += value * game.player.stats.experience;
 		this.checkMiningLevel();
 		this.xpChanged = true;
 	};

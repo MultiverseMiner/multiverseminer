@@ -360,7 +360,7 @@ function UIPlanetScreen() {
 				content += "&nbsp;Evasion: " + item.evasion + "</br>";
 				content += "&nbsp;Counter: " + item.counter + "</br>";
 				content += "&nbsp;Regeneration: " + item.regeneration + "</br>";
-				content += "&nbsp;Resillience: " + item.resillience + "</br>";
+				content += "&nbsp;resilience: " + item.resilience + "</br>";
 				content += "&nbsp;Perception: " + item.perception + "</br>";
 				content += "&nbsp;Experience: " + item.experience + "</br>";
 				content += "&nbsp;Attack Speed: " + item.attackSpeed + "</br>";

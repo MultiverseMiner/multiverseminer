@@ -115,7 +115,11 @@ function Gear(id) {
         var statNames = ["accuracy","attackSpeed","counter","defense","evasion","experience",
             "health","lootLuck","miningLuck","perception","regeneration","resillience","scavengeLuck",
             "strength","travelSpeed"];
-        var stats = {};
+        var stats = {
+			"accuracy": 0, "attackSpeed": 0, "counter": 0, "defense": 0, "evasion": 0,
+			"experience": 0, "health": 0, "lootLuck": 0, "miningLuck": 0, "perception": 0,
+			"regeneration": 0, "resilience": 0
+		};
         for (var type in this.slots) {
             if (this.slots[type] != -1) {
                 var item = game.getItem(this.slots[type]);

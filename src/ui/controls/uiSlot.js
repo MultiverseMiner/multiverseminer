@@ -178,7 +178,7 @@ function UISlot(id, parent) {
 				content += "<br>&nbsp;&nbsp;&nbsp;Evasion: " + item.evasion;
 				content += "<br>&nbsp;&nbsp;&nbsp;Counter: " + item.counter;
 				content += "<br>&nbsp;&nbsp;&nbsp;Regeneration: " + item.regeneration;
-				content += "<br>&nbsp;&nbsp;&nbsp;Resillience: " + item.resillience;
+				content += "<br>&nbsp;&nbsp;&nbsp;resilience: " + item.resilience;
 				content += "<br>&nbsp;&nbsp;&nbsp;Perception: " + item.perception;
 				content += "<br>&nbsp;&nbsp;&nbsp;Experience: " + item.experience;
 				content += "<br>&nbsp;&nbsp;&nbsp;Attack Speed: " + item.attackSpeed;
