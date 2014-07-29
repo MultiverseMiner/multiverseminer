@@ -41,6 +41,7 @@ function onDocumentReady() {
 	game.init();
 	ui.init();
 	ui.bindKey("d", onMine);
+	ui.bindKey("m", onMine);
 	ui.bindKey("g", onGather);
 	ui.bindKey("s", onScavenge);
 
