@@ -601,7 +601,9 @@ function UIPlanetScreen() {
 		Object.keys(myObj).forEach(function(prop) {
 			if (myObj.hasOwnProperty(prop) && prop !== 'key' && typeof myObj[prop] != 'function' && prop != 'id') {
 				if (myObj[prop] == null) myObj[prop] = 0;
-				x.push('<tr><td class="' + prop + '">' + prop.split(/(?=[A-Z])/g).join(' ').toLowerCase() + '</td><td>' + myObj[prop] + '</td></tr>');
+					var val = myObj[prop];
+					var value = val.toFixed(0);
+					x.push('<tr><td class="' + prop + '">' + prop.split(/(?=[A-Z])/g).join(' ').toLowerCase() + '</td><td>' + value + '</td></tr>');
 			};
 		});
 		$("#statsContent").html('<div class=\'statTable\'><table><tbody><tr><td>Stats</td><td>#</td></tr>' + x.join(''));

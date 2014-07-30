@@ -174,10 +174,10 @@ function Player() {
 			this.gainMiningXP(items.length);
 			game.settings.addStat('foundItems', items.length);
 			this.xpChanged = true;
-			$("#log").html("You found " + items.join(", ") + ".");
+			$("#log").html("You've mined " + items.join(", ") + ".");
 			return true;
         } else {
-			$("#log").html("You found nothing.");
+			$("#log").html("You've mined nothing.");
         }
         return false;
     };
@@ -185,26 +185,32 @@ function Player() {
     this.gather = function() {
         if ( !game.currentPlanet ) return false;
         var items = this.miner.gather(game.currentPlanet);
-		if (items) {
+		if (items.length > 0) {
+			$("#log").html("You've gathered " + items.join(", ") + ".");
             this.storage.addItems(items);
 			this.gainGatheringXP(items.length);
 			game.settings.addStat('foundItems', items.length);
 			this.xpChanged = true;
             return true;
-        };
+        } else {
+        	$("#log").html("You've gathered nothing.");
+        }
         return false;
     };
     
     this.scavenge = function() {
         if ( !game.currentPlanet ) return false;
         var items = this.miner.scavenge(game.currentPlanet);
-        if (items) {
+        if (items.length > 0) {
+			$("#log").html("You've scavenged " + items.join(", ") + ".");
 			this.storage.addItems(items);
 			this.gainScavengingXP(items.length);
 			game.settings.addStat('foundItems', items.length);
 			this.xpChanged = true;
             return true;
-        };
+        } else {
+        	$("#log").html("You've scavenged nothing.");
+        }
         return false;
     };
 
