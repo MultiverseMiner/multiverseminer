@@ -259,8 +259,12 @@ function onDocumentReady() {
 			}
 		},
 		modal: false,
-		expose: true
+		expose: true,
+	    cookieMonster: true,
+	    cookieName: 'JoyRide',
+	    cookieDomain: false
 	});
+	
 };
 
 function selectClass(playerClass) {
@@ -382,6 +386,7 @@ function toggleAudio() {
 		document.getElementById('audioDig').muted = true;
 		document.getElementById('audioGas').muted = true;
 		document.getElementById('audioDigSuccess').muted = true;
+		document.getElementById('audioScavenge').muted = true;
 		$("#audioDig").trigger('stop');
 		$("#audioDigSuccess").trigger('stop');
 		$("#audioGas").trigger('stop');
@@ -737,8 +742,7 @@ function changeRightCategoryButton(selected) {
 
 function characterSelect() {
 	var src = "character.html";
-
-	$.modal('<iframe src="' + src + '"height="590" width="1020" frameBorder="0">', {
+	$.modal('<iframe src="' + src + '"height="400" width="650" frameBorder="0">', {
 		closeHTML: "",
 		//onShow: function(dialog) { $(dialog.container).draggable({handle: 'div'}); },
 		opacity: 90,

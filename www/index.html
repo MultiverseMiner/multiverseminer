@@ -325,56 +325,50 @@
     </a>
   </div>
 
-  <div id="new-crafting-modal" style="display:none;">
-    <div id="item-description"></div>
-        Craft: <input type="number" id="quantity" name="quantity" />
-    <p>
-        <input style="display:none;" id="hidden-input" name="itemId" /></p>
-  </div>
-	
   <div class="hidden" id="get-a-ship" title="Thou shall not travel!">
     You need to craft a ship in order to travel away from Earth<br />
   </div>
   
   <div id="itemInfo"></div>
  	<div class="panelBottom">
- 		<img alt="logo" class="logo" src="assets/images/logo.png" />
-	
+
          <!-- Header Right Side -->
  		<div class="panelBottomRight">
-                 <div class="genericButton bottomBarButton clickable noselect" style="text-decoration: none;">
-                   <a href="http://webchat.freenode.net?channels=%23multiverseminer&amp;uio=d4" target="_new">
-                       <div class="bottomBarButton noSelect">Chat</div>
-                   </a>
-               </div>
-
-             <div class="genericButton bottomBarButton clickable noselect" onclick="spaceTravel()";>  
+			<div class="genericButton bottomBarButton clickable noSelect" onclick="characterSelect()">
+				<div class="bottomBarButtonText noSelect">Characters</div>
+			</div>
+			<div class="genericButton bottomBarButton clickable noSelect" style="text-decoration: none;">
+            	<a href="http://webchat.freenode.net?channels=%23multiverseminer&amp;uio=d4" target="_new">
+                	<div class="bottomBarButton noSelect">Chat</div>
+				</a>
+			</div>
+             <div class="genericButton bottomBarButton clickable noSelect" onclick="spaceTravel()">  
                  <div class="bottomBarButtonText noSelect">Travel</div>
              </div>
-
-             <div class="genericButton bottomBarButton clickable noselect" id="changeLog" onclick="showChangeLog()">
+             <div class="genericButton bottomBarButton clickable noSelect" id="changeLog" onclick="showChangeLog()">
                  <div class="bottomBarButtonText noSelect">Changelog</div>
              </div>
          </div>
-    
- 		<!-- Header Left Side -->
- 		<div class="panelBottomLeft">
-             <div class="genericButton bottomBarButton clickable" onclick="tutorial()">
-                 <div class="bottomBarButtonText noSelect">Tutorial</div>
-             </div>
 
-             <div class="genericButton bottomBarButton clickable">
-                 <div id="settings" class="bottomBarButtonText noSelect">Settings</div>
-             </div>
+		 <!-- Logo -->
+		 <img alt="logo" class="logo" src="assets/images/logo.png" />
 
-             <div class="genericButton bottomBarButton clickable" onclick="exportStorage()">
-                 <div id="exportSave" class="bottomBarButtonText noSelect">Export</div>
-             </div>
-             <div class="genericButton bottomBarButton clickable" onclick="importStorage()">
- 		        <div id="importSave" class="bottomBarButtonText noSelect">Import</div>
-             </div>
- 		</div>
-  </div>
+		 <!-- Header Left Side -->
+		 <div class="panelBottomLeft">
+         	<div class="genericButton bottomBarButton clickable" onclick="tutorial()">
+            	<div class="bottomBarButtonText noSelect">Tutorial</div>
+			</div>
+            <div class="genericButton bottomBarButton clickable">
+                <div id="settings" class="bottomBarButtonText noSelect">Settings</div>
+            </div>
+            <div class="genericButton bottomBarButton clickable" onclick="exportStorage()">
+                <div id="exportSave" class="bottomBarButtonText noSelect">Export</div>
+            </div>
+            <div class="genericButton bottomBarButton clickable" onclick="importStorage()">
+ 		       <div id="importSave" class="bottomBarButtonText noSelect">Import</div>
+            </div>
+		</div>
+	</div>
 <script src="require.js" type="text/javascript"></script>
 <script src="MultiverseMiner.min.js" type="text/javascript"></script>
 <script>

@@ -59,7 +59,8 @@ module.exports = function(grunt) {
                         toolbar: 'external/jquery.toolbar',
                         contextmenu: 'external/jquery.ui-contextmenu',
                         simplemodal: 'external/jquery.simplemodal-1.4.4',
-						sieve: 'external/jquery.sieve.min'
+						sieve: 'external/jquery.sieve.min',
+						cookie: 'jquery.cookie'
                     }
                 }
             }

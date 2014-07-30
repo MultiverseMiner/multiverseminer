@@ -46,7 +46,7 @@ function Player() {
     this.calculatePower = function() {
         this.strength = this.gear.getStats()["strength"] || 0;
         this.miningLuck = this.gear.getStats()["miningLuck"] || 0;
-        this.totalPower = this.strength * this.miningLuck;
+        this.totalPower = this.strength + this.miningLuck;
 		this.stats["totalPower"] = this.totalPower;
         return this.totalPower;
     };
