@@ -41,11 +41,9 @@ a {
 }
 .logo {
     height: 33px;
-    margin-right: 50px;
     max-width: 600px;
     left: auto;
     right: auto;
-    position: static;
     overflow: hidden;
 }
 .screen {
