@@ -167,16 +167,18 @@ function Player() {
     // ---------------------------------------------------------------------------	
     this.mine = function() {
         if (!game.currentPlanet) return false;
-        
         var items = this.miner.mine(game.currentPlanet, this.pickPower, this.miningLuck);
 		
-        if (items) {
+        if (items.length > 0) {
             this.storage.addItems(items);
 			this.gainMiningXP(items.length);
 			game.settings.addStat('foundItems', items.length);
 			this.xpChanged = true;
+			$("#log").html("You found " + items.join(", ") + ".");
 			return true;
-        };
+        } else {
+			$("#log").html("You found nothing.");
+        }
         return false;
     };
 
