@@ -53,10 +53,26 @@ function onDocumentReady() {
 	onActivatePlayerGear();
 
 	// Set the update interval
-	var interval = 1000 / 60;
-	setInterval(function() {
+	//var interval = 1000 / 60;
+	//setInterval(function() {
+	//	onUpdate();
+	//}, interval);
+
+	// Set the update interval
+	//window.setTimeout(function() { callback(new Date().getTime()); }, 1000 / 60);
+	window.requestAnimFrame = (function() {
+		return window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			function(callback) {
+				window.setTimeout(callback, 1000 / 60);
+		};
+	})();
+
+	(function animloop() {
 		onUpdate();
-	}, interval);
+		requestAnimFrame(animloop);
+	})();
 
 	// Right Click Menus
 	$(document).on('mousedown', '.hasMenu', function(e) {
@@ -130,7 +146,7 @@ function onDocumentReady() {
 										noty({
 											layout: 'bottomCenter',
 											type: 'error',
-											timeout: 1500,
+											timeout: 1000,
 											text: "An error was encountered when trying to move the building."
 										});
 										return;
@@ -151,7 +167,7 @@ function onDocumentReady() {
 										noty({
 											layout: 'bottomCenter',
 											type: 'error',
-											timeout: 1500,
+											timeout: 1000,
 											text: "An error was encountered when trying to move the building."
 										});
 										return;
@@ -260,11 +276,11 @@ function onDocumentReady() {
 		},
 		modal: false,
 		expose: true,
-	    cookieMonster: true,
-	    cookieName: 'JoyRide',
-	    cookieDomain: false
+		cookieMonster: true,
+		cookieName: 'JoyRide',
+		cookieDomain: false
 	});
-	
+
 };
 
 function selectClass(playerClass) {
@@ -290,15 +306,6 @@ function onUpdate() {
 	var currentTime = Date.now();
 	game.update(currentTime);
 	ui.update(currentTime);
-};
-
-function openNotifications() {
-	$("#notification-list").dialog({
-		close: function(event, ui) {
-			localStorage.setItem('notification_count', 0);
-			localStorage.setItem('notification_text', "");
-		}
-	});
 };
 
 function newCraft(itemId, quantity) {

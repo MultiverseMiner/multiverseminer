@@ -321,11 +321,6 @@ function Game() {
 
         // If player does not have a ship, they should not be able to travel
         if (!this.player.storage.hasItem("spaceship")) {
-            ui.notifyError("You cannot travel without a ship!");
-            $('#get-a-ship').dialog({
-                height: "auto",
-                width: "auto"
-            });
             return false;
         }
 
