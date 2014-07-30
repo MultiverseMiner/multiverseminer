@@ -451,13 +451,13 @@ if (typeof Object.create !== 'function') {
             open:{height:'toggle'},
             close:{height:'toggle'},
             easing:'swing',
-            speed:500
+            speed:200
         },
         timeout:false,
-        force:false,
+        force:true,
         modal:false,
-        maxVisible:5,
-		killer: false,
+        maxVisible:1,
+		killer: true,
         closeWith:['click'],
         callback:{
             onShow:function () {
