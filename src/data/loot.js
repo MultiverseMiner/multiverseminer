@@ -310,7 +310,7 @@ addTable(900, 'plutoAtmosphere', [
 // TODO: Add items to drop when scavenging.
 
 addTable(1000, 'earthScavengeRes', [
-    [Items.aluminumRing.id, 0.01],
+    [Items.aluminumRing.id, 0.009],
     [Items.armoire.id, 0.006],
     [Items.bigRock.id, 0.006],
     [Items.blender.id, 0.006],
@@ -335,17 +335,17 @@ addTable(1000, 'earthScavengeRes', [
     [Items.pan.id, 0.009],
     [Items.pizzaCutter.id, 0.009],
     [Items.silverCoin.id, 0.09],
-    [Items.sparkPlugs.id, 0.009],
-    [Items.spatula.id, 0.009],
-    [Items.tableLeg.id, 0.009],
-    [Items.teaKettle.id, 0.009],
-    [Items.telescope.id, 0.009],
-    [Items.television.id, 0.009],
-    [Items.tinyStone.id, 0.09],
+    [Items.sparkPlugs.id, 0.006],
+    [Items.spatula.id, 0.006],
+    [Items.tableLeg.id, 0.006],
+    [Items.teaKettle.id, 0.0009],
+    [Items.telescope.id, 0.0005],
+    [Items.television.id, 0.0004],
+    [Items.tinyStone.id, 0.05],
     [Items.tire.id, 0.009],
     [Items.urinal.id, 0.0009],
     [Items.waterBackpack.id, 0.009],
-    [Items.waterBottle.id, 0.09],
+    [Items.waterBottle.id, 0.009],
     [Items.webcam.id, 0.0009],
     [Items.woodenSpoon.id, 0.009]
 ]);
