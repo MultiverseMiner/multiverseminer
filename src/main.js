@@ -619,6 +619,12 @@ function doReset() {
 
 function onTravelToPlanet(target) {
 	if (!game.canTravelTo(target)) {
+		noty({
+			text: "You can't travel here.",
+			type: "error",
+			layout: "bottomCenter",
+			timeout: 500
+		});
 		return;
 	}
 	// Space Modal Closes
