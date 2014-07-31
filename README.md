@@ -13,7 +13,13 @@ sudo npm install grunt-cli -g
 grunt
 ```
 
-Now just open bin/index.html with your preferred browser.
+### Developing
+
+```shell
+grunt dev
+```
+
+Now just open [http://localhost:8080/](http://localhost:8080/) with your preferred browser.
 ---
 Since unlocking the true potential of the elements, wormholes have been created and mastered, space travel occurs at the speed of light, and the elements in the universe can be manipulated at your whim.
 
