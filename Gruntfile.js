@@ -118,6 +118,13 @@ module.exports = function(grunt) {
                     expand: true
                 }]
             }
+        },
+
+        watch: {
+            source: {
+                files: ['src/**/*.js'],
+                tasks: ['requirejs', 'copy']
+            }
         }
     });
 
@@ -127,6 +134,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadTasks('./src/build/');
 
     // Default task(s).
