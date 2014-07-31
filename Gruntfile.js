@@ -118,6 +118,26 @@ module.exports = function(grunt) {
                     expand: true
                 }]
             }
+        },
+
+        watch: {
+            source: {
+                files: ['src/**/*.js'],
+                tasks: ['requirejs', 'copy']
+            }
+        },
+
+        'http-server': {
+            dev: {
+                port: 8080,
+                root: './bin',
+                runInBackground: true
+            },
+            server: {
+                port: 8080,
+                root: './bin',
+                runInBackground: false
+            }
         }
     });
 
@@ -127,6 +147,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-http-server');
+
 	grunt.loadTasks('./src/build/');
 
     // Default task(s).
@@ -136,4 +159,10 @@ module.exports = function(grunt) {
         'cssmin',
         'copy'
     ]);
+
+    // run the dev server
+    grunt.registerTask('dev', ['http-server:dev', 'watch']);
+
+    // run a plain server
+    grunt.registerTask('server', ['http-server:server']);
 };
