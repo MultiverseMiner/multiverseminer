@@ -16,6 +16,6 @@
   },
   "scripts": {
     "start": "grunt && cd bin && http-server",
-    "test": "grunt "
+    "test": "grunt"
   }
 }
