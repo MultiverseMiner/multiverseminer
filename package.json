@@ -15,6 +15,7 @@
     "xlsjs": "^0.6.18"
   },
   "scripts": {
-    "start": "grunt && cd bin && http-server"
+    "start": "grunt && cd bin && http-server",
+    "test": "grunt test"
   }
 }
