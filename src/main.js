@@ -267,20 +267,25 @@ function onDocumentReady() {
 		});
 	};
 	game.player.updateUI();
-	$('#joyRideTipContent').joyride({
-		autoStart: true,
-		postStepCallback: function(index, tip) {
-			if (index == 2) {
-				$(this).joyride('set_li', false, 1);
-			}
-		},
-		modal: false,
-		expose: true,
-		cookieMonster: true,
-		cookieName: 'JoyRide',
-		cookieDomain: false
-	});
 
+	// first time player will set tips
+	if (game.settings.showTutorial) {
+		$('#joyRideTipContent').joyride({
+			autoStart: true,
+			postStepCallback: function(index, tip) {
+				if (index == 2) {
+					$(this).joyride('set_li', false, 1);
+				}
+			},
+			modal: false,
+			expose: true,
+			cookieMonster: true,
+			cookieName: 'JoyRide',
+			cookieDomain: false
+		});
+
+		game.settings.showTutorial = false;
+	}
 };
 
 function selectClass(playerClass) {
@@ -627,7 +632,7 @@ function doReset() {
 	onActivatePlayerGear();
 };
 
-// What happens after you decide a planet 
+// What happens after you decide a planet
 
 function onTravelToPlanet(target) {
 	if (!game.canTravelTo(target)) {
@@ -649,7 +654,7 @@ function onTravelToPlanet(target) {
 	$(".panelBottom").hide();
 	$("#planetDisplay").hide();
 	//$("#panelBottomLeft").hide();
-	//$("#panel-bottom").hide();	
+	//$("#panel-bottom").hide();
 	ui.screenPlanet.hide();
 	ui.screenTravel.show();
 	game.travelTo(target);
