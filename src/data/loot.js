@@ -68,7 +68,7 @@ addTable(100, 'earthAtmosphere', [
 
 addTable(101, 'earthMinerals', [
     [Items.aluminaOxide.id, 0.009],
-    [Items.aluminum.id, 0.0007],
+    [Items.aluminum.id, 0.008],
     [Items.barium.id, 0.0005],
     [Items.boron.id, 0.00005],
     [Items.calcium.id, 0.015],
