@@ -53,26 +53,26 @@ function onDocumentReady() {
 	onActivatePlayerGear();
 
 	// Set the update interval
-	//var interval = 1000 / 60;
-	//setInterval(function() {
-	//	onUpdate();
-	//}, interval);
+	var interval = 1000 / 60;
+	setInterval(function() {
+		onUpdate();
+	}, interval);
 
 	// Set the update interval
 	//window.setTimeout(function() { callback(new Date().getTime()); }, 1000 / 60);
-	window.requestAnimFrame = (function() {
-		return window.requestAnimationFrame ||
-			window.webkitRequestAnimationFrame ||
-			window.mozRequestAnimationFrame ||
-			function(callback) {
-				window.setTimeout(callback, 1000 / 60);
-		};
-	})();
+	//window.requestAnimFrame = (function() {
+	//	return window.requestAnimationFrame ||
+	//		window.webkitRequestAnimationFrame ||
+	//		window.mozRequestAnimationFrame ||
+	//		function(callback) {
+	//			window.setTimeout(callback, 1000 / 60);
+	//	};
+	//})();
 
-	(function animloop() {
-		onUpdate();
-		requestAnimFrame(animloop);
-	})();
+	//(function animloop() {
+	//	onUpdate();
+	//	requestAnimFrame(animloop);
+	//})();
 
 	// Right Click Menus
 	$(document).on('mousedown', '.hasMenu', function(e) {
