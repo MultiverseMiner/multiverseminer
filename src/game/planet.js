@@ -113,7 +113,7 @@ function Planet(data) {
 
     this.unEquip = function(itemId) {
         game.moveItems(itemId, this.storage, game.player.storage, 1);
-        this._updateStats();
+		this._updateStats();
         this.update();
     };
 
@@ -158,7 +158,7 @@ function Planet(data) {
         this.autoRefine = false;
         
         this.autoProduce = false;
-        this.autoProduceItems = {};
+        this.autoProduceItems = [];
 
         var buildings = this.storage.getItemsOfCategory('building');
         if (!buildings) {
@@ -170,7 +170,6 @@ function Planet(data) {
 			
             if(item.autoProduce) {
                 this.autoProduce = true;
-                this.autoProduceItems = [];
                 this.autoProduceItems.push(item.autoProduce);
             }
             
