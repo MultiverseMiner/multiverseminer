@@ -49,9 +49,11 @@ Please update the list of items accordingly. Remove item when complete.
 - Design new HUD, with an area to display badges, statistics on actions, HP, etc.
 - Spaceship parts need icons.
 
-## General UI
+## General UI  
 - Gather more statistics on actions performed and display them somewhere.
-- New solution required for HUD. Remove this jqueryui shit.
+- New solution required for HUD. Remove this jqueryui shit.  
+
+UI/UX work has been moved to [MultiverseMiner-front](https://github.com/MultiverseMiner/multiverseminer-front)  
 
 ## Solar System
 - Should only be able to visit other planets once you've built the spaceship.
