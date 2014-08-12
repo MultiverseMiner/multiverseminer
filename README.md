@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/morgajel/multiverseminer.svg?branch=master)](https://travis-ci.org/morgajel/multiverseminer)
+[![Build Status](https://travis-ci.org/multiverseminer/multiverseminer.svg?branch=master)](https://travis-ci.org/multiverseminer/multiverseminer)
 
 Multiverse Miner
 ====
