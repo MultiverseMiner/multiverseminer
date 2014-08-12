@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/MultiverseMiner/multiverseminer.png?label=ready&title=Ready)](https://waffle.io/MultiverseMiner/multiverseminer)
 [![Build Status](https://travis-ci.org/MultiverseMiner/multiverseminer.svg?branch=master)](https://travis-ci.org/MultiverseMiner/multiverseminer)
 
 Multiverse Miner
