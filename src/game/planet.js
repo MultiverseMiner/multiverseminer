@@ -23,7 +23,7 @@ function Planet(data) {
     this.autoRefine = false;
     
     this.autoProduce = false;
-    this.autoProduceItems = [];
+    //this.autoProduceItems = [];
     this.lastProduceTime = Date.now();
 
 
