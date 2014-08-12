@@ -23,7 +23,7 @@ function Planet(data) {
     this.autoRefine = false;
     
     this.autoProduce = false;
-    //this.autoProduceItems = [];
+    this.autoProduceItems = [];
     this.lastProduceTime = Date.now();
 
 
@@ -157,8 +157,8 @@ function Planet(data) {
         this.autoRefineValue = 0;
         this.autoRefine = false;
         
-        this.autoProduce = false;
-        this.autoProduceItems = {};
+        //this.autoProduce = false;
+        //this.autoProduceItems = [];
 
         var buildings = this.storage.getItemsOfCategory('building');
         if (!buildings) {
@@ -170,7 +170,6 @@ function Planet(data) {
 			
             if(item.autoProduce) {
                 this.autoProduce = true;
-                this.autoProduceItems = [];
                 this.autoProduceItems.push(item.autoProduce);
             }
             
