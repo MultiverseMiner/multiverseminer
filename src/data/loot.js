@@ -326,7 +326,6 @@ addTable(1000, 'earthScavengeRes', [
 	[Items.clutch.id, 0.008],
 	[Items.colander.id, 0.0009],
 	[Items.computer.id, 0.009],
-	[Items.concreteBlocks.id, 0.001],
 	[Items.crowbar.id, 0.001],
 	[Items.depletedBattery.id, 0.001],
 	[Items.diningRoomTable.id, 0.0009],
