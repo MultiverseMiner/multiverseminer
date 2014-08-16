@@ -1,6 +1,6 @@
 // Example by https://twitter.com/awapblog
 
-var game = new Phaser.Game(400, 300, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(400, 320, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 
 var GEM_SIZE = 64;
 var GEM_SPACING = 0;
@@ -110,9 +110,9 @@ function spawnBoard() {
     BOARD_COLS = Phaser.Math.floor(game.world.width / GEM_SIZE_SPACED);
     BOARD_ROWS = Phaser.Math.floor(game.world.height / GEM_SIZE_SPACED);
     belts = game.add.group();
-    for (var i = 0; i < BOARD_COLS; i++) {
-        for (var j = 0; j < BOARD_ROWS; j++) {
-            var belt = game.add.sprite(i * GEM_SIZE_SPACED, j * GEM_SIZE_SPACED, 'BELT');
+    for (var x = 0; x < BOARD_COLS; x++) {
+        for (var y = 0; y < BOARD_ROWS; y++) {
+            var belt = game.add.sprite(x * GEM_SIZE_SPACED, y * GEM_SIZE_SPACED, 'BELT');
 
             //  Here we add a new animation called 'run'
             //  We haven't specified any frames because it's using every frame in the texture atlas
@@ -125,13 +125,13 @@ function spawnBoard() {
         }
     }
     gems = game.add.group();
-    for (var i = 0; i < BOARD_COLS; i++) {
-        for (var j = 0; j < BOARD_ROWS; j++) {
-            var gem = gems.create(i * GEM_SIZE_SPACED, j * GEM_SIZE_SPACED, "GEMS");
+    for (var x = 0; x < BOARD_COLS; x++) {
+        for (var y = 0; y < BOARD_ROWS; y++) {
+            var gem = gems.create(x * GEM_SIZE_SPACED, y * GEM_SIZE_SPACED, "GEMS");
             gem.inputEnabled = true;
             gem.events.onInputDown.add(selectGem);
             randomizeGemColor(gem);
-            setGemPos(gem, i, j); // each gem has a position on the board
+            setGemPos(gem, x, y); // each gem has a position on the board
         }
     }
 }
@@ -261,9 +261,9 @@ function killGemRange(fromX, fromY, toX, toY) {
     fromY = Phaser.Math.clamp(fromY , 0, BOARD_ROWS - 1);
     toX = Phaser.Math.clamp(toX, 0, BOARD_COLS - 1);
     toY = Phaser.Math.clamp(toY, 0, BOARD_ROWS - 1);
-    for (var i = fromX; i <= toX; i++) {
-        for (var j = fromY; j <= toY; j++) {
-            var gem = getGem(i, j);
+    for (var x = fromX; x <= toX; x++) {
+        for (var y = fromY; y <= toY; y++) {
+            var gem = getGem(x, y);
             gem.kill();
         }
     }
@@ -293,15 +293,15 @@ function slideGems() {
 
     // Loop through each column from 0-BOARD_COLS, 
     // Then move to the next row from 0-BOARD_ROWS
-    for (var i = 0; i < BOARD_ROWS; i++) {
+    for (var y = 0; y < BOARD_ROWS; y++) {
         var slideRowCount = 0;
-        for (var j = 0; j < BOARD_COLS; j++) {
-            var gem = getGem(j,i);
+        for (var x = 0; x < BOARD_COLS; x++) {
+            var gem = getGem(x,y);
             if (gem == null) {
                 slideRowCount++;
             } else if (slideRowCount > 0) {
                 setGemPos(gem, gem.posX - slideRowCount, gem.posY );
-                tweenGemPos(gem, gem.posX, gem.posY, slideRowCount);
+                tweenGemPos(gem, gem.posX, gem.posY, slideRowCount+1);
             }
         }
         slideRowCountMax = Math.max(slideRowCount, slideRowCountMax);
@@ -314,22 +314,23 @@ function refillBoard() {
     var maxGemsMissingFromCol = 0;
     // Loop through each column from 0-BOARD_COLS, 
     // Then move to the next row from 0-BOARD_ROWS
-    for (var i = 0; i < BOARD_ROWS; i++) {
+    for (var y = 0; y < BOARD_ROWS; y++) {
         var gemsMissingFromCol = 0;
-        for (var j = 0; j < BOARD_COLS; j++) {
-            var gem = getGem(j, i);
-            console.log("checking "+j+","+i+" ="+gem )
+        for (var x = 0; x < BOARD_COLS; x++) {
+            var gem = getGem(x, y);
+            console.log("checking "+x+","+y+" ="+gem )
             if (gem == null) {
                 gemsMissingFromCol++;
                 gem = gems.getFirstDead();
-                gem.reset((BOARD_COLS+gemsMissingFromCol)* GEM_SIZE_SPACED, i  * GEM_SIZE_SPACED);
+                gem.reset(    (x+BOARD_COLS-1)*GEM_SIZE_SPACED,    y*GEM_SIZE_SPACED       );
                 randomizeGemColor(gem);
-                setGemPos(gem, j, i);
-                tweenGemPos(gem, gem.posX, gem.posY, BOARD_COLS-1);
+                setGemPos(gem, x, y);
+                tweenGemPos(gem, gem.posX, gem.posY, BOARD_COLS);
             }
         }
         maxGemsMissingFromCol = Math.max(maxGemsMissingFromCol, gemsMissingFromCol);
     }
+    
     game.time.events.add(maxGemsMissingFromCol*SLIDE_DURATION , boardRefilled);
 
 }
