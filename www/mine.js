@@ -1,6 +1,6 @@
 // Example by https://twitter.com/awapblog
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(400, 300, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 
 var GEM_SIZE = 64;
 var GEM_SPACING = 0;
@@ -117,11 +117,7 @@ function spawnBoard() {
             //  And this starts the animation playing by using its key ("run")
             //  15 is the frame rate (15fps)
             //  true means it will loop when it finishes
-            belt.animations.play('run', 15, true);
-
-
-
-            setGemPos(belt, i, j); // each gem has a position on the board
+            belt.animations.play('run', 30, true);
         }
     }
     gems = game.add.group();
@@ -284,18 +280,19 @@ function tweenGemPos(gem, newPosX, newPosY, durationMultiplier) {
     if (durationMultiplier == null) {
         durationMultiplier = 1;
     }
-    return game.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, 100 * durationMultiplier, Phaser.Easing.Linear.None, true);            
+    return game.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, 500 * durationMultiplier, Phaser.Easing.Linear.None, true);            
 }
 
 // look for gems with empty space beneath them and move them down
 function slideGems() {
     var slideRowCountMax = 0; // Row count max used to detmerine length of wait
-    //for (var i = 0; i < BOARD_COLS; i++) {
-    for (var i = BOARD_COLS - 1; i >= 0; i--) {
+
+
+    for (var i = 0; i < BOARD_ROWS; i++) {
         var slideRowCount = 0;
-        for (var j = 0; j < BOARD_ROWS; j++) {
-        //for (var j = BOARD_ROWS - 1; j >= 0; j--) {
+        for (var j = 0; j < BOARD_COLS; j++) {
             var gem = getGem(j,i);
+            console.log("checking "+j+","+i+" ="+gem )
             if (gem == null) {
                 slideRowCount++;
             } else if (slideRowCount > 0) {
@@ -304,6 +301,9 @@ function slideGems() {
             }
         }
         slideRowCountMax = Math.max(slideRowCount, slideRowCountMax);
+        console.log(slideRowCountMax);
+
+
     }
     return slideRowCountMax;
 }
@@ -318,7 +318,7 @@ function refillBoard() {
             if (gem == null) {
                 gemsMissingFromCol++;
                 gem = gems.getFirstDead();
-                gem.reset((BOARD_COLS-gemsMissingFromCol)* GEM_SIZE_SPACED, j  * GEM_SIZE_SPACED);
+                gem.reset((BOARD_COLS+gemsMissingFromCol)* GEM_SIZE_SPACED, j  * GEM_SIZE_SPACED);
                 randomizeGemColor(gem);
                 setGemPos(gem, i, j);
                 tweenGemPos(gem, gem.posX, gem.posY, gemsMissingFromCol * 2);
