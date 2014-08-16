@@ -30,7 +30,7 @@ function create() {
     // currently selected gem starting position. used to stop player form moving gems too far.
     selectedGemStartPos = { x: 0, y: 0 };
     
-    // used to disable input while gems are dropping down and respawning
+    // used to disable input while gems are slide3 over and respawning
     allowInput = true;
 }
 
@@ -39,7 +39,7 @@ function update() {
     // when the mouse is released with a gem selected
     // 1) check for matches
     // 2) remove matched gems
-    // 3) drop down gems above removed gems
+    // 3) slide over gems above removed gems
     // 4) refill the board
 
     if (game.input.mousePointer.justReleased()) {
@@ -54,8 +54,8 @@ function update() {
 
             removeKilledGems();
 
-            var dropGemDuration = dropGems();
-            game.time.events.add(dropGemDuration * 100, refillBoard); // delay board refilling until all existing gems have dropped down
+            var slideGemDuration = slideGems();
+            game.time.events.add(slideGemDuration * 100, refillBoard); // delay board refilling until all existing gems have slide over
 
             allowInput = false;
 
@@ -288,35 +288,37 @@ function tweenGemPos(gem, newPosX, newPosY, durationMultiplier) {
 }
 
 // look for gems with empty space beneath them and move them down
-function dropGems() {
-    var dropRowCountMax = 0;
-    for (var i = 0; i < BOARD_COLS; i++) {
-        var dropRowCount = 0;
-        for (var j = BOARD_ROWS - 1; j >= 0; j--) {
-            var gem = getGem(i, j);
+function slideGems() {
+    var slideRowCountMax = 0; // Row count max used to detmerine length of wait
+    //for (var i = 0; i < BOARD_COLS; i++) {
+    for (var i = BOARD_COLS - 1; i >= 0; i--) {
+        var slideRowCount = 0;
+        for (var j = 0; j < BOARD_ROWS; j++) {
+        //for (var j = BOARD_ROWS - 1; j >= 0; j--) {
+            var gem = getGem(j,i);
             if (gem == null) {
-                dropRowCount++;
-            } else if (dropRowCount > 0) {
-                setGemPos(gem, gem.posX, gem.posY + dropRowCount);
-                tweenGemPos(gem, gem.posX, gem.posY, dropRowCount);
+                slideRowCount++;
+            } else if (slideRowCount > 0) {
+                setGemPos(gem, gem.posX - slideRowCount, gem.posY );
+                tweenGemPos(gem, gem.posX, gem.posY, slideRowCount);
             }
         }
-        dropRowCountMax = Math.max(dropRowCount, dropRowCountMax);
+        slideRowCountMax = Math.max(slideRowCount, slideRowCountMax);
     }
-    return dropRowCountMax;
+    return slideRowCountMax;
 }
 
 // look for any empty spots on the board and spawn new gems in their place that fall down from above
 function refillBoard() {
     var maxGemsMissingFromCol = 0;
-    for (var i = 0; i < BOARD_COLS; i++) {
+    for (var i = BOARD_COLS - 1; i >= 0; i--) {
         var gemsMissingFromCol = 0;
-        for (var j = BOARD_ROWS - 1; j >= 0; j--) {
+        for (var j = 0; j < BOARD_ROWS; j++) {
             var gem = getGem(i, j);
             if (gem == null) {
                 gemsMissingFromCol++;
                 gem = gems.getFirstDead();
-                gem.reset(i * GEM_SIZE_SPACED, -gemsMissingFromCol * GEM_SIZE_SPACED);
+                gem.reset((BOARD_COLS-gemsMissingFromCol)* GEM_SIZE_SPACED, j  * GEM_SIZE_SPACED);
                 randomizeGemColor(gem);
                 setGemPos(gem, i, j);
                 tweenGemPos(gem, gem.posX, gem.posY, gemsMissingFromCol * 2);
@@ -325,6 +327,7 @@ function refillBoard() {
         maxGemsMissingFromCol = Math.max(maxGemsMissingFromCol, gemsMissingFromCol);
     }
     game.time.events.add(maxGemsMissingFromCol * 2 * 100, boardRefilled);
+
 }
 
 // when the board has finished refilling, re-enable player input
