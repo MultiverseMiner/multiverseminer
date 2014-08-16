@@ -19,19 +19,21 @@ var tempShiftedGemTween;
 var allowInput;
 
 function preload() {
-    game.load.spritesheet("GEMS", "../assets/images/minestones.png", GEM_SIZE, GEM_SIZE);
-    game.load.spritesheet("BELT", "../assets/images/conveyorbelt.png", GEM_SIZE, GEM_SIZE);
+    game.load.spritesheet("ROCKS",  "../assets/images/minestones.png", GEM_SIZE, GEM_SIZE);
+    game.load.spritesheet("OTHER", "../assets/images/minestones.png", GEM_SIZE, GEM_SIZE);
+    game.load.spritesheet("BELT",  "../assets/images/conveyorbelt.png", GEM_SIZE, GEM_SIZE);
 }
 
 function create() {
 
     // fill the screen with as many gems as possible
+    // TODO spawn non-rocks on the board
     spawnBoard();
 
     // currently selected gem starting position. used to stop player form moving gems too far.
     selectedGemStartPos = { x: 0, y: 0 };
     
-    // used to disable input while gems are slide3 over and respawning
+    // used to disable input while gems are sliding over and respawning
     allowInput = true;
 }
 
@@ -72,39 +74,41 @@ function update() {
     // check if a selected gem should be moved and do it
 
     if (selectedGem != null) {
+        moveGem();
 
-        var cursorGemPosX = getGemPos(game.input.mousePointer.x);
-        var cursorGemPosY = getGemPos(game.input.mousePointer.y);
+    }
+}
+function moveGem() {
+    var gemPos = getGemPos(game.input.mousePointer);
 
-        if (checkIfGemCanBeMovedHere(selectedGemStartPos.x, selectedGemStartPos.y, cursorGemPosX, cursorGemPosY)) {
-            if (cursorGemPosX != selectedGem.posX || cursorGemPosY != selectedGem.posY) {
+    if (checkIfGemCanBeMovedHere(selectedGemStartPos.x, selectedGemStartPos.y, gemPos.x, gemPos.y)) {
+        if (gemPos.x != selectedGem.posX || gemPos.y != selectedGem.posY) {
 
-                // move currently selected gem
-                if (selectedGemTween != null) {
-                    game.tweens.remove(selectedGemTween);
-                }
-                selectedGemTween = tweenGemPos(selectedGem, cursorGemPosX, cursorGemPosY);
-                gems.bringToTop(selectedGem);
+            // move currently selected gem
+            if (selectedGemTween != null) {
+                game.tweens.remove(selectedGemTween);
+            }
+            selectedGemTween = tweenGemPos(selectedGem, gemPos.x, gemPos.y);
+            gems.bringToTop(selectedGem);
 
-                // if we moved a gem to make way for the selected gem earlier, move it back into its starting position
-                if (tempShiftedGem != null) {
-                    tweenGemPos(tempShiftedGem, selectedGem.posX , selectedGem.posY);
-                    swapGemPosition(selectedGem, tempShiftedGem);
-                }
+            // if we moved a gem to make way for the selected gem earlier, move it back into its starting position
+            if (tempShiftedGem != null) {
+                tweenGemPos(tempShiftedGem, selectedGem.posX , selectedGem.posY);
+                swapGemPosition(selectedGem, tempShiftedGem);
+            }
 
-                // when the player moves the selected gem, we need to swap the position of the selected gem with the gem currently in that position 
-                tempShiftedGem = getGem(cursorGemPosX, cursorGemPosY);
-                if (tempShiftedGem == selectedGem) {
-                    tempShiftedGem = null;
-                } else {
-                    tweenGemPos(tempShiftedGem, selectedGem.posX, selectedGem.posY);
-                    swapGemPosition(selectedGem, tempShiftedGem);
-                }
+            // when the player moves the selected gem, we need to swap the position of the selected gem with the gem currently in that position 
+            tempShiftedGem = getGem(gemPos.x, gemPos.y);
+            if (tempShiftedGem == selectedGem) {
+                tempShiftedGem = null;
+            } else {
+                tweenGemPos(tempShiftedGem, selectedGem.posX, selectedGem.posY);
+                swapGemPosition(selectedGem, tempShiftedGem);
             }
         }
     }
-}
 
+}
 // fill the screen with as many gems as possible
 function spawnBoard() {
     BOARD_COLS = Phaser.Math.floor(game.world.width / GEM_SIZE_SPACED);
@@ -127,7 +131,7 @@ function spawnBoard() {
     gems = game.add.group();
     for (var x = 0; x < BOARD_COLS; x++) {
         for (var y = 0; y < BOARD_ROWS; y++) {
-            var gem = gems.create(x * GEM_SIZE_SPACED, y * GEM_SIZE_SPACED, "GEMS");
+            var gem = gems.create(x * GEM_SIZE_SPACED, y * GEM_SIZE_SPACED, "ROCKS");
             gem.inputEnabled = true;
             gem.events.onInputDown.add(selectGem);
             randomizeGemColor(gem);
@@ -151,8 +155,8 @@ function getGem(posX, posY) {
 }
 
 // convert world coordinates to board position
-function getGemPos(coordinate) {
-    return Phaser.Math.floor(coordinate / GEM_SIZE_SPACED);
+function getGemPos(coordinates) {
+    return {x:Phaser.Math.floor(coordinates.x / GEM_SIZE_SPACED), y: Phaser.Math.floor(coordinates.y / GEM_SIZE_SPACED)};
 }
 
 // set the position on the board for a gem
