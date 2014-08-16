@@ -8,6 +8,7 @@ var GEM_SIZE_SPACED = GEM_SIZE + GEM_SPACING;
 var BOARD_COLS;
 var BOARD_ROWS;
 var MATCH_MIN = 3; // min number of same color gems required in a row to be considered a match
+var SLIDE_DURATION = 500;
 
 var gems;
 var selectedGem;
@@ -46,19 +47,22 @@ function update() {
         
         if (selectedGem != null) {
 
+            //1
             checkAndKillGemMatches(selectedGem);
 
             if (tempShiftedGem != null) {
                 checkAndKillGemMatches(tempShiftedGem);
             }
 
+            //2
             removeKilledGems();
+            //3
+            slideGems();
+            //4
+            refillBoard();
 
-            var slideGemDuration = slideGems();
-            game.time.events.add(slideGemDuration * 100, refillBoard); // delay board refilling until all existing gems have slide over
-
+            // not sure why these are here like orphans...
             allowInput = false;
-
             selectedGem = null;
             tempShiftedGem = null;
         }
@@ -280,19 +284,19 @@ function tweenGemPos(gem, newPosX, newPosY, durationMultiplier) {
     if (durationMultiplier == null) {
         durationMultiplier = 1;
     }
-    return game.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, 500 * durationMultiplier, Phaser.Easing.Linear.None, true);            
+    return game.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, SLIDE_DURATION * durationMultiplier, Phaser.Easing.Linear.None, true);            
 }
 
 // look for gems with empty space beneath them and move them down
 function slideGems() {
     var slideRowCountMax = 0; // Row count max used to detmerine length of wait
 
-
+    // Loop through each column from 0-BOARD_COLS, 
+    // Then move to the next row from 0-BOARD_ROWS
     for (var i = 0; i < BOARD_ROWS; i++) {
         var slideRowCount = 0;
         for (var j = 0; j < BOARD_COLS; j++) {
             var gem = getGem(j,i);
-            console.log("checking "+j+","+i+" ="+gem )
             if (gem == null) {
                 slideRowCount++;
             } else if (slideRowCount > 0) {
@@ -301,9 +305,6 @@ function slideGems() {
             }
         }
         slideRowCountMax = Math.max(slideRowCount, slideRowCountMax);
-        console.log(slideRowCountMax);
-
-
     }
     return slideRowCountMax;
 }
@@ -311,26 +312,30 @@ function slideGems() {
 // look for any empty spots on the board and spawn new gems in their place that fall down from above
 function refillBoard() {
     var maxGemsMissingFromCol = 0;
-    for (var i = BOARD_COLS - 1; i >= 0; i--) {
+    // Loop through each column from 0-BOARD_COLS, 
+    // Then move to the next row from 0-BOARD_ROWS
+    for (var i = 0; i < BOARD_ROWS; i++) {
         var gemsMissingFromCol = 0;
-        for (var j = 0; j < BOARD_ROWS; j++) {
-            var gem = getGem(i, j);
+        for (var j = 0; j < BOARD_COLS; j++) {
+            var gem = getGem(j, i);
+            console.log("checking "+j+","+i+" ="+gem )
             if (gem == null) {
                 gemsMissingFromCol++;
                 gem = gems.getFirstDead();
-                gem.reset((BOARD_COLS+gemsMissingFromCol)* GEM_SIZE_SPACED, j  * GEM_SIZE_SPACED);
+                gem.reset((BOARD_COLS+gemsMissingFromCol)* GEM_SIZE_SPACED, i  * GEM_SIZE_SPACED);
                 randomizeGemColor(gem);
-                setGemPos(gem, i, j);
-                tweenGemPos(gem, gem.posX, gem.posY, gemsMissingFromCol * 2);
+                setGemPos(gem, j, i);
+                tweenGemPos(gem, gem.posX, gem.posY, BOARD_COLS-1);
             }
         }
         maxGemsMissingFromCol = Math.max(maxGemsMissingFromCol, gemsMissingFromCol);
     }
-    game.time.events.add(maxGemsMissingFromCol * 2 * 100, boardRefilled);
+    game.time.events.add(maxGemsMissingFromCol*SLIDE_DURATION , boardRefilled);
 
 }
 
 // when the board has finished refilling, re-enable player input
 function boardRefilled() {
     allowInput = true;
+    console.log('input allowed')
 }
