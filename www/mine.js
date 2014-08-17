@@ -1,10 +1,11 @@
 // Example by https://twitter.com/awapblog
 
-var game = new Phaser.Game(400, 320, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 
-var GEM_SIZE = 64;
-var GEM_SPACING = 0;
-var GEM_SIZE_SPACED = GEM_SIZE + GEM_SPACING;
+
+var game = new Phaser.Game(512, 256, Phaser.CANVAS, 'MiningGame', { preload: preload, create: create, update: update });
+
+
+var TILE_SIZE = 64;
 var BOARD_COLS;
 var BOARD_ROWS;
 var MATCH_MIN = 3; // min number of same color gems required in a row to be considered a match
@@ -19,10 +20,10 @@ var tempShiftedGemTween;
 var allowInput;
 
 function preload() {
-    game.load.spritesheet("ROCKS",  "../assets/images/minestones.png", GEM_SIZE, GEM_SIZE);
-    game.load.spritesheet("OTHER", "../assets/images/minestones.png", GEM_SIZE, GEM_SIZE);
-    game.load.spritesheet("BELT",  "../assets/images/conveyorbelt.png", GEM_SIZE, GEM_SIZE);
+    game.load.spritesheet("ROCKS",  "../assets/images/minestones.png", TILE_SIZE, TILE_SIZE);
+    game.load.spritesheet("BELT",  "../assets/images/conveyorbelt.png", TILE_SIZE, TILE_SIZE);
 }
+
 
 function create() {
 
@@ -44,6 +45,9 @@ function update() {
     // 2) remove matched gems
     // 3) slide over gems above removed gems
     // 4) refill the board
+    if (selectedGem != null) {
+        moveGem();
+    }
 
     if (game.input.mousePointer.justReleased()) {
         
@@ -63,21 +67,16 @@ function update() {
             //4
             refillBoard();
 
-            // not sure why these are here like orphans...
-            allowInput = false;
+            allowInput = false; //TODO why is this here?
             selectedGem = null;
             tempShiftedGem = null;
         }
 
     }
 
-    // check if a selected gem should be moved and do it
-
-    if (selectedGem != null) {
-        moveGem();
-
-    }
 }
+
+//====================================================Sanity Line: Everything above here I understand.=======================================================
 function moveGem() {
     var gemPos = getGemPos(game.input.mousePointer);
 
@@ -111,12 +110,12 @@ function moveGem() {
 }
 // fill the screen with as many gems as possible
 function spawnBoard() {
-    BOARD_COLS = Phaser.Math.floor(game.world.width / GEM_SIZE_SPACED);
-    BOARD_ROWS = Phaser.Math.floor(game.world.height / GEM_SIZE_SPACED);
+    BOARD_COLS = Phaser.Math.floor(game.world.width / TILE_SIZE);
+    BOARD_ROWS = Phaser.Math.floor(game.world.height / TILE_SIZE);
     belts = game.add.group();
     for (var x = 0; x < BOARD_COLS; x++) {
         for (var y = 0; y < BOARD_ROWS; y++) {
-            var belt = game.add.sprite(x * GEM_SIZE_SPACED, y * GEM_SIZE_SPACED, 'BELT');
+            var belt = game.add.sprite(x * TILE_SIZE, y * TILE_SIZE, 'BELT');
 
             //  Here we add a new animation called 'run'
             //  We haven't specified any frames because it's using every frame in the texture atlas
@@ -131,7 +130,7 @@ function spawnBoard() {
     gems = game.add.group();
     for (var x = 0; x < BOARD_COLS; x++) {
         for (var y = 0; y < BOARD_ROWS; y++) {
-            var gem = gems.create(x * GEM_SIZE_SPACED, y * GEM_SIZE_SPACED, "ROCKS");
+            var gem = gems.create(x * TILE_SIZE, y * TILE_SIZE, "ROCKS");
             gem.inputEnabled = true;
             gem.events.onInputDown.add(selectGem);
             randomizeGemColor(gem);
@@ -156,7 +155,7 @@ function getGem(posX, posY) {
 
 // convert world coordinates to board position
 function getGemPos(coordinates) {
-    return {x:Phaser.Math.floor(coordinates.x / GEM_SIZE_SPACED), y: Phaser.Math.floor(coordinates.y / GEM_SIZE_SPACED)};
+    return {x:Phaser.Math.floor(coordinates.x / TILE_SIZE), y: Phaser.Math.floor(coordinates.y / TILE_SIZE)};
 }
 
 // set the position on the board for a gem
@@ -222,8 +221,9 @@ function swapGemPosition(gem1, gem2) {
 // count how many gems of the same color are above, below, to the left and right
 // if there are more than 3 matched horizontally or vertically, kill those gems
 // if no match was made, move the gems back into their starting positions
-function checkAndKillGemMatches(gem, matchedGems) {
+function checkAndKillGemMatches(gem) {
 
+    // Make sure we have a gem
     if (gem != null) {
 
         var countUp = countSameColorGems(gem, 0, -1);
@@ -234,15 +234,19 @@ function checkAndKillGemMatches(gem, matchedGems) {
         var countHoriz = countLeft + countRight + 1;
         var countVert = countUp + countDown + 1;
 
+        // If a vertical line
         if (countVert >= MATCH_MIN) {
             killGemRange(gem.posX, gem.posY - countUp, gem.posX, gem.posY + countDown);
         }
-
+        //If a horizontal line
         if (countHoriz >= MATCH_MIN) {
             killGemRange(gem.posX - countLeft, gem.posY, gem.posX + countRight, gem.posY);
         }
 
+        // If you fail at both
         if (countVert < MATCH_MIN && countHoriz < MATCH_MIN) {
+            
+            // If the gem we're holding isn't in  the selected start position
             if (gem.posX != selectedGemStartPos.x || gem.posY != selectedGemStartPos.y) {
                 if (selectedGemTween != null) {
                     game.tweens.remove(selectedGemTween);
@@ -259,12 +263,17 @@ function checkAndKillGemMatches(gem, matchedGems) {
     }
 }
 
+//====================================================Sanity Line: Everything Below here I understand.=======================================================
+
+
 // kill all gems from a starting position to an end position
 function killGemRange(fromX, fromY, toX, toY) {
+    // I have no idea how the from and to work -morgajel
     fromX = Phaser.Math.clamp(fromX, 0, BOARD_COLS - 1);
     fromY = Phaser.Math.clamp(fromY , 0, BOARD_ROWS - 1);
     toX = Phaser.Math.clamp(toX, 0, BOARD_COLS - 1);
     toY = Phaser.Math.clamp(toY, 0, BOARD_ROWS - 1);
+    // Kills all gems in the region being removed
     for (var x = fromX; x <= toX; x++) {
         for (var y = fromY; y <= toY; y++) {
             var gem = getGem(x, y);
@@ -273,8 +282,9 @@ function killGemRange(fromX, fromY, toX, toY) {
     }
 }
 
+
 // move gems that have been killed off the board
-//TODO - Is this a potential memory leak? -morgajel
+// This just sticks them in a pile for reuse
 function removeKilledGems() {
     gems.forEach(function(gem) {
         if (!gem.alive) {
@@ -283,17 +293,18 @@ function removeKilledGems() {
     });
 }
 
+
 // animated gem movement
-function tweenGemPos(gem, newPosX, newPosY, durationMultiplier) {
-    if (durationMultiplier == null) {
-        durationMultiplier = 1;
+function tweenGemPos(gem, newPosX, newPosY, distanceMultiplier) {
+    if (distanceMultiplier == null) {
+        distanceMultiplier = 1;
     }
-    return game.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, SLIDE_DURATION * durationMultiplier, Phaser.Easing.Linear.None, true);            
+    return game.add.tween(gem).to({x: newPosX  * TILE_SIZE, y: newPosY * TILE_SIZE}, SLIDE_DURATION * distanceMultiplier, Phaser.Easing.Linear.None, true);            
 }
+
 
 // look for gems with empty space beneath them and move them down
 function slideGems() {
-    var slideRowCountMax = 0; // Row count max used to detmerine length of wait
 
     // Loop through each column from 0-BOARD_COLS, 
     // Then move to the next row from 0-BOARD_ROWS
@@ -304,16 +315,16 @@ function slideGems() {
             if (gem == null) {
                 slideRowCount++;
             } else if (slideRowCount > 0) {
+                // Set the new gem position
                 setGemPos(gem, gem.posX - slideRowCount, gem.posY );
-                tweenGemPos(gem, gem.posX, gem.posY, slideRowCount+1);
+                //animate the slide to the new position
+                tweenGemPos(gem, gem.posX, gem.posY, slideRowCount);
             }
         }
-        slideRowCountMax = Math.max(slideRowCount, slideRowCountMax);
     }
-    return slideRowCountMax;
 }
 
-// look for any empty spots on the board and spawn new gems in their place that fall down from above
+// look for any empty spots on the board and spawn new gems in their place that slide over
 function refillBoard() {
     var maxGemsMissingFromCol = 0;
     // Loop through each column from 0-BOARD_COLS, 
@@ -324,17 +335,25 @@ function refillBoard() {
             var gem = getGem(x, y);
             console.log("checking "+x+","+y+" ="+gem )
             if (gem == null) {
-                gemsMissingFromCol++;
+                //Offscreen spot for the replacement gem
+                var offscreenSpot=BOARD_COLS+gemsMissingFromCol;
+                // Snag a new gem to replace it
                 gem = gems.getFirstDead();
-                gem.reset(    (x+BOARD_COLS-1)*GEM_SIZE_SPACED,    y*GEM_SIZE_SPACED       );
+
+                //Gems moved to new offscreen spot
+                gem.reset(    (offscreenSpot)*TILE_SIZE,    y*TILE_SIZE       );
                 randomizeGemColor(gem);
+                // Set new spot to move to
                 setGemPos(gem, x, y);
-                tweenGemPos(gem, gem.posX, gem.posY, BOARD_COLS);
+                // slide from offscreen spot to new spot.
+                tweenGemPos(gem, gem.posX, gem.posY, offscreenSpot-gem.posX   );
+                gemsMissingFromCol++;
             }
         }
+        // Track this to calculate how long it'll take to refull board
         maxGemsMissingFromCol = Math.max(maxGemsMissingFromCol, gemsMissingFromCol);
     }
-    
+    // Allow user input
     game.time.events.add(maxGemsMissingFromCol*SLIDE_DURATION , boardRefilled);
 
 }
