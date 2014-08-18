@@ -11,7 +11,7 @@ if(!exports) {
 exports.sys = sys;
 
 function System() {	
-    this.imageRoot = "assets/images/";
+    this.imageRoot = "static/images/";
     this.iconRoot = this.imageRoot + "itemIcons/";
     this.gemIconRoot = this.iconRoot + "gems/";
     

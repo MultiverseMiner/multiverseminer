@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                     preserveLicenseComments: false,
 
                     baseUrl: "./src",
-                    out: "bin/MultiverseMiner.min.js",
+                    out: "static/js/MultiverseMiner.min.js",
                     optimize: 'uglify2',
                     name: 'main',
 
@@ -69,9 +69,10 @@ module.exports = function(grunt) {
         cssmin: {
             combine: {
                 files: {
-                    'bin/<%= pkg.name %>.min.css': [
-                        'assets/css/*.css',
-                        'assets/fonts/overpass/*.css',
+                    'static/css/<%= pkg.name %>.min.css': [
+                        'static/css/*.css',
+                        '!static/css/MultiverseMiner.min.css',
+                        'static/fonts/overpass/*.css',
                         'src/ui/controls/*.css',
                         'src/external/*.css'
                     ]
@@ -89,32 +90,42 @@ module.exports = function(grunt) {
                 }, {
                     cwd: 'src/external/images',
                     src: '**/*',
-                    dest: 'bin/images',
+                    dest: 'bin/static/images',
                     expand: true
                 }, {
-                    cwd: 'assets/images',
+                    cwd: 'static/css/',
+                    src: 'MultiverseMiner.min.css',
+                    dest: 'bin/static/css/',
+                    expand: true
+                }, {
+                    cwd: 'static/js/',
+                    src: 'MultiverseMiner.min.js*',
+                    dest: 'bin/static/js/',
+                    expand: true
+                }, {
+                    cwd: 'static/images',
                     src: '**/*',
-                    dest: 'bin/assets/images',
+                    dest: 'bin/static/images',
                     expand: true
                 }, {
-                    cwd: 'assets/fonts/overpass/',
+                    cwd: 'static/fonts/overpass/',
                     src: '**/*.ttf',
-                    dest: 'bin',
+                    dest: 'bin/static/fonts/overpass',
                     expand: true
                 }, {
-                    cwd: 'assets/fonts/overpass/',
+                    cwd: 'static/fonts/overpass/',
                     src: '**/*.svg',
-                    dest: 'bin',
+                    dest: 'bin/static/fonts/overpass',
                     expand: true
                 }, {
-                    cwd: 'assets/fonts/overpass/',
+                    cwd: 'static/fonts/overpass/',
                     src: '**/*.woff',
-                    dest: 'bin',
+                    dest: 'bin/static/fonts/overpass',
                     expand: true
                 }, {
-                    cwd: 'assets/sound',
+                    cwd: 'static/sound',
                     src: '**/*',
-                    dest: 'bin/assets/sound',
+                    dest: 'bin/static/sound',
                     expand: true
                 }]
             }

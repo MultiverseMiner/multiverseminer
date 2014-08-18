@@ -72,7 +72,7 @@
 }
 
 .planetDisplayName {
-	background:url(assets/images/planetTitleBackground.png) no-repeat center; 
+	background:url(/static/images/planetTitleBackground.png) no-repeat center; 
 	background-size: 295px 61px;
 }
 

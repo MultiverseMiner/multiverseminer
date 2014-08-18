@@ -1,7 +1,7 @@
 html {
 }
 .body {
-    background: url("assets/images/bg.png") no-repeat fixed center center / cover rgba(0, 0, 0, 0);
+    background: url("/static/images/bg.png") no-repeat fixed center center / cover rgba(0, 0, 0, 0);
     color: #ffffff;
     padding-left: 0;
     position: static;
@@ -18,7 +18,7 @@ a {
 	padding: 5px 10px 10px;
 }
 .questionMark{
-	content:url("assets/images/questions.png");
+	content:url("static/images/questions.png");
 }
 .lootFloating {
     position: absolute;

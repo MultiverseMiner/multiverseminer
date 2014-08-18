@@ -21,3 +21,13 @@ src/data/actors.js
 multiverseminer.iml
 scripts
 
+# Python/flask stuff
+env/
+*.pyc
+
+
+# Minified text
+static/css/MultiverseMiner.min.css
+static/js/MultiverseMiner.min.js
+static/js/MultiverseMiner.min.js.map
+

@@ -33,7 +33,7 @@ addPlanet(1, 'earth', 'Earth', {
     'oxygen': true,
     'baseMultiplier': 1,
     'distance': 0,
-    'background': 'assets/images/earth.png',
+    'background': '/static/images/earth.png',
     'gatherLootTableId': LootTables.earthAtmosphere.id,
     'miningLootTableId': LootTables.earthMining.id,
     'scavengeLootTableId': LootTables.earthScavengeRes.id
@@ -44,13 +44,13 @@ addPlanet(2, 'moon', 'Moon', {
     'oxygen': false,
     'baseMultiplier': 1,
     'distance': 10000,
-    'background': 'assets/images/moon.png',
+    'background': '/static/images/moon.png',
     'gatherLootTableId': LootTables.moonAtmosphere.id,
     'miningLootTableId': LootTables.moonMinerals.id
 });
 
 addPlanet(3, 'mercury', 'Mercury', {
-    'background': 'assets/images/mercury.png',
+    'background': '/static/images/mercury.png',
 	'gravity': 0.378,
     'oxygen': false,
     'baseMultiplier': 1,
@@ -60,7 +60,7 @@ addPlanet(3, 'mercury', 'Mercury', {
 });
 
 addPlanet(4, 'venus', 'Venus', {
-    'background': 'assets/images/venus.png',
+    'background': '/static/images/venus.png',
 	'gravity': .907,
     'oxygen': false,
     'baseMultiplier': 1,
@@ -70,7 +70,7 @@ addPlanet(4, 'venus', 'Venus', {
 });
 
 addPlanet(5, 'mars', 'Mars', {
-    'background': 'assets/images/mars.png',
+    'background': '/static/images/mars.png',
 	'gravity': 0.713,
     'oxygen': false,
     'baseMultiplier': 1,
@@ -80,7 +80,7 @@ addPlanet(5, 'mars', 'Mars', {
 });
 
 addPlanet(6, 'jupiter', 'Jupiter', {
-    'background': 'assets/images/jupiter.png',
+    'background': '/static/images/jupiter.png',
 	'gravity': 2.36,
     'oxygen': false,
     'baseMultiplier': 1,
@@ -89,7 +89,7 @@ addPlanet(6, 'jupiter', 'Jupiter', {
 });
 
 addPlanet(7, 'saturn', 'Saturn', {
-    'background': 'assets/images/saturn.png',
+    'background': '/static/images/saturn.png',
 	'gravity': 0.916,
     'oxygen': false,
     'baseMultiplier': 1,
@@ -98,7 +98,7 @@ addPlanet(7, 'saturn', 'Saturn', {
 });
 
 addPlanet(8, 'uranus', 'Uranus', {
-    'background': 'assets/images/uranus.png',
+    'background': '/static/images/uranus.png',
 	'gravity': 0.230,
     'oxygen': false,
     'baseMultiplier': 1,
@@ -106,17 +106,17 @@ addPlanet(8, 'uranus', 'Uranus', {
 });
 
 addPlanet(9, 'neptune', 'Neptune', {
-    'background': 'assets/images/neptune.png',
+    'background': '/static/images/neptune.png',
 	'gravity': 0.297,
     'oxygen': false,
     'baseMultiplier': 1,
     'distance': 58000,
-    'background': 'assets/images/neptune.png',
+    'background': '/static/images/neptune.png',
     'gatherLootTableId': LootTables.neptuneAtmosphere.id
 });
 
 addPlanet(10, 'pluto', 'Pluto', {
-    'background': 'assets/images/pluto.png',
+    'background': '/static/images/pluto.png',
 	'gravity': 0.059,
     'oxygen': false,
     'baseMultiplier': 1,

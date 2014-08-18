@@ -18,7 +18,7 @@
 }
 
 #changesLog a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -47,7 +47,7 @@
     height: 300px;
     width: 1220px;
     color: #bbb;
-	background-image:url(assets/images/stardust.jpg) no-repeat;
+	background-image:url(static/images/stardust.jpg) no-repeat;
     /* background-color: #333; */
     /* border: 1px solid #444; */
     padding: 1px;
@@ -57,7 +57,7 @@
 }
 
 #spaceTravelMap a.modalCloseImg {
-    /* background: url(assets/images/x.png) no-repeat; */
+    /* background: url(static/images/x.png) no-repeat; */
     width: 25px;
     height: 29px;
     display: inline;
@@ -89,7 +89,7 @@
 }
 
 #importBox a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -159,7 +159,7 @@
 }
 
 #exportBox a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -210,7 +210,7 @@
 }
 
 #decompBox a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -265,7 +265,7 @@
 }
 
 #resetDialog a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -309,7 +309,7 @@
 
 
 #miningBox a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -346,7 +346,7 @@
 }
 
 #gatheringBox a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -383,7 +383,7 @@
 }
 
 #scavengingBox a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;
@@ -434,7 +434,7 @@
     color: #ddd;
 }
 #planetLootModal a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;

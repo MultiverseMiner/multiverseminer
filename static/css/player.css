@@ -58,7 +58,7 @@
 }
 
 #characterSelect a.modalCloseImg {
-    background: url(assets/images/x.png) no-repeat;
+    background: url(static/images/x.png) no-repeat;
     width: 25px;
     height: 29px;
     display: inline;

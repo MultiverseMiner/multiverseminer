@@ -706,14 +706,14 @@ function onReset() {
 }
 
 function spaceTravel() {
-	$("#solarsystem").load('solar.html').modal({
+	$("#solarsystem").load('/solar').modal({
 		opacity: 100,
 		height: 20,
 		escClose: true,
 		overlayClose: true,
 		overlayCss: {
 			backgroundColor: "#000",
-			backgroundImage: "url('assets/images/stardust.jpg')"
+			backgroundImage: "url('static/images/stardust.jpg')"
 		},
 		containerId: 'spaceTravelMap'
 	});

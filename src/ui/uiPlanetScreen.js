@@ -686,7 +686,7 @@ function UIPlanetScreen() {
 			var background = game.currentPlanet.getBackground();
 			if (background) {
 				if (game.currentPlanet.getName() === "Earth") {
-					$('#planetDisplayBackground').append('<img class="planetBigEarth" src="assets/images/bigEarth.png"/>');
+					$('#planetDisplayBackground').append('<img class="planetBigEarth" src="static/images/bigEarth.png"/>');
 				} else {
 					$('#planetDisplayBackground').append('<img class="planetImage" src="' + background + '"/>');
 				}
