@@ -2,12 +2,14 @@
 
 # Import the stuffs!
 from flask import Flask, render_template, request
+from flask.ext.assets import Environment, Bundle
 import logging
 import logging.config
 import ConfigParser
 import datetime
 import json
 import re
+import os
 import traceback
 
 CONFIG = ConfigParser.RawConfigParser()
@@ -16,6 +18,21 @@ CONFIG.read('config.ini')
 # We can use CONFIG.get() to pull DB credentials
 
 app = Flask(__name__)
+assets = Environment(app)
+
+
+#########################################################################
+# Using JS and CSS bundlers to minify code.
+
+#TODO figure out why uglifyjs returns blank text
+js = Bundle('../src/**/*.js',
+            filters='yui_js', output='gen/packed.js')
+assets.register('js_all', js)
+
+
+css = Bundle('../src/**/*.css','css/*.css',
+            filters='yui_css', output='gen/packed.css')
+assets.register('css_all', css)
 
 #########################################################################
 

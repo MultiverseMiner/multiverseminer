@@ -24,10 +24,10 @@ scripts
 # Python/flask stuff
 env/
 *.pyc
+*.swp
 
 
 # Minified text
-static/css/MultiverseMiner.min.css
-static/js/MultiverseMiner.min.js
-static/js/MultiverseMiner.min.js.map
+static/.webassets-cache/
+static/gen/
 

@@ -4,7 +4,9 @@
 <head>
   <title>Multiverse Miner: An incremental sci-fi RPG game.</title>
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-	<link href="static/css/MultiverseMiner.min.css" rel="stylesheet" type="text/css" />
+{% assets "css_all" %}
+	<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
+{% endassets %}
 </head>
 
 <body class="body">
@@ -370,8 +372,10 @@
             </div>
 		</div>
 	</div>
-<script src="static/js/require.js" type="text/javascript"></script>
-<script src="static/js/MultiverseMiner.min.js" type="text/javascript"></script>
+
+{% assets "js_all" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
