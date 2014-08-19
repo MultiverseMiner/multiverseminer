@@ -26,7 +26,8 @@ assets = Environment(app)
 
 #TODO figure out why uglifyjs returns blank text
 js = Bundle('../src/**/*.js',
-            filters='yui_js', output='gen/packed.js')
+#            filters='yui_js', 
+            output='gen/packed.js')
 assets.register('js_all', js)
 
 
