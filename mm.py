@@ -1,8 +1,10 @@
 """`main` is the top level module for this application."""
 
 # Import the stuffs!
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g, session, flash, redirect, url_for, make_response
 from flask.ext.assets import Environment, Bundle
+from authomatic.adapters import WerkzeugAdapter
+from authomatic import Authomatic
 import logging
 import logging.config
 import ConfigParser
@@ -12,10 +14,7 @@ import re
 import os
 import traceback
 
-CONFIG = ConfigParser.RawConfigParser()
-CONFIG.read('config.ini')
-
-# We can use CONFIG.get() to pull DB credentials
+from config import CONFIG
 
 app = Flask(__name__)
 assets = Environment(app)
@@ -26,53 +25,46 @@ assets = Environment(app)
 
 #TODO figure out why uglifyjs returns blank text
 js = Bundle(
-
-'js/data/*.js',
-'js/game/game.js',
-'js/game/gear.js',
-'js/game/miner.js',
-'js/game/planet.js',
-'js/game/player.js',
-'js/game/quest.js',
-'js/game/settings.js',
-'js/game/statistics.js',
-'js/game/storage.js',
-
-'js/ui/ui.js',
-'js/ui/controls/uiComponent.js',
-'js/ui/controls/uiInventory.js',
-'js/ui/controls/uiSelection.js',
-'js/ui/controls/uiSlot.js',
-'js/ui/controls/uiStarfield.js',
-'js/ui/uiPlanetScreen.js',
-'js/ui/uiTravelScreen.js',
-
-'js/external/jquery-ui-1.10.4.custom.js',
-'js/external/jquery.jgrowl.min.js',
-'js/external/jquery.tooltipster.min.js',
-'js/external/jquery.joyride-2.1.js',
-'js/external/jquery.noty.packaged.js',
-'js/external/jquery.toolbar.js',
-'js/external/jquery.ui-contextmenu.js',
-'js/external/jquery.simplemodal-1.4.4.js',
-'js/external/jquery.sieve.min.js',
-'js/jquery.cookie.js',
-
-'js/remote/*.js',
-
-'js/utils.js',
-'js/main.js',
-
-
-#            filters='yui_js', 
-#            output='gen/packed.js'
+'js/**/*.js',
+            filters='yui_js',
+            output='gen/packed.js'
 )
 assets.register('js_all', js)
 
 
-css = Bundle('../src/**/*.css','css/*.css',
+css = Bundle('css/*.css',
             filters='yui_css', output='gen/packed.css')
 assets.register('css_all', css)
+
+#########################################################################
+
+
+authomatic = Authomatic(CONFIG, 'random secret string for session signing')
+
+@app.route('/login/<provider_name>/', methods=['GET', 'POST'])
+def login(provider_name):
+    response = make_response()
+    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
+    if result:
+        print "found result"
+        # procedure is complete
+        if result.user:
+            print "found result user"
+            # ensure that the user is up to date....
+            result.user.update()
+            if  (result.user.name and result.user.id):
+                print "found user name"
+                #store user result data in the DB or session
+                # Show that everything is ok.
+                return render_template('account.html', result=result)
+            else:
+                # FIXME need better behavior here...
+                return render_template('account.html', result=result)
+        else:
+            # FIXME No user was found...?
+            return render_template('account.html', result=result)
+    # FIXME I don't like this bare response- should be an error page if you get no result back.
+    return response
 
 #########################################################################
 
@@ -119,8 +111,8 @@ def page_borked(error):
 #########################################################################
 # Error Handlers
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+    app.run(debug=True, port=8000)
+
 
 if CONFIG.has_option('main', 'debug'):
     app.debug = CONFIG.getboolean('main', 'debug')
