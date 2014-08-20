@@ -25,7 +25,7 @@ assets = Environment(app)
 
 #TODO figure out why uglifyjs returns blank text
 js = Bundle(
-'js/**/*.js',
+'js/**/*.js', 'js/*.js',
             filters='yui_js',
             output='gen/packed.js'
 )
@@ -72,16 +72,6 @@ def login(provider_name):
 def indexpage():
     """This is the first page anyone sees."""
     return render_template('index.html')
-
-@app.route('/changelog')
-def changelog():
-    """Details from the changelog."""
-    return render_template('changelog.html')
-
-@app.route('/solar')
-def solarpage():
-    """Page for solar system travel."""
-    return render_template('solar.html')
 
 
 #########################################################################
