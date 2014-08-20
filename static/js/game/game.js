@@ -1,4 +1,3 @@
-require(["gameplayer", "gameplanet", "gamesettings", "gamestatistics", "utils", "gamequest", "noty"]);
 
 function Game() {
     this.player = new Player();

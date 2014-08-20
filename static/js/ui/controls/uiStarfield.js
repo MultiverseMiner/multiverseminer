@@ -1,4 +1,3 @@
-require([ "jquery" ]);
 
 UIStarfield.prototype = new UIComponent();
 UIStarfield.prototype.$super = parent;

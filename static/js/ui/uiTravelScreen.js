@@ -1,4 +1,3 @@
-require([ "uistarfield" ]);
 
 UITravelScreen.prototype = new UIComponent();
 UITravelScreen.prototype.$super = parent;

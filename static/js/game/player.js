@@ -1,4 +1,3 @@
-require(["game", "gameminer", "gamestorage", "ui", "uiplanetscreen", "gamesettings", "simplemodal"]);
 
 function Player() {
     this.id = 'player';

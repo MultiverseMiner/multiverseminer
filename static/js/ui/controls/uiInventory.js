@@ -1,4 +1,3 @@
-require([ "uislot" ]);
 
 UIInventory.prototype = new UIComponent();
 UIInventory.prototype.$super = parent;

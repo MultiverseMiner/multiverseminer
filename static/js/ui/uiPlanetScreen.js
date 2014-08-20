@@ -1,4 +1,3 @@
-require(["uicomponent", "uiinventory", "uiselection", "game"]);
 
 UIPlanetScreen.prototype = new UIComponent();
 UIPlanetScreen.prototype.$super = parent;

@@ -1,4 +1,3 @@
-require(["jquery", "tooltipster", "enums"]);
 UISlot.prototype = new UIComponent();
 UISlot.prototype.$super = parent;
 UISlot.prototype.constructor = UISlot;

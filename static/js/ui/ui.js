@@ -1,4 +1,3 @@
-require(["uiplanetscreen", "uitravelscreen", "jquery", "jqueryui", "jgrowl", "tooltipster"]);
 
 // ---------------------------------------------------------------------------
 // Some const values used in ui code

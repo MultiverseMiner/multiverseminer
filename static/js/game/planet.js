@@ -1,4 +1,3 @@
-require(["gameminer", "gamestorage", "gamegear", "uiplanetscreen"]);
 
 function Planet(data) {
     this.data = data;

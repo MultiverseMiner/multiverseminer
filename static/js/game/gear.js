@@ -1,4 +1,3 @@
-require(["gameplayer"]);
 
 function Gear(id) {
     this.id = id;
