@@ -111,10 +111,7 @@ def page_borked(error):
 #########################################################################
 # Error Handlers
 if __name__ == '__main__':
+    app.debug = True
     app.run(debug=True, port=8000)
-
-
-if CONFIG.has_option('main', 'debug'):
-    app.debug = CONFIG.getboolean('main', 'debug')
 
 
