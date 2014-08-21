@@ -5,26 +5,9 @@
 Multiverse Miner
 ====
 
-This game is open source, however the icons (art) are not.
+Note: This game is open source, however the icons (art) are not. Please message antlong on irc.freenode.net for license details.
 
-Please message antlong on irc.freenode.net for license details.
-
-### Running
-
-```shell
-npm install # installs project dependencies
-sudo npm install grunt-cli -g
-grunt
-```
-
-### Developing
-
-```shell
-grunt dev
-```
-
-Now just open [http://localhost:8080/](http://localhost:8080/) with your preferred browser.
----
+### Backstory
 Since unlocking the true potential of the elements, wormholes have been created and mastered, space travel occurs at the speed of light, and the elements in the universe can be manipulated at your whim.
 
 Fascinated in the advancements in geology, physics, and time-travel, you decide to pick up your pickaxe, build yourself a ship and explore the farthest reaches of the universe.
@@ -35,6 +18,24 @@ Fascinated in the advancements in geology, physics, and time-travel, you decide 
 * Find artifacts, the most powerful and rare objects in the universe. Wield them to unlock powerful stat boosts. Only one of each artifact exists, will you be lucky enough to wield them?
 * Travel to every planet in the solar system; Each contains accurate amounts of the real elements found on the planet.
 * Scavenge the remains of war torn houses. Find rare items, and more.
+
+### Prerequesites
+
+To run Multiverse Miner locally, you will need python 2.7 and virtualenv
+
+### Configuration
+```shell
+virtualenv env
+source env/bin/activate
+pip install -r requirements
+python mm.py
+
+```
+
+Now just open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) with your preferred browser.
+---
+
+
 
 
 [Join us on IRC.](http://webchat.freenode.net?channels=%23multiverseminer&uio=d4)  |  [Play the game.](http://multiverseminer.com)  |  [Visit our subreddit](http://reddit.com/r/multiverseminer)
