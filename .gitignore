@@ -28,6 +28,6 @@ env/
 config.py
 
 # Minified text
-static/.webassets-cache/
-static/gen/
+app/static/.webassets-cache/
+app/static/gen/
 
