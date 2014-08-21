@@ -30,14 +30,16 @@ from app import models
 #########################################################################
 # Using JS and CSS bundlers to minify code.
 
-#TODO figure out why uglifyjs returns blank text
 js = Bundle(
-'js/**/*.js', 'js/*.js',
-            filters='yui_js',
+#NOTE that these js files have to be loaded in a specific order.
+'js/vendor/*.js',
+'js/jquery/*.js',
+'js/foundation.min.js',
+'js/custom.js',
+            filters='jsmin',
             output='gen/packed.js'
 )
 assets.register('js_all', js)
-
 
 css = Bundle('css/*.css',
             filters='yui_css', output='gen/packed.css')
