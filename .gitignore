@@ -31,3 +31,7 @@ config.py
 app/static/.webassets-cache/
 app/static/gen/
 
+
+# ignore sqllite
+app.db
+db_repository/

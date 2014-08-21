@@ -3,6 +3,9 @@ Flask-Testing==0.4
 Flask-Assets
 Flask-SQLAlchemy
 Flask-WTF
+SQLAlchemy
+SQLAlchemy-migrate
+
 yuicompressor
 gunicorn>=18.0
 Rednose>=0.4.1
