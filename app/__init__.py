@@ -3,6 +3,7 @@
 # Import the stuffs!
 from flask import Flask, render_template, request, g, session, flash, redirect, url_for, make_response,send_from_directory
 from flask.ext.assets import Environment, Bundle
+from flask.ext.sqlalchemy import SQLAlchemy
 from authomatic.adapters import WerkzeugAdapter
 from authomatic import Authomatic
 import logging
@@ -14,10 +15,16 @@ import re
 import os
 import traceback
 
+
 from config import CONFIG
 
 app = Flask(__name__)
+app.config.from_object('config')
 assets = Environment(app)
+db = SQLAlchemy(app)
+
+from app import models
+
 
 
 #########################################################################
