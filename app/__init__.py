@@ -1,7 +1,7 @@
 """`main` is the top level module for this application."""
 
 # Import the stuffs!
-from flask import Flask, render_template, request, g, session, flash, redirect, url_for, make_response
+from flask import Flask, render_template, request, g, session, flash, redirect, url_for, make_response,send_from_directory
 from flask.ext.assets import Environment, Bundle
 from authomatic.adapters import WerkzeugAdapter
 from authomatic import Authomatic
@@ -67,6 +67,11 @@ def login(provider_name):
     return response
 
 #########################################################################
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static/images'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/')
 def indexpage():
