@@ -33,5 +33,5 @@ app/static/gen/
 
 
 # ignore sqllite
-app.db
-db_repository/
+APP.db
+DB_REPO
