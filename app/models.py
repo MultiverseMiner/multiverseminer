@@ -40,7 +40,6 @@ class Item(db.Model):
     autoRefine= db.Column(db.Float)
     planetLimit= db.Column(db.Float)
     ingredients = db.relationship("Recipe")
-    decompose   = db.relationship("Recipe")
 
     def __repr__(self):
         return '<Item %r>' % (self.name)
