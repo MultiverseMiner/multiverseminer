@@ -26,6 +26,21 @@ db = SQLAlchemy(app)
 from app import models
 
 
+#########################################################################
+# Set up Logging
+
+logdir='log'
+if not os.path.exists(logdir):
+    os.makedirs(logdir)
+
+from logging.handlers import TimedRotatingFileHandler
+file_handler = TimedRotatingFileHandler( logdir+'/server.log', 'midnight', 1, 30)
+file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+
+app.logger.setLevel(logging.DEBUG)
+file_handler.setLevel(logging.DEBUG)
+app.logger.addHandler(file_handler)
+
 
 #########################################################################
 # Using JS and CSS bundlers to minify code.
@@ -55,15 +70,14 @@ def login(provider_name):
     response = make_response()
     result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
     if result:
-        print "found result"
-        # procedure is complete
+        app.logger.debug('auth result returned')
         if result.user:
-            print "found result user"
+            app.logger.debug('valid user returned')
             # ensure that the user is up to date....
             result.user.update()
             if  (result.user.name and result.user.id):
-                print "found user name"
-                #store user result data in the DB or session
+                app.logger.debug('user ' + result.user.name + ' has logged in.')
+                #TODO store user result data in the DB or session
                 # Show that everything is ok.
                 return render_template('account.html', result=result)
             else:
@@ -93,29 +107,18 @@ def indexpage():
 @app.errorhandler(404)
 def page_not_found(error):
     """Return a custom 404 error."""
-    print " ======================="
-    print "Exception:", error
-    time = str(datetime.datetime.now())
-    return render_template("400.html", request=request, time=time), 404
+    return render_template("404.html", request=request,e=error), 404
 
 @app.errorhandler(500)
 def page_borked(error):
     """Return a custom 500 error. Only hit when debugging is off."""
-    print " ======================="
-    print "problem with ", request.url
-    time = str(datetime.datetime.now())
-    print "on seed", app.seed, "at", time
-    print "Exception:", error.args[0]
-    traceback.print_exc()
-
-    return render_template("500.html", seed=app.seed, request=request, e=error, time=time), 500
+    db.session.rollback()
+    return render_template("500.html", request=request, e=error), 500
 
 
-
-#########################################################################
-# Error Handlers
 if __name__ == '__main__':
-    app.debug = True
-    app.run(debug=True, port=8000)
+    app.debug = False
+    app.run(debug=False, port=8000)
+
 
 
