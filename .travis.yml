@@ -6,7 +6,7 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 before_script:
-  - cp config.py.sample config.py
+  - cp config.py.test config.py
   - psql -c 'create database mm;' -U postgres
   - ./db_create.py
 script: nosetests
