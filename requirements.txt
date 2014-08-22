@@ -5,6 +5,7 @@ Flask-SQLAlchemy
 Flask-WTF
 SQLAlchemy
 SQLAlchemy-migrate
+jsmin
 python-openid
 yuicompressor
 pg8000
