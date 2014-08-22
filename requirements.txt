@@ -11,7 +11,7 @@ gunicorn>=18.0
 Rednose>=0.4.1
 unittest2>=0.5.1
 authomatic
-
+psycopg2
 coveralls
 
 

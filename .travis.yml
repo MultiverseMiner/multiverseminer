@@ -7,6 +7,7 @@ install:
 # command to run tests
 before_script:
   - cp config.py.sample config.py
+  - psql -c 'create database mm;' -U postgres
   - ./db_create.py
 script: nosetests
 
