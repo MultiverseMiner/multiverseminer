@@ -21,19 +21,8 @@ Fascinated in the advancements in geology, physics, and time-travel, you decide 
 
 ### Prerequesites
 
-To run Multiverse Miner locally, you will need python 2.7 and virtualenv
+To run Multiverse Miner locally, Please see [these instructions](https://github.com/MultiverseMiner/multiverseminer/wiki/Introduction-to-Flask-and-Python).
 
-### Configuration
-```shell
-virtualenv env
-source env/bin/activate
-pip install -r requirements
-python mm.py
-
-```
-
-Now just open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) with your preferred browser.
----
 
 
 
