@@ -5,7 +5,7 @@ Flask-SQLAlchemy
 Flask-WTF
 SQLAlchemy
 SQLAlchemy-migrate
-
+python-openid
 yuicompressor
 gunicorn>=18.0
 Rednose>=0.4.1
