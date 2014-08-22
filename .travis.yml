@@ -10,4 +10,5 @@ before_script:
   - psql -c 'create database mm;' -U postgres
   - ./db_create.py
 script: nosetests
-
+after_success:
+  coveralls
