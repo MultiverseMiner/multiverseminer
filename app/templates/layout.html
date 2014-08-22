@@ -1,11 +1,69 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
     <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}Multiverse Miner - Beta{% endblock %}</title>
+
+        <link href='//fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic' rel='stylesheet' type='text/css'>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+        {% assets "css_all" %}
+            <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
+        {% endassets %}
+
     </head>
     <body>
-    {% block body %}
-    {% endblock %}
+        <div class="row">
+            <div class="large-4 columns">
+                <img class="logo" src="static/images/logo_placeholder.png">
+            </div>
+            <div class="large-6 large-offset-2 columns">
+                <div class="row">
+                    <div class="no-gutter large-6 columns">
+                        <div class="icon-bar five-up">
+                            <a class="item menu-pop" data-window-type="hero"> <img src="static/images/icons/equipment.png">  <label>You</label> </a>
+                            <a class="item menu-pop" data-window-type="inventory"> <img src="static/images/icons/inventory.png" > <label>Inventory</label> </a>
+                            <a class="item menu-pop"> <img src="static/images/icons/spaceship.png" > <label>Fleet</label> </a>
+                            <a class="item menu-pop"> <img src="static/images/icons/empire.png" > <label>Empire</label> </a>
+                            <a class="item menu-pop"> <img src="static/images/icons/crafting.png" > <label>Crafting</label> </a>
+                        </div>
+                    </div>
+                    <div class="no-gutter large-6 columns">
+                        <div class="icon-bar five-up">
+                            <a class="item menu-pop"> <img src="static/images/icons/questlog.png" > <label>Quests</label> </a>
+                            <a class="item menu-pop"> <img src="static/images/icons/achievements.png" > <label>Triumphs</label> </a>
+                            <a class="item menu-pop"> <img src="static/images/icons/mail.png" > <label>Mail</label> <span class="unread-msg">23</span></a>
+                            <a class="item menu-pop" data-window-type="options"> <i class="fa fa-wrench"></i> <label>Options</label> </a>
+                            <a class="item menu-pop" data-window-type="logout"> <i class="fa fa-power-off"></i> <label>Log out</label></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        <div class="outters">
+            <div class="menu-pop-window pattern hide">
+                <div class="title-bar">
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <span class="window-title"></span>
+                            <span class="window-close right"><i class="fa fa-times"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pop-window-body">
+                </div>
+            </div>
+        </div>
+        <div class="global-close"><i class="fa fa-level-up"></i></div>
+
+        {% assets "js_all" %}
+            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
 
     </body>
 </html>
