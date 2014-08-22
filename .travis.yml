@@ -5,5 +5,8 @@ python:
 install:
   - pip install -r requirements.txt
 # command to run tests
+before_script:
+  - cp config.py.sample config.py
+  - ./db_create.py
 script: nosetests
 
