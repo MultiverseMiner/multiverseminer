@@ -21,7 +21,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Define the database - we are working with
 # SQLite for this example
-SQLALCHEMY_DATABASE_URI =  "postgresql://postgres@localhost/mm"
+SQLALCHEMY_DATABASE_URI =  "postgresql+pg8000://postgres@localhost/mm"
 #SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'APP.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'DB_REPO')
 

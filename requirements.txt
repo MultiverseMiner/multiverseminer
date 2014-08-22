@@ -7,6 +7,7 @@ SQLAlchemy
 SQLAlchemy-migrate
 python-openid
 yuicompressor
+pg8000
 gunicorn>=18.0
 Rednose>=0.4.1
 unittest2>=0.5.1
