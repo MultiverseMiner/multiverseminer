@@ -1,6 +1,7 @@
-Flask==0.10.1
-Flask-Testing==0.4
+Flask
+Flask-Testing
 Flask-Assets
+Flask-Migrate
 Flask-SQLAlchemy
 Flask-WTF
 SQLAlchemy

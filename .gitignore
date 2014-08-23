@@ -20,6 +20,7 @@ app/static/.webassets-cache/
 app/static/gen/
 
 
-# ignore sqllite
+# ignore db stuff
 APP.db
-DB_REPO
+DB_REPO/
+migrations/

@@ -18,7 +18,7 @@ class Player(db.Model):
 class Category(db.Model):
     id = db.Column(db.String(64), index = True, unique = True, primary_key = True)
     name = db.Column(db.String(64), index = True, unique = True)
-    parent_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    parent_id = db.Column(db.String(64), db.ForeignKey('category.id'))
     parent = db.relationship("Category")
     items = db.relationship("Item")
 
@@ -34,7 +34,7 @@ class Recipe(db.Model):
 class Item(db.Model):
     id = db.Column(db.String(64), index = True, unique = True, primary_key = True)
     name = db.Column(db.String(64), index = True, unique = True)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category_id = db.Column(db.String(64), db.ForeignKey('category.id'))
     category = db.relationship('Category', backref='item')
     description = db.Column(db.Text)
     value = db.Column(db.Integer)
