@@ -8,7 +8,7 @@ CONFIG = {
         'class_': oauth2.Google,
         'consumer_key': 'you need the actual oauthclientID here',
         'consumer_secret': 'and you need the actual client secret here',
-        'scope':  oauth2.Google.user_info_scope,
+        'scope': ['email','openid']
 
     },
     # we can add more auth methods here as long as we add login buttons for them...
