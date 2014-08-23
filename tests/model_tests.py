@@ -32,7 +32,7 @@ class DatabaseTest(unittest.TestCase):
 
     def test_dbstuff(self):
         """  """
-        self.assertEqual('foo','foo')
+        self.assertEqual('foo','fail')
 
 
     def teardown(self):
