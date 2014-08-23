@@ -8,7 +8,9 @@ install:
 before_script:
   - cp config.py.test config.py
   - psql -c 'create database mm;' -U postgres
-  - ./db_create.py
+  - ./db_migrate.py db init
+  - ./db_migrate.py db migrate
+  - ./db_migrate.py db upgrade
 script: nosetests
 after_success:
   coveralls
