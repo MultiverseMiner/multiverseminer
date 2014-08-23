@@ -92,10 +92,10 @@ def login(provider_name):
                     user=user.first()
                 else:
                     print "player not found"
-                    user = Player(oauth_id=result.user.id, email=result.user.email, username=result.user.name,inventory='',created=datetime.datetime.now() )
-                    db.session.add(user)
-                    db.session.commit()
-                user.lastLogin=datetime.datetime.now()
+                    user = Player(oauth_id=result.user.id, email=result.user.email, username=result.user.name,inventory='' )
+                user.lastLogin=datetime.datetime.utcnow()
+                db.session.add(user)
+                db.session.commit()
                 session['oauth_id']=user.oauth_id
 
                 return render_template('account.html', user=user)

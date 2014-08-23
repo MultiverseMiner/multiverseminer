@@ -1,7 +1,6 @@
 from app import db
 
-ROLE_USER = 0
-ROLE_ADMIN = 1
+import datetime
 
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -9,9 +8,56 @@ class Player(db.Model):
     email = db.Column(db.String(120), index = True, unique = True)
     oauth_id = db.Column(db.String(120), index = True, unique = True)
     inventory = db.Column(db.Text)
-    created = db.Column(db.DateTime)
-    lastLogin = db.Column(db.DateTime)
+    created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    lastLogin = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    characters = db.relationship("Character", backref='player')
 
+    # associated with player so the player can't create multiple chars and have them all running at the same time
+    lastmine     = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    lastscavenge = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    lastgather   = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
+class Character(db.Model):
+
+    name = db.Column(db.String(64), index = True, unique = True, primary_key = True)
+    player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
+
+    #primary
+    constitution = db.Column(db.Integer)
+    dexterity = db.Column(db.Integer)
+    luck = db.Column(db.Integer)
+    perception = db.Column(db.Integer)
+    strength = db.Column(db.Integer)
+
+    #secondary
+    accuracy = db.Column(db.Integer)
+    attackSpeed = db.Column(db.Integer)
+    counter = db.Column(db.Integer)
+    critChance = db.Column(db.Integer)
+    critPercentage = db.Column(db.Integer)
+    defense = db.Column(db.Integer)
+    evasion = db.Column(db.Integer)
+    health = db.Column(db.Integer)
+    lootLuck = db.Column(db.Integer)
+    miningLuck = db.Column(db.Integer)
+    parry = db.Column(db.Integer)
+    regeneration = db.Column(db.Integer)
+    resillience = db.Column(db.Integer)
+    scavengeLuck = db.Column(db.Integer)
+    shipSpeed = db.Column(db.Integer)
+
+    #experience
+    characterExperience = db.Column(db.Integer)
+    craftingExperience = db.Column(db.Integer)
+    lootExperience = db.Column(db.Integer)
+    miningExperience = db.Column(db.Integer)
+    scavengingExperience = db.Column(db.Integer)
+
+    #tbd
+    #inventory
+    #skills
+    #gear
+    #weapon
     def __repr__(self):
         return '<Player %r>' % (self.username)
 
