@@ -56,6 +56,13 @@ js = Bundle(
 )
 assets.register('js_all', js)
 
+jsmine = Bundle(
+'js/minigame/mine.js',
+        filters='jsmin',
+        output='gen/minepacked.js'
+)
+assets.register('js_mine', jsmine)
+
 css = Bundle('css/*.css',
             filters='yui_css', output='gen/packed.css')
 assets.register('css_all', css)
@@ -121,6 +128,10 @@ def indexpage():
     """This is the first page anyone sees."""
     return render_template('index.html')
 
+@app.route('/mining')
+def miningpage():
+    """This is the first page anyone sees."""
+    return render_template('minegame.html')
 
 #########################################################################
 # Error Handlers

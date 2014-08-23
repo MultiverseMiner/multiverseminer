@@ -2,7 +2,7 @@
 
 
 
-var game = new Phaser.Game(645,645, Phaser.CANVAS, 'MiningGame', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(900,520, Phaser.CANVAS, 'MiningGame', { preload: preload, create: create, update: update });
 
 var TILE_SIZE = 64;
 var BOARD_COLS;
@@ -29,10 +29,8 @@ var planetUnCommonItems=['iron','gold']
 
 
 function preload() {
-
-    game.load.spritesheet("ROCKS",  "../assets/images/minestones.png", TILE_SIZE, TILE_SIZE);
-    game.load.spritesheet("BELT",  "../assets/images/conveyorbelt.png", TILE_SIZE, TILE_SIZE);
-
+    game.load.spritesheet("ROCKS",  "/static/images/minestones.png", TILE_SIZE, TILE_SIZE);
+    game.load.spritesheet("BELT",  "/static/images/conveyorbelt.png", TILE_SIZE, TILE_SIZE);
 }
 
 
@@ -137,7 +135,7 @@ function spawnBoard() {
             //  And this starts the animation playing by using its key ("run")
             //  15 is the frame rate (15fps)
             //  true means it will loop when it finishes
-            belt.animations.play('run', 30, true);
+            belt.animations.play('run', 15, true);
         }
     }
     tiles = game.add.group();

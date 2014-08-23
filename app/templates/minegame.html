@@ -1,14 +1,17 @@
-<html>
 
-<body>
-
-  <div id="MiningGame"></div>
+{% extends "layout.html" %}
 
 
-<script src="phaser.js" type="text/javascript"></script>
-<script src="mine.js" type="text/javascript"></script>
+{% block content %}
+
+  <div id="MiningGame" class="minigame" ></div>
+
+{% endblock %}
 
 
-</body>
+{% block footer %}
+     {% assets "js_mine" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+{% endblock %}
 
-</html>
