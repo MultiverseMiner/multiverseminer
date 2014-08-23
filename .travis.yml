@@ -14,3 +14,13 @@ before_script:
 script: nosetests
 after_success:
   coveralls
+
+
+notifications:
+  irc:
+    channels: "chat.freenode.net#multiverseminer"
+    on_success: never  # default: always
+    on_failure: change # default: always
+    template:
+      - "%{repository} (%{commit}) : %{message} "
+      - "Build details: %{build_url}"
