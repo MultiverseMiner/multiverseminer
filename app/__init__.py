@@ -16,14 +16,14 @@ import os
 import traceback
 
 
-from config import CONFIG
+from config import CONFIG,SECRET_KEY
 
 app = Flask(__name__)
 app.config.from_object('config')
 assets = Environment(app)
 db = SQLAlchemy(app)
 
-from app import models
+from app.models import *
 
 
 #########################################################################
@@ -63,7 +63,7 @@ assets.register('css_all', css)
 #########################################################################
 
 
-authomatic = Authomatic(CONFIG, 'random secret string for session signing')
+authomatic = Authomatic(CONFIG, SECRET_KEY )
 
 @app.route('/login/<provider_name>/', methods=['GET', 'POST'])
 def login(provider_name):
@@ -79,15 +79,35 @@ def login(provider_name):
                 app.logger.debug('user ' + result.user.name + ' has logged in.')
                 #TODO store user result data in the DB or session
                 # Show that everything is ok.
-                return render_template('account.html', result=result)
+                user=Player.query.filter_by(oauth_id=result.user.id)
+                if user.first():
+                    print "player found"
+                    user=user.first()
+                else:
+                    print "player not found"
+                    user = Player(oauth_id=result.user.id, email=result.user.email, username=result.user.name,inventory='',created=datetime.datetime.now() )
+                    db.session.add(user)
+                    db.session.commit()
+                user.lastLogin=datetime.datetime.now()
+                session['oauth_id']=user.oauth_id
+
+                return render_template('account.html', user=user)
             else:
+                app.logger.error('user found, but no name/id found')
                 # FIXME need better behavior here...
-                return render_template('account.html', result=result)
+                return render_template('account.html')
         else:
-            # FIXME No user was found...?
-            return render_template('account.html', result=result)
+            app.logger.error('result was empty')
+            return render_template('account.html')
     # FIXME I don't like this bare response- should be an error page if you get no result back.
     return response
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template('index.html')
+
+
 
 #########################################################################
 
