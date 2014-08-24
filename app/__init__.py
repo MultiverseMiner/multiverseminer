@@ -1,7 +1,7 @@
 """`main` is the top level module for this application."""
 
 # Import the stuffs!
-from flask import Flask, render_template, request, g, session, flash, redirect, url_for, make_response,send_from_directory
+from flask import Flask, render_template, request, g, session, flash, redirect, url_for, make_response,send_from_directory, jsonify
 from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from authomatic.adapters import WerkzeugAdapter
@@ -84,8 +84,6 @@ def login(provider_name):
             result.user.update()
             if  (result.user.name and result.user.id):
                 app.logger.debug('user ' + result.user.name + ' has logged in.')
-                #TODO store user result data in the DB or session
-                # Show that everything is ok.
                 user=Player.query.filter_by(oauth_id=result.user.id)
                 if user.first():
                     print "player found"
@@ -114,7 +112,26 @@ def logout():
     session.clear()
     return render_template('index.html')
 
+#########################################################################
 
+@app.route('/collect/<collectiontype>', methods=['GET', 'POST'])
+def collect(collectiontype):
+    """Place a request to collect data."""
+    if session['oauth_id']:
+        app.logger.debug('session oauth id:'+session['oauth_id'])
+        curtime=datetime.datetime.utcnow()
+        player=Player.query.filter_by(oauth_id= session['oauth_id']).first()
+        app.logger.info(player.username+' is attempting to '+collectiontype )
+        json=player.update_collection(collectiontype);
+        db.session.add(player)
+        db.session.commit()
+        return json
+    else:
+        return render_template('500.html')
+    # if last_x +5 seconds is less than now()
+    #   set new last_x
+    #   calculate if anything is found
+    #   return new last_x +5
 
 #########################################################################
 

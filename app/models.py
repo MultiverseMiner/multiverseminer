@@ -1,5 +1,5 @@
 from app import db
-
+from flask import jsonify
 import datetime
 
 class Player(db.Model):
@@ -16,6 +16,29 @@ class Player(db.Model):
     lastmine     = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastscavenge = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastgather   = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
+    def update_collection(self,collectiontype):
+        """ This method will verify the collectiontype is valid, then see if it's been long enough to update."""
+        curtime=datetime.datetime.utcnow()
+        waittime=datetime.timedelta(0,5)  # 5 seconds
+        #FIXME ugly and inefficient.
+        if collectiontype == 'mine':
+            if self.lastmine + waittime < curtime:
+                self.lastmine=curtime
+                #calculate_gains
+            return jsonify(collectiontype=collectiontype, lastrun=self.lastmine, result='success')
+        elif collectiontype == 'scavenge':
+            if self.lastscavenge + waittime < curtime:
+                self.lastscavenge=curtime
+                #calculate_gains
+            return jsonify(collectiontype=collectiontype, lastrun=self.lastscavenge, result='success')
+        elif collectiontype == 'gather':
+            if self.lastgather + waittime < curtime:
+                self.lastgather=curtime
+                #calculate_gains
+            return jsonify(collectiontype=collectiontype, lastrun=self.lastgather, result='success')
+        else:
+            return jsonify(collectiontype=collectiontype, message="invalid collection type", result='failure')
 
 class Character(db.Model):
 
