@@ -3,9 +3,7 @@
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import Session
 import unittest2 as unittest
-from mock import MagicMock
-from config import CONFIG,SQLALCHEMY_DATABASE_URI
-import app  # This is your declarative base class
+from config import SQLALCHEMY_DATABASE_URI
 
 
 def setup_module():
@@ -17,6 +15,7 @@ def setup_module():
     transaction = connection.begin()
 
     # If you want to insert fixtures to the DB, do it here
+
 
 def teardown_module():
     # Roll back the top level transaction and disconnect from the database
@@ -32,10 +31,8 @@ class DatabaseTest(unittest.TestCase):
 
     def test_dbstuff(self):
         """  """
-        self.assertEqual('foo','foo')
-
+        self.assertEqual('foo', 'foo')
 
     def teardown(self):
         self.session.close()
         self.__transaction.rollback()
-
