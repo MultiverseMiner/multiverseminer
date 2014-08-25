@@ -1,2 +1,2 @@
 [report]
-omit = /usr/*, env/*,~/virtualenv/python*/*
+omit = /usr/*, env/*,~/virtualenv/python*/*, ~/virtualenv/pypy*/*

@@ -101,8 +101,8 @@ class Category(db.Model):
 
 
 class Ingredient(db.Model):
-    """ ingredient is an association table that crosses the """
-    """ recipe with the child items and their amounts. """
+    """ ingredient is an association table that crosses the
+        recipe with the child items and their amounts. """
     __tablename__ = 'ingredient'
 
     recipe_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
@@ -117,6 +117,7 @@ class Ingredient(db.Model):
 
 
 class Item(db.Model):
+    """ Primary table with all the goodies. """
     id = db.Column(db.String(64), primary_key=True)
     name = db.Column(db.String(64), unique=True)
     category_id = db.Column(db.ForeignKey('category.id'))
@@ -152,4 +153,5 @@ class Item(db.Model):
     category = db.relationship('Category', backref='items')
 
     def __repr__(self):
+        """ return a tag for the item"""
         return '<Item %r>' % (self.name)
