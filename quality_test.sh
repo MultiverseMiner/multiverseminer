@@ -1,4 +1,4 @@
 #!/bin/bash
 
-pylint -r n app test
-flake8 app test
+pylint -r n mm/ test/
+flake8 mm/ test/

@@ -1,6 +1,6 @@
 """ This contains a list of all models used by Multiverse Miner"""
 
-from app import db
+from mm import db
 from flask import jsonify
 import datetime
 

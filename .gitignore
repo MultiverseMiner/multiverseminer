@@ -16,8 +16,8 @@ log/
 config.py
 
 # Minified text
-app/static/.webassets-cache/
-app/static/gen/
+mm/static/.webassets-cache/
+mm/static/gen/
 
 
 # ignore db stuff
