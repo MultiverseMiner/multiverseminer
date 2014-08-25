@@ -3,7 +3,7 @@ python:
   - "2.7"
   - "pypy"
 install:
-  - pip install -r requirements.txt Testing-requirements.txt
+  - pip install -r requirements.txt -r Testing-requirements.txt
 # command to run tests
 before_script:
   - cp config.py.test config.py
