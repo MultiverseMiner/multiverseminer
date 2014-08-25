@@ -7,20 +7,21 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from authomatic.adapters import WerkzeugAdapter
 from authomatic import Authomatic
+from logging.handlers import TimedRotatingFileHandler
 import logging
 import logging.config
 import datetime
 import os
 
 
+
 from config import CONFIG, SECRET_KEY
 
 app = Flask(__name__)
 app.config.from_object('config')
-assets = Environment(app)
 db = SQLAlchemy(app)
-
 from app.models import Player
+
 
 
 ###############################################################################
@@ -30,7 +31,6 @@ logdir = 'log'
 if not os.path.exists(logdir):
     os.makedirs(logdir)
 
-from logging.handlers import TimedRotatingFileHandler
 file_handler = TimedRotatingFileHandler(logdir+'/server.log',
                                         'midnight', 1, 30)
 formatline = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
@@ -43,6 +43,7 @@ app.logger.addHandler(file_handler)
 
 #########################################################################
 # Using JS and CSS bundlers to minify code.
+assets = Environment(app)
 
 # NOTE that these js files have to be loaded in a specific order.
 js = Bundle(
@@ -70,7 +71,6 @@ assets.register('css_all', css)
 
 
 authomatic = Authomatic(CONFIG, SECRET_KEY)
-
 
 @app.route('/login/<provider>/', methods=['GET', 'POST'])
 def login(provider):
