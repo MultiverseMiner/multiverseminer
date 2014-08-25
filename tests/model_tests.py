@@ -3,14 +3,14 @@
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import Session
 import unittest2 as unittest
-from config import SQLALCHEMY_DATABASE_URI
+from config import TestConfiguration
 
 
 def setup_module():
     global transaction, connection, engine
 
     # Connect to the database and create the schema within a transaction
-    engine = create_engine(SQLALCHEMY_DATABASE_URI)
+    engine = create_engine(TestConfiguration.SQLALCHEMY_DATABASE_URI)
     connection = engine.connect()
     transaction = connection.begin()
 

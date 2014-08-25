@@ -13,12 +13,10 @@ import logging.config
 import datetime
 import os
 
-
-
-from config import CONFIG, SECRET_KEY
+from config import BaseConfiguration, CONFIG
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 from mm.models import Player
 
@@ -70,26 +68,27 @@ assets.register('css_all', css)
 #########################################################################
 
 
-authomatic = Authomatic(CONFIG, SECRET_KEY)
+authomatic = Authomatic(CONFIG, BaseConfiguration.SECRET_KEY)
 
 @app.route('/login/<provider>/', methods=['GET', 'POST'])
 def login(provider):
     response = make_response()
     result = authomatic.login(WerkzeugAdapter(request, response), provider)
     if result:
-        app.logger.debug('auth result returned')
         if result.user:
-            app.logger.debug('valid user returned')
+            app.logger.debug('valid user %s' % result.user.name)
             # ensure that the user is up to date....
             result.user.update()
             if (result.user.name and result.user.id):
                 app.logger.debug('%s has logged in.' % result.user.name)
+                app.logger.debug('%s is the id.' % result.user.id)
                 user = Player.query.filter_by(oauth_id=result.user.id)
+
                 if user.first():
-                    print "player found"
+                    app.logger.debug('Player found')
                     user = user.first()
                 else:
-                    print "player not found"
+                    app.logger.debug('Player not found')
                     user = Player(oauth_id=result.user.id,
                                   email=result.user.email,
                                   username=result.user.name)
