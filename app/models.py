@@ -1,59 +1,57 @@
+""" This contains a list of all models used by Multiverse Miner"""
+
 from app import db
 from flask import jsonify
 import datetime
 
+
 class Player(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(64), index = True, unique = True)
-    email = db.Column(db.String(120), index = True, unique = True)
-    oauth_id = db.Column(db.String(120), index = True, unique = True)
+    """ Player object represents an individual user"""
+    username = db.Column(db.String(64), index=True, unique=True)
+    email = db.Column(db.String(120), index=True, unique=True)
+    oauth_id = db.Column(db.String(120), primary_key=True)
     inventory = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastLogin = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
-    # associated with player so the player can't create multiple chars and have them all running at the same time
-    lastmine     = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    # associated with player so the player can't create
+    # multiple chars and have them all running at the same time.
+    lastmine = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastscavenge = db.Column(db.DateTime, default=datetime.datetime.utcnow())
-    lastgather   = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    lastgather = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
     characters = db.relationship("Character", backref='player')
 
-    def update_collection(self,collectiontype):
-        """ This method will verify the collectiontype is valid, then see if it's been long enough to update."""
-        curtime=datetime.datetime.utcnow()
-        waittime=datetime.timedelta(0,5)  # 5 seconds
-        #FIXME ugly and inefficient. switch to setattr
-        if collectiontype == 'mine':
-            if self.lastmine + waittime < curtime:
-                self.lastmine=curtime
-                #calculate_gains
-            return jsonify(collectiontype=collectiontype, lastrun=self.lastmine, result='success')
-        elif collectiontype == 'scavenge':
-            if self.lastscavenge + waittime < curtime:
-                self.lastscavenge=curtime
-                #calculate_gains
-            return jsonify(collectiontype=collectiontype, lastrun=self.lastscavenge, result='success')
-        elif collectiontype == 'gather':
-            if self.lastgather + waittime < curtime:
-                self.lastgather=curtime
-                #calculate_gains
-            return jsonify(collectiontype=collectiontype, lastrun=self.lastgather, result='success')
+    def update_collection(self, collectiontype):
+        """ This method will verify the collectiontype is valid,
+            then see if it's been long enough to update."""
+        curtime = datetime.datetime.utcnow()
+        waittime = datetime.timedelta(0, 5)  # 5 seconds
+        if 'last'+collectiontype in self.__dict__:
+            oldtime = getattr(self, 'last'+collectiontype)
+            if oldtime + waittime < curtime:
+                oldtime = curtime
+                setattr(self, 'last'+collectiontype, oldtime)
+            return jsonify(collectiontype=collectiontype,
+                           lastrun=oldtime, result='success')
         else:
-            return jsonify(collectiontype=collectiontype, message="invalid collection type", result='failure')
+            return jsonify(collectiontype=collectiontype, result='failure',
+                           message="invalid collection type")
+
 
 class Character(db.Model):
 
-    name = db.Column(db.String(64), index = True, unique = True, primary_key = True)
-    player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
+    name = db.Column(db.String(64), primary_key=True)
+    player_id = db.Column(db.ForeignKey('player.oauth_id'))
 
-    #primary
+    # primary
     constitution = db.Column(db.Integer)
     dexterity = db.Column(db.Integer)
     luck = db.Column(db.Integer)
     perception = db.Column(db.Integer)
     strength = db.Column(db.Integer)
 
-    #secondary
+    # secondary
     accuracy = db.Column(db.Integer)
     attackSpeed = db.Column(db.Integer)
     counter = db.Column(db.Integer)
@@ -70,24 +68,25 @@ class Character(db.Model):
     scavengeLuck = db.Column(db.Integer)
     shipSpeed = db.Column(db.Integer)
 
-    #experience
+    # experience
     characterExperience = db.Column(db.Integer)
     craftingExperience = db.Column(db.Integer)
     lootExperience = db.Column(db.Integer)
     miningExperience = db.Column(db.Integer)
     scavengingExperience = db.Column(db.Integer)
 
-    #tbd
-    #inventory
-    #skills
-    #gear
-    #weapon
+    # tbd
+    # inventory
+    # skills
+    # gear
+    # weapon
     def __repr__(self):
         return '<Player %r>' % (self.username)
 
+
 class Category(db.Model):
-    id = db.Column(db.String(64), index = True, unique = True, primary_key = True)
-    name = db.Column(db.String(64), index = True, unique = True)
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(64), index=True, unique=True)
     parent_id = db.Column(db.ForeignKey('category.id'))
     parent = db.relationship("Category")
 
@@ -96,17 +95,18 @@ class Category(db.Model):
 
 
 class Ingredient(db.Model):
-    # FIXME id shouldn't be needed... should be able to remove it...
     __tablename__ = 'ingredient'
 
-    recipe_id = db.Column(db.ForeignKey('item.id'), primary_key = True)
-    item_id = db.Column(db.ForeignKey('item.id'), primary_key = True)
+    recipe_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
     amount = db.Column(db.Integer)
 
-    recipe = db.relationship("Item",backref='ingredients', foreign_keys=[recipe_id])
-    item = db.relationship("Item", backref='usedIn',foreign_keys=[item_id])
+    recipe = db.relationship("Item", backref='ingredients',
+                             foreign_keys=[recipe_id])
+    item = db.relationship("Item", backref='usedIn', foreign_keys=[item_id])
 
     db.PrimaryKeyConstraint('recipe_id', 'item_id', name='ingredient_pk')
+
 
 class Item(db.Model):
     id = db.Column(db.String(64), primary_key=True)
