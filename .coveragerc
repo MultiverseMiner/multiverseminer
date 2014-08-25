@@ -1,2 +1,2 @@
 [report]
-omit = /usr/*, env/*
+omit = /usr/*, env/*,~/virtualenv/*
