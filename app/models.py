@@ -10,18 +10,19 @@ class Player(db.Model):
     inventory = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastLogin = db.Column(db.DateTime, default=datetime.datetime.utcnow())
-    characters = db.relationship("Character", backref='player')
 
     # associated with player so the player can't create multiple chars and have them all running at the same time
     lastmine     = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastscavenge = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastgather   = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
+    characters = db.relationship("Character", backref='player')
+
     def update_collection(self,collectiontype):
         """ This method will verify the collectiontype is valid, then see if it's been long enough to update."""
         curtime=datetime.datetime.utcnow()
         waittime=datetime.timedelta(0,5)  # 5 seconds
-        #FIXME ugly and inefficient.
+        #FIXME ugly and inefficient. switch to setattr
         if collectiontype == 'mine':
             if self.lastmine + waittime < curtime:
                 self.lastmine=curtime
@@ -87,37 +88,60 @@ class Character(db.Model):
 class Category(db.Model):
     id = db.Column(db.String(64), index = True, unique = True, primary_key = True)
     name = db.Column(db.String(64), index = True, unique = True)
-    parent_id = db.Column(db.String(64), db.ForeignKey('category.id'))
+    parent_id = db.Column(db.ForeignKey('category.id'))
     parent = db.relationship("Category")
-    items = db.relationship("Item")
-
 
     def __repr__(self):
         return '<Category %r>' % (self.name)
 
-class Recipe(db.Model):
-    item_id         = db.Column(db.String(64), db.ForeignKey('item.id'), primary_key=True)
-    ingredient_id   = db.Column(db.String(64), db.ForeignKey('item.id'), primary_key=True)
+
+class Ingredient(db.Model):
+    # FIXME id shouldn't be needed... should be able to remove it...
+    __tablename__ = 'ingredient'
+
+    recipe_id = db.Column(db.ForeignKey('item.id'), primary_key = True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key = True)
     amount = db.Column(db.Integer)
 
+    recipe = db.relationship("Item",backref='ingredients', foreign_keys=[recipe_id])
+    item = db.relationship("Item", backref='usedIn',foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('recipe_id', 'item_id', name='ingredient_pk')
+
 class Item(db.Model):
-    id = db.Column(db.String(64), index = True, unique = True, primary_key = True)
-    name = db.Column(db.String(64), index = True, unique = True)
-    category_id = db.Column(db.String(64), db.ForeignKey('category.id'))
-    category = db.relationship('Category', backref='item')
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    category_id = db.Column(db.ForeignKey('category.id'))
+
+    accuracy = db.Column(db.Float)
+    attack = db.Column(db.Float)
+    attackSpeed = db.Column(db.Float)
+    autoGather = db.Column(db.Float)
+    autoMine = db.Column(db.Float)
+    autoProduce = db.Column(db.ForeignKey('item.id'))
+    autoRefine = db.Column(db.Float)
+    autoScavenge = db.Column(db.Float)
+    defense = db.Column(db.Float)
     description = db.Column(db.Text)
-    value = db.Column(db.Integer)
     droprate = db.Column(db.Float)
-    autoMine= db.Column(db.Float)
-    autoGather= db.Column(db.Float)
-    autoScavenge= db.Column(db.Float)
-    autoRefine= db.Column(db.Float)
-    planetLimit= db.Column(db.Float)
-    ingredients = db.relationship("Item",
-                        secondary='recipe',
-                        primaryjoin="Item.id==recipe.c.item_id",
-                        secondaryjoin="Item.id==recipe.c.ingredient_id"
-    )
+    evasion = db.Column(db.Float)
+    experience = db.Column(db.Integer)
+    gearType = db.Column(db.String(64))
+    health = db.Column(db.Float)
+    lootLuck = db.Column(db.Float)
+    minimumMiningLevel = db.Column(db.Integer)
+    miningLuck = db.Column(db.Float)
+    perception = db.Column(db.Float)
+    planetLimit = db.Column(db.Float)
+    regeneration = db.Column(db.Float)
+    resilience = db.Column(db.Float)
+    scavengeLuck = db.Column(db.Float)
+    shipSpeed = db.Column(db.Float)
+    storagelimit = db.Column(db.Integer)
+    strength = db.Column(db.Float)
+    value = db.Column(db.Integer)
+
+    category = db.relationship('Category', backref='items')
 
     def __repr__(self):
         return '<Item %r>' % (self.name)
