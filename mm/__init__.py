@@ -20,7 +20,7 @@ from config import CONFIG, SECRET_KEY
 app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
-from app.models import Player
+from mm.models import Player
 
 
 

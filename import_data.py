@@ -3,9 +3,8 @@
 # This item importer reviews the json file, then creates or updates each item.
 
 
-from app import db
-from app.models import *
-import app
+from mm import db
+from mm.models import Item, Ingredient, Category
 import json
 
 #import our items

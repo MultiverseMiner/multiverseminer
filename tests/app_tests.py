@@ -1,5 +1,5 @@
 
-import app as mm
+import mm
 import unittest2 as unittest
 import flask.ext.testing
 from flask import Flask
