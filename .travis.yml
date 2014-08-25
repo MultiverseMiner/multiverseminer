@@ -3,7 +3,7 @@ python:
   - "2.7"
   - "pypy"
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements.txt Testing-requirements.txt
 # command to run tests
 before_script:
   - cp config.py.test config.py
@@ -20,7 +20,7 @@ after_success:
 notifications:
   irc:
     channels: "chat.freenode.net#multiverseminer"
-    on_success: never  # default: always
+    on_success: change # default: always
     on_failure: change # default: always
     template:
       - "%{repository} (%{commit}) : %{message} "
