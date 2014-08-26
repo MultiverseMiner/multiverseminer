@@ -1,6 +1,7 @@
 Flask
 Flask-Assets
 Flask-Migrate
+Flask-Paginate
 Flask-SQLAlchemy
 Flask-WTF
 SQLAlchemy
