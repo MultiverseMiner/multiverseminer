@@ -19,7 +19,6 @@ class Player(db.Model):
     lastmine = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastscavenge = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastgather = db.Column(db.DateTime, default=datetime.datetime.utcnow())
-
     characters = db.relationship("Character", backref='player')
 
     def update_collection(self, collectiontype):
@@ -36,7 +35,8 @@ class Player(db.Model):
                            lastrun=oldtime, result='success')
         else:
             return jsonify(collectiontype=collectiontype, result='failure',
-                           message="invalid collection type")
+                           message="Invalid collection type.")
+
     def __repr__(self):
         """ return a tag for the player"""
         return '<Player %r>' % (self.username)

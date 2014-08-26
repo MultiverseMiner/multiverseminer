@@ -4,7 +4,7 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import Session
 import unittest2 as unittest
 from config import TestConfiguration
-
+from mm.models import Player, Category, Ingredient, Item
 
 def setup_module():
     global transaction, connection, engine

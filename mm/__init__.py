@@ -1,7 +1,7 @@
 """`main` is the top level module for this application."""
 
 # Import the stuffs!
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 from flask import make_response, send_from_directory
 from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -19,7 +19,6 @@ app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 from mm.models import Player
-
 
 
 ###############################################################################
@@ -70,9 +69,11 @@ assets.register('css_all', css)
 
 authomatic = Authomatic(CONFIG, BaseConfiguration.SECRET_KEY)
 
+
 @app.route('/login/<provider>/', methods=['GET', 'POST'])
 def login(provider):
     response = make_response()
+    message = ""
     result = authomatic.login(WerkzeugAdapter(request, response), provider)
     if result:
         if result.user:
@@ -80,34 +81,37 @@ def login(provider):
             # ensure that the user is up to date....
             result.user.update()
             if (result.user.name and result.user.id):
-                app.logger.debug('%s has logged in.' % result.user.name)
-                app.logger.debug('%s is the id.' % result.user.id)
+                app.logger.debug('%s has logged in with an id of %s' %
+                                 (result.user.name, result.user.id))
                 user = Player.query.filter_by(oauth_id=result.user.id)
-
                 if user.first():
-                    app.logger.debug('Player found')
                     user = user.first()
+                    message = "Welcome back, %s." % user.username
+                    app.logger.debug(message)
                 else:
-                    app.logger.debug('Player not found')
                     user = Player(oauth_id=result.user.id,
                                   email=result.user.email,
                                   username=result.user.name)
+                    message = "Welcome to Multiverse Miner, %s." % user.username
+                    app.logger.debug(message)
                 user.lastLogin = datetime.datetime.utcnow()
                 db.session.add(user)
                 db.session.commit()
                 session['oauth_id'] = user.oauth_id
 
-                return render_template('account.html', user=user)
+                return render_template('account.html', user=user,
+                                       message=message)
             else:
-                app.logger.error('user found, but no name/id found')
-                # FIXME need better behavior here...
-                return render_template('account.html')
+                message = "There is an issue with your account. Contact us."
+                app.logger.error(message)
+                return render_template('account.html', message=message)
         else:
-            app.logger.error('result was empty')
-            return render_template('account.html')
-    # FIXME I don't like this bare response-
-    # should be an error page if you get no result back.
-    return response
+            message = "Your account was not found on %s" % provider
+            app.logger.error(message)
+            return render_template('account.html', message=message)
+    else:
+        # This should be a redirect to google set by WerkzeugAdapter
+        return response
 
 
 @app.route('/logout')
@@ -119,7 +123,7 @@ def logout():
 @app.route('/collect/<collectiontype>', methods=['GET', 'POST'])
 def collect(collectiontype):
     """Place a request to collect data."""
-    if session['oauth_id']:
+    if 'oauth_id' in session:
         app.logger.debug('session oauth id:'+session['oauth_id'])
         player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
         json = player.update_collection(collectiontype)
@@ -128,7 +132,9 @@ def collect(collectiontype):
         db.session.commit()
         return json
     else:
-        return render_template('500.html')
+        return jsonify(collectiontype=collectiontype, result='failure',
+                       message="User not logged in.")
+
     # if last_x +5 seconds is less than now()
     #   set new last_x
     #   calculate if anything is found
