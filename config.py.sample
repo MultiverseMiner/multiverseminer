@@ -3,6 +3,7 @@
 from authomatic.providers import oauth2, oauth1, openid
 import os
 
+
 CONFIG = {
     'google': {
         'class_': oauth2.Google,
@@ -10,34 +11,34 @@ CONFIG = {
         'consumer_secret': 'and you need the actual client secret here',
         'scope': ['email','openid']
 
-
     },
     # we can add more auth methods here as long as we add login buttons for them...
 }
-# Statement for enabling the development environment
-DEBUG = True
-
-# Define the application directory
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-# Define the database - we are working with
-# SQLite for this example
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'APP.db')
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'DB_REPO')
 
 
-# Application threads. A common general assumption is
-# using 2 per available processor cores - to handle
-# incoming requests using one and performing background
-# operations using the other.
-THREADS_PER_PAGE = 2
+class BaseConfiguration(object):
+    # Statement for enabling the development environment
+    DEBUG = True
 
-# Enable protection agains *Cross-site Request Forgery (CSRF)*
-CSRF_ENABLED     = True
+    # Define the application directory
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    SECRET_KEY = "c is for cookie"
 
-# Use a secure, unique and absolutely secret key for
-# signing the data.
-CSRF_SESSION_KEY = "wwwweeeee."
+    # SQLite for this example
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 
-# Secret key for signing cookies
-SECRET_KEY = "c is for cookie"
+    THREADS_PER_PAGE = 2
+
+    # Enable protection agains *Cross-site Request Forgery (CSRF)*
+    CSRF_ENABLED     = True
+
+    # Use a secure, unique and absolutely secret key for
+    # signing the data.
+    CSRF_SESSION_KEY = "wwwweeeee."
+
+class TestConfiguration(BaseConfiguration):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    TESTING=True
+    WTF_CSRF_ENABLED = False
+    HASH_ROUNDS = 1

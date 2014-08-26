@@ -19,7 +19,6 @@ class Player(db.Model):
     lastmine = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastscavenge = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     lastgather = db.Column(db.DateTime, default=datetime.datetime.utcnow())
-
     characters = db.relationship("Character", backref='player')
 
     def update_collection(self, collectiontype):
@@ -36,11 +35,15 @@ class Player(db.Model):
                            lastrun=oldtime, result='success')
         else:
             return jsonify(collectiontype=collectiontype, result='failure',
-                           message="invalid collection type")
+                           message="Invalid collection type.")
+
+    def __repr__(self):
+        """ return a tag for the player"""
+        return '<Player %r>' % (self.username)
 
 
 class Character(db.Model):
-
+    """ Character is the actual in-game PC."""
     name = db.Column(db.String(64), primary_key=True)
     player_id = db.Column(db.ForeignKey('player.oauth_id'))
 
@@ -81,20 +84,25 @@ class Character(db.Model):
     # gear
     # weapon
     def __repr__(self):
-        return '<Player %r>' % (self.username)
+        """ return a tag for the character"""
+        return '<Character %r>' % (self.name)
 
 
 class Category(db.Model):
+    """ Category models the hierarchy of items."""
     id = db.Column(db.String(64), primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
     parent_id = db.Column(db.ForeignKey('category.id'))
     parent = db.relationship("Category")
 
     def __repr__(self):
+        """ return a tag for the category"""
         return '<Category %r>' % (self.name)
 
 
 class Ingredient(db.Model):
+    """ ingredient is an association table that crosses the
+        recipe with the child items and their amounts. """
     __tablename__ = 'ingredient'
 
     recipe_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
@@ -109,6 +117,7 @@ class Ingredient(db.Model):
 
 
 class Item(db.Model):
+    """ Primary table with all the goodies. """
     id = db.Column(db.String(64), primary_key=True)
     name = db.Column(db.String(64), unique=True)
     category_id = db.Column(db.ForeignKey('category.id'))
@@ -144,4 +153,5 @@ class Item(db.Model):
     category = db.relationship('Category', backref='items')
 
     def __repr__(self):
+        """ return a tag for the item"""
         return '<Item %r>' % (self.name)

@@ -5,10 +5,6 @@
 {% block content %}
 
     <a href="/">Home</a>
-    {% if user %}
-    <p> You are logged in as {{user.username}}.</p>
-    {% else %}
-    <p> There was a problem logging you in...</p>
-    {% endif %}
+    {{message}}
 
 {% endblock %}

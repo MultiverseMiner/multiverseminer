@@ -1,6 +1,7 @@
 # Eclipse stuff
 .settings
 .project
+.coverage
 
 # system stuff
 Thumbs.db
