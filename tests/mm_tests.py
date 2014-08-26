@@ -7,7 +7,7 @@ from mm import app, db
 import mm
 
 
-class AppTestCase(TestCase):
+class MmTestCase(TestCase):
 
     def create_app(self):
         """ This app config will be overlayed on the normal config
