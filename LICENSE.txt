@@ -1,3 +1,12 @@
+
+This License applies to all code within this project, however we do not
+have the rights to redistribute the artwork. 
+
+Please contact the Multiverse Miner team with any questions.
+
+
+
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
 
