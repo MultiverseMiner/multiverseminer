@@ -114,6 +114,9 @@ class Ingredient(db.Model):
     item = db.relationship("Item", backref='usedIn', foreign_keys=[item_id])
 
     db.PrimaryKeyConstraint('recipe_id', 'item_id', name='ingredient_pk')
+    def __repr__(self):
+        """ return a tag for the player"""
+        return '<Ingredient %s %s for %s>' % (self.amount, self.item_id, self.recipe_id)
 
 
 class Item(db.Model):
