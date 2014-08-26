@@ -1,7 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/MultiverseMiner/multiverseminer.png?label=ready&title=Ready)](https://waffle.io/MultiverseMiner/multiverseminer)
 [![Build Status](https://travis-ci.org/MultiverseMiner/multiverseminer.svg?branch=master)](https://travis-ci.org/MultiverseMiner/multiverseminer)
 [![Gitter chat](https://badges.gitter.im/MultiverseMiner.png)](https://gitter.im/MultiverseMiner)
-[![Coverage Status](https://coveralls.io/repos/MultiverseMiner/multiverseminer/badge.png)](https://coveralls.io/r/MultiverseMiner/multiverseminer)
+[![Coverage Status](https://coveralls.io/repos/MultiverseMiner/multiverseminer/badge.png?branch=develop)](https://coveralls.io/r/MultiverseMiner/multiverseminer?branch=develop)
 
 Multiverse Miner
 ====
