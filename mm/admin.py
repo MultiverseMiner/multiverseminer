@@ -4,54 +4,55 @@
 
 
 from mm import app, db
+from flask.ext import admin
+from flask.ext.admin.contrib import sqla
 
-from flask import Flask, render_template, request, session, jsonify
-from flask import make_response, send_from_directory
-from flask.ext.assets import Environment, Bundle
-from flask.ext.sqlalchemy import SQLAlchemy
-from authomatic.adapters import WerkzeugAdapter
-from authomatic import Authomatic
-from logging.handlers import TimedRotatingFileHandler
-import logging
-import logging.config
-import datetime
-import os
-from flask.ext.paginate import Pagination
-
-from models import Player, Item, Category, Ingredient
-
-# TODO find out more about @login_required -morgajel
-@app.route('/admin/players')
-@app.route('/admin/players/')
-@app.route('/admin/players/<int:page>')
-def list_players(page = 1):
-    players = Player.query.all()
-    pagination = Pagination(page=page, total=len(players), search=False, record_name='players', ss_framework='foundation')
-    return render_template('list.html', displaylist=players, pagination=pagination)
+from models import Player, Item, Category, Ingredient, Character
 
 
-@app.route('/admin/items')
-@app.route('/admin/items/')
-@app.route('/admin/items/<int:page>')
-def list_items(page = 1):
-    items = Item.query.all()
-    pagination = Pagination(page=page, total=len(items), search=False, record_name='item', css_framework='foundation')
-    return render_template('list.html', displaylist=items, pagination=pagination)
+class ItemAdmin(sqla.ModelView):
+
+    # If we only want certain fields visible, use this
+    # column_list=('name', 'category')
+
+    # If we want to add unique templates (we do), use this.
+    # list_template = 'listItem.html'
+    # create_template = 'create.html'
+    # edit_template = 'edit.html'
+
+    # Make columns sortable
+    column_sortable_list = (('name', Item.name), ('category', Category.name))
+
+    # Give them pretty names
+    column_labels = dict(name='Item Name')
+
+    # Add filtering
+    column_filters = ('name', 'category')
+
+    def __init__(self, session):
+        # Just call parent class with predefined model.
+        super(ItemAdmin, self).__init__(Item, session)
 
 
-@app.route('/admin/categories')
-@app.route('/admin/categories/')
-@app.route('/admin/categories/<int:page>')
-def list_categories(page = 1):
-    categories = Category.query.all()
-    pagination = Pagination(page=page, total=len(categories), search=False, record_name='category', css_framework='foundation')
-    return render_template('list.html', displaylist=categories, pagination=pagination)
+class PlayerAdmin(sqla.ModelView):
+    """ Nothing fancy yet... """
 
 
-@app.route('/admin/ingredients')
-@app.route('/admin/ingredients/')
-@app.route('/admin/ingredients/<int:page>')
-def list_ingredients(page = 1):
-    ingredients = Ingredient.query.all()
-    pagination = Pagination(page=page, total=len(ingredients), search=False, record_name='ingredient', css_framework='foundation')
-    return render_template('list.html', displaylist=ingredients, pagination=pagination)
+class CharacterAdmin(sqla.ModelView):
+    """ Nothing fancy yet... """
+    column_list = ('name', 'player')
+
+
+class CategoryView(sqla.ModelView):
+    """ Nothing Fancy here yet... """
+
+
+# Create admin
+admin = admin.Admin(app, 'Admin Interface')
+
+# Add views
+admin.add_view(PlayerAdmin(Player, db.session))
+admin.add_view(CharacterAdmin(Character, db.session))
+admin.add_view(sqla.ModelView(Ingredient, db.session))
+admin.add_view(ItemAdmin(db.session))
+admin.add_view(CategoryView(Category, db.session))

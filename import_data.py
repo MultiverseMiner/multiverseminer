@@ -90,25 +90,34 @@ for itemid in jsonitems:
 
     # If there is a craft cost, process it.
     if 'craftCost' in jsonitem :
-        print "craftCost for %s" % itemid
+        #print "craftCost for %s" % itemid
         for ingredientname in jsonitem['craftCost']:
             amount=jsonitem['craftCost'][ingredientname]
 
-            print "requiring %s %s for %s" % (amount,ingredientname,itemid)
+            #print "requiring %s %s for %s" % (amount,ingredientname,itemid)
             dbingredient= Item.query.filter_by(id=ingredientname)
 
             if dbingredient.first():
-                print "good news, %s was found in the db" % ingredientname
+                #print "good news, %s was found in the db" % ingredientname
                 dbingredient=dbingredient.first();
 
-                if dbingredient in dbitem.ingredients:
-                    print "%s already has %s listed" %()
+                print "checking for %s having %s " % (itemid, dbingredient.id)
+                ingredients=Ingredient.query.filter_by(recipe_id=itemid, item_id=dbingredient.id)
+
+                if  ingredients.first():
+                    print "%s already has %s listed" % ( dbitem.id, dbingredient.id)
+                    dbrecipe=ingredients.first()
+                    #update the amount, just in case
+                    dbrecipe.amount=amount
+                    db.session.add(dbrecipe)
+                    db.session.commit()
                 else:
                     print "%s requires %s %s to be added." % (itemid, amount, ingredientname)
                     dbrecipe=Ingredient(item=dbingredient,recipe=dbitem,  amount=amount)
                     db.session.add(dbrecipe)
+                    db.session.commit()
             else:
-                print "strange... %s was not in the db." % ingredientname
+                print "!!! strange... %s was not in the db." % ingredientname
 
     db.session.add(dbitem)
 

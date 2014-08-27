@@ -1,4 +1,5 @@
 Flask
+Flask-Admin
 Flask-Assets
 Flask-Migrate
 Flask-Paginate
@@ -9,8 +10,8 @@ SQLAlchemy-migrate
 jsmin
 python-openid
 yuicompressor
-pg8000
-gunicorn>=18.0
+psycopg2
+gunicorn
 authomatic
 twill
 pylint

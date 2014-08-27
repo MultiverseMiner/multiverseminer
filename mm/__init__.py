@@ -95,7 +95,7 @@ def login(provider):
                                   username=result.user.name)
                     message = "Welcome to Multiverse Miner, %s." % user.username
                     app.logger.debug(message)
-                user.lastLogin = datetime.datetime.utcnow()
+                user.last_login = datetime.datetime.utcnow()
                 db.session.add(user)
                 db.session.commit()
                 session['oauth_id'] = user.oauth_id
