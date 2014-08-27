@@ -62,75 +62,73 @@ $(document).on('click', '.menu-pop', function(){
 			var estimatedInnerHeight = $(windowClone).height() - $(windowClone).find('.title-bar').outerHeight() - $(windowClone).find('.pop-window-toolbar').outerHeight() - $(windowClone).find('.pop-window-footer').outerHeight();
 			$(windowClone).find('.internal-section').css('height', estimatedInnerHeight).jScrollPane({contentWidth: '0px', autoReinitialise: true});
 		}
+		switch(windowType) {
+			case 'inventory':
+				$(windowClone).find('.window-title').text(windowType).css('textTransform', 'capitalize');
 
-		if(windowType == 'inventory'){
+				$(windowClone).resizable().find('.pop-window-body').load( "examples/inventory.html", function(e){
+					internalHeightSync();
 
-			$(windowClone).find('.window-title').text(windowType).css('textTransform', 'capitalize');
-
-			$(windowClone).resizable().find('.pop-window-body').load( "examples/inventory.html", function(e){
-				internalHeightSync();
-
-				$('.game-item').each(function(e){
-					$(this).draggable({ revert: "invalid", cursor: "move" });
-				});	
-			});
-		}
-		else if(windowType == 'options'){
-
-			$(windowClone).find('.window-title').text(windowType).css('textTransform', 'capitalize');
-			$(windowClone).resizable().find('.pop-window-body').load( "examples/options.html", internalHeightSync);
-		}
-		else if(windowType == 'hero'){
-
-			$(windowClone).find('.window-title').text('_Rufus The Planet Destroyer 1995_');
-
-			$(windowClone).addClass('hero').find('.pop-window-body').load( "examples/hero.html", function(){
-
-				$('.game-item').each(function(e){
-					$(this).draggable({ revert: "invalid", cursor: "move" });
+					$('.game-item').each(function(e){
+						$(this).draggable({ revert: "invalid", cursor: "move" });
+					});	
 				});
+			case 'options':
+				$(windowClone).find('.window-title').text(windowType).css('textTransform', 'capitalize');
+				$(windowClone).resizable().find('.pop-window-body').load( "examples/options.html", internalHeightSync);
+			case 'hero':
+				$(windowClone).find('.window-title').text('_Rufus The Planet Destroyer 1995_');
 
-				$('.inventory-socket').each(function(e){
+				$(windowClone).addClass('hero').find('.pop-window-body').load( "examples/hero.html", function(){
 
-					$(this).droppable({
-						accept: '[data-item-type="' + $(this).attr('id') + '"]',
-						activeClass: 'ui-state-hover',
-						hoverClass: 'ui-state-active',
-						drop: function( event, ui ) {
-							$('.ui-draggable-dragging').appendTo(this).css({
-								'top':'0',
-								'left':'0'
-							});
-						}
+					$('.game-item').each(function(e){
+						$(this).draggable({ revert: "invalid", cursor: "move" });
 					});
-				});
 
-				$('.storage-socket').each(function(e){
+					$('.inventory-socket').each(function(e){
 
-					$(this).droppable({
-						accept: '.player-item',
-						activeClass: 'ui-state-hover',
-						hoverClass: 'ui-state-active',
-						drop: function( event, ui ) {
-							if($(this).is(':softEmpty')){
+						$(this).droppable({
+							accept: '[data-item-type="' + $(this).attr('id') + '"]',
+							activeClass: 'ui-state-hover',
+							hoverClass: 'ui-state-active',
+							drop: function( event, ui ) {
 								$('.ui-draggable-dragging').appendTo(this).css({
 									'top':'0',
 									'left':'0'
 								});
 							}
-							else{
-								var emptySocket = $('.storage-socket:softEmpty:first');
-								$('.ui-draggable-dragging').appendTo(emptySocket).css({
-									'top':'0',
-									'left':'0'
-								});
+						});
+					});
+
+					$('.storage-socket').each(function(e){
+
+						$(this).droppable({
+							accept: '.player-item',
+							activeClass: 'ui-state-hover',
+							hoverClass: 'ui-state-active',
+							drop: function( event, ui ) {
+								if($(this).is(':softEmpty')){
+									$('.ui-draggable-dragging').appendTo(this).css({
+										'top':'0',
+										'left':'0'
+									});
+								}
+								else{
+									var emptySocket = $('.storage-socket:softEmpty:first');
+									$('.ui-draggable-dragging').appendTo(emptySocket).css({
+										'top':'0',
+										'left':'0'
+									});
+								}
 							}
-						}
+						});
 					});
 				});
-			});
+			default:
+				$(windowClone).find('.window-title').text(windowType).css('textTransform', 'capitalize');
+				$(windowClone).resizable();	
 		}
-
+		console.log(windowType);
 	}
 
 });
