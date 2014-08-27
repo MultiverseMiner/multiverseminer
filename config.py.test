@@ -25,7 +25,7 @@ class BaseConfiguration(object):
     SECRET_KEY = "c is for cookie"
 
     # SQLite for this example
-    SQLALCHEMY_DATABASE_URI =  "postgresql+pg8000://postgres@localhost/mm"
+    SQLALCHEMY_DATABASE_URI =  "postgresql+psycopg2://postgres@localhost/mm"
 
     THREADS_PER_PAGE = 2
 
@@ -38,7 +38,7 @@ class BaseConfiguration(object):
 
 class TestConfiguration(BaseConfiguration):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI =  "postgresql+pg8000://postgres@localhost/mm"
+    SQLALCHEMY_DATABASE_URI =  "postgresql+psycopg2://postgres@localhost/mm"
     TESTING=True
     WTF_CSRF_ENABLED = False
     HASH_ROUNDS = 1
