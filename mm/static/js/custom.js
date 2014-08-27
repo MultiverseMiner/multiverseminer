@@ -48,7 +48,7 @@ $(document).on('click', '.menu-pop', function(){
 	if($('.menu-pop-window[data-window-type="' + windowType + '"]').length){
 
 		if($('.front-window').length){
-			$('.front-window').removeClass('front-window');
+			$('.front-window').remove();
 		}
 		$('.menu-pop-window[data-window-type="' + windowType + '"]').addClass('front-window').show();
 
