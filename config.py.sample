@@ -25,7 +25,7 @@ class BaseConfiguration(object):
     SECRET_KEY = "c is for cookie"
 
     # SQLite for this example
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///../APP.db'
 
     THREADS_PER_PAGE = 2
 
