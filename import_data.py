@@ -33,7 +33,7 @@ for itemid in jsonitems:
 
 
     # This is a summation of all the existing json fields that it could possibly have.
-    fields=['accuracy','attack','attackSpeed','autoGather','autoMine','autoRefine','autoScavenge','defense','description ','droprate','evasion','experience','gearType','health','lootLuck','minimumMiningLevel','miningLuck','perception','planetLimit','regeneration','resilience','scavengeLuck','shipSpeed','storagelimit','strength','value ']
+    fields=['accuracy','attack','attack_speed','auto_gather','autoMine','auto_refiine','auto_scavenge','defense','description ','droprate','evasion','experience','gear_type','health','loot_luck','minimum_mining_level','mining_luck','perception','planet_limit','regeneration','resilience','scavenge_luck','ship_speed','storagelimit','strength','value ']
 
 
     # They are only set on the new item if they were in the json.
