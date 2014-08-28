@@ -20,7 +20,7 @@ app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 from mm.models import Player
 
-import mm.admin
+import mm.admin, mm.craft
 
 ###############################################################################
 # Set up Logging
@@ -160,6 +160,11 @@ def indexpage():
 def miningpage():
     """This is the first page anyone sees."""
     return render_template('minegame.html')
+
+@app.route('/chat/<message>')
+def chatpage(message):
+    print message
+    return render_template('index.html')
 
 
 #########################################################################

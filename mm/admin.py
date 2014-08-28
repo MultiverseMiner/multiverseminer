@@ -7,7 +7,7 @@ from mm import app, db
 from flask.ext import admin
 from flask.ext.admin.contrib import sqla
 
-from models import Player, Item, Category, Ingredient, Character
+from models import Player, Item, Category, Ingredient, Character, Inventory, Warehouse
 
 
 class ItemAdmin(sqla.ModelView):
@@ -40,7 +40,6 @@ class PlayerAdmin(sqla.ModelView):
 
 class CharacterAdmin(sqla.ModelView):
     """ Nothing fancy yet... """
-    column_list = ('name', 'player')
 
 
 class CategoryView(sqla.ModelView):
@@ -56,3 +55,8 @@ admin.add_view(CharacterAdmin(Character, db.session))
 admin.add_view(sqla.ModelView(Ingredient, db.session))
 admin.add_view(ItemAdmin(db.session))
 admin.add_view(CategoryView(Category, db.session))
+
+admin.add_view(sqla.ModelView(Inventory, db.session))
+admin.add_view(sqla.ModelView(Warehouse, db.session))
+
+
