@@ -20,6 +20,9 @@ class Player(db.Model):
     last_scavenge = db.Column(db.DateTime, default=time, nullable=False)
     last_gather = db.Column(db.DateTime, default=time, nullable=False)
 
+    planet_id = db.Column(db.ForeignKey('planet.id'))
+    planet = db.relationship("Planet", backref='players')
+
     # associated with player so the player can't create
     # multiple chars and have them all running at the same time.
     characters = db.relationship("Character", backref='player')
@@ -35,6 +38,14 @@ class Player(db.Model):
             if oldtime + waittime < curtime:
                 oldtime = curtime
                 setattr(self, collectionlastfield, oldtime)
+
+#                chance = Item_drop_rate * 100000;
+#                x = random.randomint(1, 100001);
+#                if  x <= chance;
+#                Success
+
+
+
             return jsonify(collectiontype=collectiontype,
                            lastrun=oldtime, result='success')
         else:
@@ -48,6 +59,54 @@ class Player(db.Model):
     def __unicode__(self):
         """ return the unicode name """
         return self.username
+
+
+class Planet(db.Model):
+    """ """
+    id = db.Column(db.String(64), primary_key=True, nullable=False)
+    name = db.Column(db.String(64), nullable=False)
+
+    mineable_max = db.Column(db.Integer, default=100000, nullable=False)
+    mineable_remaining = db.Column(db.Integer, default=100000, nullable=False)
+    mineable_replenish =  db.Column(db.Float, default=1.1, nullable=False)
+
+    gatherable_max = db.Column(db.Integer, default=100000, nullable=False)
+    gatherable_remaining = db.Column(db.Integer, default=100000, nullable=False)
+    gatherable_replenish =  db.Column(db.Float, default=1.1, nullable=False)
+
+    scavengable_max = db.Column(db.Integer, default=100000, nullable=False)
+    scavengable_remaining = db.Column(db.Integer, default=100000, nullable=False)
+    scavengable_replenish =  db.Column(db.Float, default=1.1, nullable=False)
+
+
+class PlanetLoot(db.Model):
+    """ ingredient is an association table that crosses the
+        recipe with the child items and their amounts. """
+    __tablename__ = 'planetloot'
+
+    planet_id = db.Column(db.ForeignKey('planet.id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
+
+    droprate = db.Column(db.Float, default=0, nullable=False)
+
+    planet = db.relationship("Planet", backref='items',
+                             foreign_keys=[planet_id])
+
+    item = db.relationship("Item", backref='found_on', foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('planet_id', 'item_id', name='loot_pk')
+
+    def __repr__(self):
+        """ return a tag for the planet items"""
+        return '<PlanetLoot %s %s on %s>' % (self.droprate,
+                                              self.item_id, self.planet_id)
+
+    def __eq__(self, itm):
+        return self.planet_id == itm.planet_id and self.item_id == itm.item_id
+
+    def __unicode__(self):
+        """ return the unicode name """
+        return "Loot for %s " % self.planet_id
 
 
 class Character(db.Model):
@@ -160,7 +219,6 @@ class Item(db.Model):
     auto_scavenge = db.Column(db.Float, default=0, nullable=False)
     defense = db.Column(db.Float, default=0, nullable=False)
     description = db.Column(db.Text, default=0, nullable=False)
-    droprate = db.Column(db.Float, default=0, nullable=False)
     evasion = db.Column(db.Float, default=0, nullable=False)
     experience = db.Column(db.Integer, default=0, nullable=False)
     gear_type = db.Column(db.String(64))

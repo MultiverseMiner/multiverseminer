@@ -4,9 +4,12 @@
 
 
 from mm import db
-from mm.models import Item, Ingredient, Category
+from mm.models import Item, Ingredient, Category, Planet
 import json
 
+
+
+#######################################
 #import our items
 text=open('data/items.json').read()
 jsonitems = json.loads(text)
@@ -19,7 +22,7 @@ for itemid in jsonitems:
     # grab a single item in json format
     jsonitem=jsonitems[itemid]
 
-    print "checking %s..." % jsonitem['id']
+    #print "checking %s..." % jsonitem['id']
 
     #create an empty newitem which we may or may not use
     newitem = Item( id=itemid, name=jsonitem['name'])
@@ -59,7 +62,8 @@ for categoryname in categories:
     # check to see if the categoryname exists in the DB
     category= Category.query.filter_by(id=categoryname)
     if category.first():
-        print "%s already exists... ignoring" % categoryname
+        """ """
+        #print "%s already exists... ignoring" % categoryname
     else:
         print "%s not found in DB... creating..." % categoryname
         category = Category( id=categoryname, name=categoryname)
@@ -101,11 +105,11 @@ for itemid in jsonitems:
                 #print "good news, %s was found in the db" % ingredientname
                 dbingredient=dbingredient.first();
 
-                print "checking for %s having %s " % (itemid, dbingredient.id)
+                #print "checking for %s having %s " % (itemid, dbingredient.id)
                 ingredients=Ingredient.query.filter_by(recipe_id=itemid, item_id=dbingredient.id)
 
                 if  ingredients.first():
-                    print "%s already has %s listed" % ( dbitem.id, dbingredient.id)
+                    #print "%s already has %s listed" % ( dbitem.id, dbingredient.id)
                     dbrecipe=ingredients.first()
                     #update the amount, just in case
                     dbrecipe.amount=amount
@@ -123,5 +127,39 @@ for itemid in jsonitems:
 
 db.session.commit()
 
-
 print "category assignment complete"
+
+
+
+#######################################
+#import our items
+text=open('data/planets.json').read()
+jsonplanets = json.loads(text)
+
+########################
+# Process all JSON items
+for planetid in jsonplanets:
+    planetjson=jsonplanets[planetid]
+
+    #create an empty newitem which we may or may not use
+    newplanet = Planet( id=planetid, name=planetjson['name'])
+
+    # Check to see if any pre-existing items in the db match the item ID
+    dbplanets= Planet.query.filter_by(id=planetid)
+
+    if dbplanets.first():
+        print "%s already exists in db, updating..." % planetid
+        newplanet=dbplanets.first()
+        # This is a summation of all the existing json fields that it could possibly have.
+
+    fields=['mineable_max','mineable_remaining','mineable_replenish','gatherable_max','gatherable_remaining','gatherable_replenish','scavengable_max','scavengable_remaining','scavengable_replenish']
+
+    # They are only set on the new item if they were in the json.
+    for field in fields:
+        if field in planetjson:
+            setattr(newplanet, field, planetjson[field])
+
+    # This is as far as we can go with this new item. Commit it to the DB
+    db.session.add(newplanet)
+    db.session.commit()
+print "planets imported."
