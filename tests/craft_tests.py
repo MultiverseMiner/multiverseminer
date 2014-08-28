@@ -28,7 +28,7 @@ class CraftTestCase(TestCase):
         refinery = Item(id='refinery',name='Refinery' )
 
         # create player and inventory
-        self.oldauth = mm.authomatic
+        self.oldauth = mm.login.authomatic
         result = Mock()
         result.user = Mock()
         result.user.update = MagicMock()
@@ -47,8 +47,8 @@ class CraftTestCase(TestCase):
 
 
         db.session.commit()
-        mm.authomatic = Mock(Authomatic)
-        mm.authomatic.login = MagicMock(return_value=result)
+        mm.login.authomatic = Mock(Authomatic)
+        mm.login.authomatic.login = MagicMock(return_value=result)
         self.app = app.test_client()
         response = self.app.get("/login/google/")
         self.assertTemplateUsed('account.html')
@@ -63,7 +63,7 @@ class CraftTestCase(TestCase):
         db.session.remove()
         # remove the DB.
         db.drop_all()
-        mm.authomatic = self.oldauth
+        mm.login.authomatic = self.oldauth
 
 
     def test_craft_one_valid_item(self):

@@ -21,7 +21,7 @@ class MmTestCase(TestCase):
         db.create_all()
         app.testing = True
 
-        self.oldauth = mm.authomatic
+        self.oldauth = mm.login.authomatic
         result = Mock()
         result.user = Mock()
         result.user.update = MagicMock()
@@ -29,8 +29,8 @@ class MmTestCase(TestCase):
         result.user.id = '123123123'
         result.user.email = 'foo@bar.com'
 
-        mm.authomatic = Mock(Authomatic)
-        mm.authomatic.login = MagicMock(return_value=result)
+        mm.login.authomatic = Mock(Authomatic)
+        mm.login.authomatic.login = MagicMock(return_value=result)
         self.app = app.test_client()
 
     def tearDown(self):
@@ -39,7 +39,7 @@ class MmTestCase(TestCase):
         db.session.remove()
         # remove the DB.
         db.drop_all()
-        mm.authomatic = self.oldauth
+        mm.login.authomatic = self.oldauth
 
     def test_index_route(self):
         """ test the primary route """
@@ -80,7 +80,7 @@ class MmTestCase(TestCase):
         result = Mock()
         result.user = False
 
-        mm.authomatic.login = MagicMock(return_value=result)
+        mm.login.authomatic.login = MagicMock(return_value=result)
         response = self.app.get("/login/google/")
         self.assertTemplateUsed('account.html')
         self.assertIn('', response.data)
@@ -92,7 +92,7 @@ class MmTestCase(TestCase):
         result.user.update = MagicMock()
         result.user.name = False
 
-        mm.authomatic.login = MagicMock(return_value=result)
+        mm.login.authomatic.login = MagicMock(return_value=result)
         response = self.app.get("/login/google/")
         self.assertTemplateUsed('account.html')
         self.assertIn('There is an issue with your account. Contact us.',
@@ -101,7 +101,7 @@ class MmTestCase(TestCase):
 
     def test_provider_redirect_google_route(self):
         """ Ensure that the redirect to google is happening. """
-        mm.authomatic = self.oldauth
+        mm.login.authomatic = self.oldauth
         response = self.app.get("/login/google/")
         self.assertStatus(response, 302)
         self.assertIn('accounts.google.com', response.headers[1][1])
