@@ -8,8 +8,8 @@ from datetime import datetime, timedelta
 class Player(db.Model):
     """ Player object represents an individual user"""
     time = datetime.utcnow()
-
-    oauth_id = db.Column(db.String(120), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    oauth_id = db.Column(db.String(120), unique=True, nullable=False)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     created = db.Column(db.DateTime, default=time, nullable=False)

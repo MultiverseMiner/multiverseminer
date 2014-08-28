@@ -4,7 +4,7 @@
 
 
 from mm import db
-from mm.models import Item, Ingredient, Category, Planet
+from mm.models import Item, Ingredient, Category, Planet, Player
 import json
 
 
@@ -152,14 +152,85 @@ for planetid in jsonplanets:
         newplanet=dbplanets.first()
         # This is a summation of all the existing json fields that it could possibly have.
 
-    fields=['mineable_max','mineable_remaining','mineable_replenish','gatherable_max','gatherable_remaining','gatherable_replenish','scavengable_max','scavengable_remaining','scavengable_replenish']
+    fields=['mineable_max','mineable_remaining','mineable_replenish',
+            'gatherable_max','gatherable_remaining','gatherable_replenish',
+            'scavengable_max','scavengable_remaining','scavengable_replenish']
 
     # They are only set on the new item if they were in the json.
     for field in fields:
         if field in planetjson:
             setattr(newplanet, field, planetjson[field])
 
+
+    # If there is a craft cost, process it.
+    if 'loot' in planetjson :
+        #print "craftCost for %s" % planetid
+        for material in planetjson['loot']:
+
+            #print "requiring %s %s for %s" % (amount,ingredientname,planetid)
+            dbmaterial= Item.query.filter_by(id=material['item_id'])
+
+            if dbmaterial.first():
+                dbmaterial=dbmaterial.first();
+                print "good news, %s was found in the db" % dbmaterial.name
+
+                #print "checking for %s having %s " % (planetid, dbingredient.id)
+                if dbmaterial in newplanet.items:
+                    print "planet already has %s, moving on." % dbmaterial.name
+                else:
+                    print "%s wasn't found on planet, adding." % dbmaterial.name
+                    print newplanet#items.append(dbmaterial)
+                    db.session.add(dbmaterial)
+                    db.session.commit()
+            else:
+                print "!!! strange... %s was not in the db." % material['item_id']
+
+
+
     # This is as far as we can go with this new item. Commit it to the DB
     db.session.add(newplanet)
     db.session.commit()
 print "planets imported."
+
+
+#######################################
+#import our items
+text=open('data/players.json').read()
+jsonplayers = json.loads(text)
+
+########################
+# Process all JSON items
+for playerid in jsonplayers:
+    playerjson=jsonplayers[playerid]
+
+    #create an empty newitem which we may or may not use
+    newplayer = Player( oauth_id=playerjson['oauth_id'], username=playerjson['username'], email=playerjson['email'])
+
+    # Check to see if any pre-existing items in the db match the item ID
+    dbplayers= Player.query.filter_by(username=playerid)
+
+    if dbplayers.first():
+        print "%s already exists in db, updating..." % playerid
+        newplayer=dbplayers.first()
+        # This is a summation of all the existing json fields that it could possibly have.
+
+    fields=[
+            'created',
+            'last_login',
+            'access_level',
+            'last_mine',
+            'last_scavenge',
+            'last_gather',
+            'planet_id']
+
+
+
+    # They are only set on the new item if they were in the json.
+    for field in fields:
+        if field in playerjson:
+            setattr(newplayer, field, playerjson[field])
+
+    # This is as far as we can go with this new item. Commit it to the DB
+    db.session.add(newplayer)
+    db.session.commit()
+print "players imported."
