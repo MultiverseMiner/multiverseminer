@@ -11,6 +11,7 @@ from logging.handlers import TimedRotatingFileHandler
 import logging
 import logging.config
 import datetime
+from chat import *
 import os
 
 from config import BaseConfiguration, CONFIG
@@ -42,6 +43,7 @@ app.logger.addHandler(file_handler)
 #########################################################################
 # Using JS and CSS bundlers to minify code.
 assets = Environment(app)
+chathandler = chathandler.ChatHandler()
 
 # NOTE that these js files have to be loaded in a specific order.
 js = Bundle(
@@ -163,9 +165,20 @@ def miningpage():
 
 @app.route('/chat/<message>')
 def chatpage(message):
-    print message
-    return render_template('index.html')
+    player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
+    chathandler.chat(player.username, message)
+    return ""
 
+@app.route('/chat/join')
+def join():
+    player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
+    chathandler.join(player.username)
+    return ""
+
+@app.route('/chat/poll/<channel>')
+def poll(channel):
+    player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
+    return jsonify(results = chathandler.get_new_messages(player.username, channel))
 
 #########################################################################
 # Error Handlers

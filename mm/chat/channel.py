@@ -1,3 +1,4 @@
+import datetime
 class Channel():
     def __init__(self, channel_name, owner):
         self.name = channel_name
@@ -9,6 +10,7 @@ class Channel():
         # synchronized lists
         self.messages = []
         self.messageuser = []
+        self.messagetime = []
         
         self.max_length = 100
     def get_user(self, username):
@@ -17,16 +19,18 @@ class Channel():
                 return user
         return False
     def chat(self, message, user):
-        if banned or user.authenticated == False:
+        if user in self._banned or user.authenticated == False:
             return False
-        if user not in self._connected_users:
-            self._connected_users.append(user)
+        if user not in self.connected_users:
+            self.connected_users.append(user)
         self.messages.append(message)
-        self.messages.append(user)
-        if len(messages)>self.max_length:
+        self.messageuser.append(user)
+        self.messagetime.append(datetime.datetime.now())
+        if len(self.messages)>self.max_length:
             self.messages.pop(0)
             self.messageuser.pop(0)
-        parse_command(message, user)
+            self.messagetime.pop(0)
+        self.parse_command(message, user)
     def set_owner(self, owner, sender):
         if sender==self._owner:
             self._owner = owner
@@ -55,21 +59,29 @@ class Channel():
             if command == "setowner":
                 user = self.get_user(args[1])
                 if user: self.set_owner(user, sender)
-            else if command == "addadmin":
+            if command == "addadmin":
                 user = self.get_user(args[1])
                 if user: self.add_admin(user, sender)
-            else if command == "removeadmin":
+            if command == "removeadmin":
                 user = self.get_user(args[1])
                 if user: self.remove_admin(user, sender)
-            else if command == "addmoderator":
+            if command == "addmoderator":
                 user = self.get_user(args[1])
                 if user: self.add_moderator(user, sender)
-            else if command == "removemoderator":
+            if command == "removemoderator":
                 user = self.get_user(args[1])
                 if user: self.remove_moderator(user, sender)
-            else if command == "ban":
+            if command == "ban":
                 user = self.get_user(args[1])
                 if user: self.ban(user, sender)
-            else if command == "pardon":
+            if command == "pardon":
                 user = self.get_user(args[1])
                 if user: self.pardon(user, sender)
+    def generate_messages(self, time, user=None):
+        index = 0
+        total = []
+        for date in self.messagetime:
+            if date>time:
+                total.append({"name": self.messageuser[index].name, "message": self.messages[index], "date":str(self.messagetime[index])})
+            index+=1
+        return total
