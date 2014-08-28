@@ -161,6 +161,11 @@ def miningpage():
     """This is the first page anyone sees."""
     return render_template('minegame.html')
 
+@app.route('/chat/<message>')
+def chatpage(message):
+    print message
+    return render_template('index.html')
+
 
 #########################################################################
 # Error Handlers
