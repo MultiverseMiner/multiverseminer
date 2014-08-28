@@ -20,7 +20,7 @@ app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 from mm.models import Player
 
-import mm.admin
+import mm.admin, mm.craft
 
 ###############################################################################
 # Set up Logging

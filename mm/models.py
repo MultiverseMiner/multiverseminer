@@ -4,6 +4,8 @@ from mm import db
 from flask import jsonify
 from datetime import datetime, timedelta
 
+from mm.exceptions import CraftingException
+
 
 class Player(db.Model):
     """ Player object represents an individual user"""
@@ -23,6 +25,34 @@ class Player(db.Model):
     # associated with player so the player can't create
     # multiple chars and have them all running at the same time.
     characters = db.relationship("Character", backref='player')
+
+    def craft_item(self, itemid, count):
+
+        newitem = Item.query.filter_by(id=itemid)
+        if newitem.first():
+            newitem = newitem.first()
+            # verify all ingredients are in inventory.
+            for ingredient in newitem.ingredients:
+                amount_needed = count * ingredient.amount
+                if not self.in_inventory(amount_needed):
+                    raise CraftingException("cannot craft %s %s without %s %s" % (count, itemid, amount_needed, ingredient.item.id))
+            # remove items from inventory now that we know all exist
+            for ingredient in newitem.ingredients:
+                amount_needed = count * ingredient.amount
+                self.adjust_inventory(ingredient.item,-amount_needed)
+
+            self.adjust_inventory(newitem, count)
+            return newitem
+        else:
+            raise CraftingException("Item %s doesn't exist in DB" % itemid)
+
+    def in_inventory(self, item):
+        """placeholder"""
+        return True
+
+    def adjust_inventory(self, item, count):
+        """placeholder"""
+        return True
 
     def update_collection(self, collectiontype):
         """ This method will verify the collectiontype is valid,
