@@ -117,7 +117,6 @@ class Character(db.Model):
     scavenging_experience = db.Column(db.Integer, default=1, nullable=False)
 
     # tbd
-    # inventory
     # skills
     # gear
     # weapon
@@ -167,7 +166,7 @@ class Ingredient(db.Model):
                                               self.item_id, self.recipe_id)
 
     def __eq__(self, itm):
-        return self.recipe_id == itm.recipe_id and self.item_id == itm.item_id
+        return hasattr(itm, 'recipe_id') and hasattr(itm, 'item_id') and self.recipe_id == itm.recipe_id and self.item_id == itm.item_id
 
     def __unicode__(self):
         """ return the unicode name """
@@ -193,6 +192,7 @@ class Item(db.Model):
     droprate = db.Column(db.Float, default=0, nullable=False)
     evasion = db.Column(db.Float, default=0, nullable=False)
     experience = db.Column(db.Integer, default=0, nullable=False)
+    # NOTE gear_type may not be needed- we could just query the category.
     gear_type = db.Column(db.String(64))
     health = db.Column(db.Float, default=0, nullable=False)
     lootLuck = db.Column(db.Float, default=0, nullable=False)
@@ -219,7 +219,7 @@ class Item(db.Model):
         return False
 
     def __eq__(self, other):
-        return self.id == other.id
+        return hasattr(other,'id') and self.id == other.id
 
     def __repr__(self):
         """ return a tag for the item"""
@@ -229,7 +229,31 @@ class Item(db.Model):
         """ return the unicode name """
         return self.name
 
-class ItemStack(db.Model):
-    id=db.Column(db.Integer, primary_key=True)
+class Inventory(db.Model):
+    # This table is personal inventory only.
+    __tablename__ = 'inventory'
+    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
     amount = db.Column(db.Integer, default=1, nullable=False)
-    item = db.Column(db.ForeignKey('item.id'))
+
+    player = db.relationship("Player", backref='inventory', foreign_keys=[player_id])
+    item = db.relationship("Item", foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('item_id', 'player_id', name='inventory_pk')
+
+class Warehouse(db.Model):
+    # This table is planetary inventory only.
+    # TODO add planet to warehouse
+    __tablename__ = 'warehouse'
+    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+#    planet_id = db.Column(db.ForeignKey('planet.id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
+    amount = db.Column(db.Integer, default=1, nullable=False)
+
+    player = db.relationship("Player", backref='warehouse', foreign_keys=[player_id])
+#    planet = db.relationship("Planet", backref='warehouse', foreign_keys=[planet_id])
+    item = db.relationship("Item",  foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('item_id', 'player_id', 'planet_id', name='warehouse_pk')
+
+
