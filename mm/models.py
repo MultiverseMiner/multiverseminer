@@ -1,6 +1,6 @@
 """ This contains a list of all models used by Multiverse Miner"""
 
-from mm import db
+from mm import app, db
 from flask import jsonify
 from datetime import datetime, timedelta
 
@@ -27,16 +27,18 @@ class Player(db.Model):
     characters = db.relationship("Character", backref='player')
 
     def craft_item(self, itemid, count):
-
         newitem = Item.query.filter_by(id=itemid)
         if newitem.first():
             newitem = newitem.first()
             # verify all ingredients are in inventory.
+            if not newitem.ingredients:
+                raise CraftingException("%s is a base material and non-craftable." % itemid)
             for ingredient in newitem.ingredients:
                 amount_needed = count * ingredient.amount
-                if not self.in_inventory(amount_needed):
+                if not self.in_inventory(ingredient.item,amount_needed):
                     raise CraftingException("cannot craft %s %s without %s %s" % (count, itemid, amount_needed, ingredient.item.id))
             # remove items from inventory now that we know all exist
+            app.logger.debug("Crafting %s %s " % (count, itemid))
             for ingredient in newitem.ingredients:
                 amount_needed = count * ingredient.amount
                 self.adjust_inventory(ingredient.item,-amount_needed)
@@ -46,13 +48,27 @@ class Player(db.Model):
         else:
             raise CraftingException("Item %s doesn't exist in DB" % itemid)
 
-    def in_inventory(self, item):
+    def in_inventory(self, item, amount):
         """placeholder"""
-        return True
+        for inventory_item in self.inventory:
+            if inventory_item.item == item and inventory_item.amount > amount:
+                return True
+        return False
 
-    def adjust_inventory(self, item, count):
+    def adjust_inventory(self, item, amount):
         """placeholder"""
-        return True
+        for inventory_item in self.inventory:
+            if inventory_item.item == item:
+                if inventory_item.amount >= amount:
+                    inventory_item.amount=inventory_item.amount + amount
+                    return inventory_item.amount
+                else:
+                    raise CraftingException("You have %s %s, but need %s" % (amount, inventory_item.item.id, inventory_item.amount))
+        if amount >0:
+            self.inventory.append(Inventory(player=self,item=item,amount=amount))
+            return amount
+
+        raise CraftingException("Item %s not found in inventory??" % itemid)
 
     def update_collection(self, collectiontype):
         """ This method will verify the collectiontype is valid,
@@ -117,7 +133,6 @@ class Character(db.Model):
     scavenging_experience = db.Column(db.Integer, default=1, nullable=False)
 
     # tbd
-    # inventory
     # skills
     # gear
     # weapon
@@ -167,7 +182,7 @@ class Ingredient(db.Model):
                                               self.item_id, self.recipe_id)
 
     def __eq__(self, itm):
-        return self.recipe_id == itm.recipe_id and self.item_id == itm.item_id
+        return hasattr(itm, 'recipe_id') and hasattr(itm, 'item_id') and self.recipe_id == itm.recipe_id and self.item_id == itm.item_id
 
     def __unicode__(self):
         """ return the unicode name """
@@ -193,6 +208,7 @@ class Item(db.Model):
     droprate = db.Column(db.Float, default=0, nullable=False)
     evasion = db.Column(db.Float, default=0, nullable=False)
     experience = db.Column(db.Integer, default=0, nullable=False)
+    # NOTE gear_type may not be needed- we could just query the category.
     gear_type = db.Column(db.String(64))
     health = db.Column(db.Float, default=0, nullable=False)
     lootLuck = db.Column(db.Float, default=0, nullable=False)
@@ -219,7 +235,7 @@ class Item(db.Model):
         return False
 
     def __eq__(self, other):
-        return self.id == other.id
+        return hasattr(other,'id') and self.id == other.id
 
     def __repr__(self):
         """ return a tag for the item"""
@@ -228,3 +244,32 @@ class Item(db.Model):
     def __unicode__(self):
         """ return the unicode name """
         return self.name
+
+class Inventory(db.Model):
+    # This table is personal inventory only.
+    __tablename__ = 'inventory'
+    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
+    amount = db.Column(db.Integer, default=1, nullable=False)
+
+    player = db.relationship("Player", backref='inventory', foreign_keys=[player_id])
+    item = db.relationship("Item", foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('item_id', 'player_id', name='inventory_pk')
+
+class Warehouse(db.Model):
+    # This table is planetary inventory only.
+    # TODO add planet to warehouse
+    __tablename__ = 'warehouse'
+    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+#    planet_id = db.Column(db.ForeignKey('planet.id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
+    amount = db.Column(db.Integer, default=1, nullable=False)
+
+    player = db.relationship("Player", backref='warehouse', foreign_keys=[player_id])
+#    planet = db.relationship("Planet", backref='warehouse', foreign_keys=[planet_id])
+    item = db.relationship("Item",  foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('item_id', 'player_id', 'planet_id', name='warehouse_pk')
+
+
