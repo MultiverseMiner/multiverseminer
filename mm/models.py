@@ -1,6 +1,6 @@
 """ This contains a list of all models used by Multiverse Miner"""
 
-from mm import db
+from mm import app, db
 from flask import jsonify
 from datetime import datetime, timedelta
 
@@ -27,16 +27,18 @@ class Player(db.Model):
     characters = db.relationship("Character", backref='player')
 
     def craft_item(self, itemid, count):
-
         newitem = Item.query.filter_by(id=itemid)
         if newitem.first():
             newitem = newitem.first()
             # verify all ingredients are in inventory.
+            if not newitem.ingredients:
+                raise CraftingException("%s is a base material and non-craftable." % itemid)
             for ingredient in newitem.ingredients:
                 amount_needed = count * ingredient.amount
-                if not self.in_inventory(amount_needed):
+                if not self.in_inventory(ingredient.item,amount_needed):
                     raise CraftingException("cannot craft %s %s without %s %s" % (count, itemid, amount_needed, ingredient.item.id))
             # remove items from inventory now that we know all exist
+            app.logger.debug("Crafting %s %s " % (count, itemid))
             for ingredient in newitem.ingredients:
                 amount_needed = count * ingredient.amount
                 self.adjust_inventory(ingredient.item,-amount_needed)
@@ -46,13 +48,27 @@ class Player(db.Model):
         else:
             raise CraftingException("Item %s doesn't exist in DB" % itemid)
 
-    def in_inventory(self, item):
+    def in_inventory(self, item, amount):
         """placeholder"""
-        return True
+        for inventory_item in self.inventory:
+            if inventory_item.item == item and inventory_item.amount > amount:
+                return True
+        return False
 
-    def adjust_inventory(self, item, count):
+    def adjust_inventory(self, item, amount):
         """placeholder"""
-        return True
+        for inventory_item in self.inventory:
+            if inventory_item.item == item:
+                if inventory_item.amount >= amount:
+                    inventory_item.amount=inventory_item.amount + amount
+                    return inventory_item.amount
+                else:
+                    raise CraftingException("You have %s %s, but need %s" % (amount, inventory_item.item.id, inventory_item.amount))
+        if amount >0:
+            self.inventory.append(Inventory(player=self,item=item,amount=amount))
+            return amount
+
+        raise CraftingException("Item %s not found in inventory??" % itemid)
 
     def update_collection(self, collectiontype):
         """ This method will verify the collectiontype is valid,
