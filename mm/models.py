@@ -198,3 +198,8 @@ class Item(db.Model):
     def __unicode__(self):
         """ return the unicode name """
         return self.name
+
+class ItemStack(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    amount = db.Column(db.Integer, default=1, nullable=False)
+    item = db.Column(db.ForeignKey('item.id'))
