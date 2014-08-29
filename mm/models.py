@@ -25,9 +25,6 @@ class Player(db.Model):
     planet_id = db.Column(db.ForeignKey('planet.id'))
     planet = db.relationship("Planet", backref='players')
 
-    # associated with player so the player can't create
-    # multiple chars and have them all running at the same time.
-    characters = db.relationship("Character", backref='player')
 
     def craft_item(self, itemid, count):
         newitem = Item.query.filter_by(id=itemid)
@@ -370,3 +367,25 @@ class Warehouse(db.Model):
     def __unicode__(self):
         """ return the unicode name """
         return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.item_player, self.planet_id)
+
+
+class RecipeBook(db.Model):
+    # This table represents which recipes a player knows
+    __tablename__ = 'recipebook'
+    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
+    mastered = db.Column(db.Integer, default=1, nullable=False)
+    used = db.Column(db.Integer, default=1, nullable=False)
+
+    player = db.relationship("Player", backref='recipebook', foreign_keys=[player_id])
+    item = db.relationship("Item", foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('item_id', 'player_id', name='recipebook_pk')
+
+    def __repr__(self):
+        """ return a tag for the recipe"""
+        return '<Recipe for %s owned by %s>' % (self.item_id, self.item_player)
+
+    def __unicode__(self):
+        """ return the unicode name """
+        return '<Recipe for %s owned by %s>' % (self.item_id, self.item_player)
