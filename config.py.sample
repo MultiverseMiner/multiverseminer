@@ -1,6 +1,6 @@
 # Currently only google is supported
 
-from authomatic.providers import oauth2, oauth1, openid
+from authomatic.providers import oauth2
 import os
 
 
@@ -9,9 +9,9 @@ CONFIG = {
         'class_': oauth2.Google,
         'consumer_key': 'you need the actual oauthclientID here',
         'consumer_secret': 'and you need the actual client secret here',
-        'scope': ['email','openid']
+        'scope': ['email', 'openid']
 
-    },
+    }
     # we can add more auth methods here as long as we add login buttons for them...
 }
 
@@ -30,15 +30,16 @@ class BaseConfiguration(object):
     THREADS_PER_PAGE = 2
 
     # Enable protection agains *Cross-site Request Forgery (CSRF)*
-    CSRF_ENABLED     = True
+    CSRF_ENABLED = True
 
     # Use a secure, unique and absolutely secret key for
     # signing the data.
     CSRF_SESSION_KEY = "wwwweeeee."
 
+
 class TestConfiguration(BaseConfiguration):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    TESTING=True
+    TESTING = True
     WTF_CSRF_ENABLED = False
     HASH_ROUNDS = 1
