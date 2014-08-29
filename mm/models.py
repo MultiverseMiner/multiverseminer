@@ -3,7 +3,7 @@
 from mm import app, db
 from flask import jsonify
 from datetime import datetime, timedelta
-
+from random import randint
 from mm.exceptions import CraftingException
 
 
@@ -62,7 +62,7 @@ class Player(db.Model):
         """placeholder"""
         for inventory_item in self.inventory:
             if inventory_item.item == item:
-                if inventory_item.amount >= amount:
+                if inventory_item.amount+ amount >=0:
                     inventory_item.amount=inventory_item.amount + amount
                     return inventory_item.amount
                 else:
@@ -79,21 +79,33 @@ class Player(db.Model):
         curtime = datetime.utcnow()
         waittime = timedelta(0, 5)  # 5 seconds
         collectionlastfield = 'last_'+collectiontype
+        successlist={}
         if hasattr(self, collectionlastfield):
             oldtime = getattr(self, collectionlastfield)
             if oldtime + waittime < curtime:
                 oldtime = curtime
                 setattr(self, collectionlastfield, oldtime)
-
-#                chance = Item_drop_rate * 100000;
-#                x = random.randomint(1, 100001);
-#                if  x <= chance;
-#                Success
-
-
-
-            return jsonify(collectiontype=collectiontype,
-                           lastrun=oldtime, result='success')
+                for loot in self.planet.loot:
+                    chance = loot.droprate * 100000;
+                    x = randint(0, 10000);
+                    app.logger.debug('is %s less than %s for %s?' %(x, chance, loot.item.name))
+                    if x <= chance:
+                        amount = randint(1,5)
+                        self.adjust_inventory( loot.item,amount)
+                        successlist[loot.item.id] = amount
+                if successlist:
+                    return jsonify(collectiontype=collectiontype,
+                                   message="You found something.",
+                                   data=successlist,
+                                   lastrun=oldtime, result='success')
+                else:
+                    return jsonify(collectiontype=collectiontype,
+                                   message="nothing found.",
+                                   data=successlist,
+                                   lastrun=oldtime, result='success')
+            else:
+                return jsonify(collectiontype=collectiontype, message="too soon",
+                               lastrun=oldtime, result='success')
         else:
             return jsonify(collectiontype=collectiontype, result='failure',
                            message="Invalid collection type.")
@@ -123,6 +135,13 @@ class Planet(db.Model):
     scavengable_max = db.Column(db.Integer, default=100000, nullable=False)
     scavengable_remaining = db.Column(db.Integer, default=100000, nullable=False)
     scavengable_replenish =  db.Column(db.Float, default=1.1, nullable=False)
+    def __repr__(self):
+        """ return a tag for the planet"""
+        return '<Planet %r>' % (self.name)
+
+    def __unicode__(self):
+        """ return the unicode name """
+        return self.name
 
 
 class PlanetLoot(db.Model):
@@ -135,7 +154,7 @@ class PlanetLoot(db.Model):
 
     droprate = db.Column(db.Float, default=0, nullable=False)
 
-    planet = db.relationship("Planet", backref='items',
+    planet = db.relationship("Planet", backref='loot',
                              foreign_keys=[planet_id])
 
     item = db.relationship("Item", backref='found_on', foreign_keys=[item_id])
@@ -152,7 +171,7 @@ class PlanetLoot(db.Model):
 
     def __unicode__(self):
         """ return the unicode name """
-        return "Loot for %s " % self.planet_id
+        return "%s on %s " % (self.item_id, self.planet_id)
 
 
 class Character(db.Model):
@@ -314,20 +333,34 @@ class Inventory(db.Model):
     item = db.relationship("Item", foreign_keys=[item_id])
 
     db.PrimaryKeyConstraint('item_id', 'player_id', name='inventory_pk')
+    def __repr__(self):
+        """ return a tag for the inventory"""
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id,self.item_player)
+
+    def __unicode__(self):
+        """ return the unicode name """
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id,self.item_player)
 
 class Warehouse(db.Model):
     # This table is planetary inventory only.
     # TODO add planet to warehouse
     __tablename__ = 'warehouse'
     player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
-#    planet_id = db.Column(db.ForeignKey('planet.id'), primary_key=True)
+    planet_id = db.Column(db.ForeignKey('planet.id'), primary_key=True)
     item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
     amount = db.Column(db.Integer, default=1, nullable=False)
 
     player = db.relationship("Player", backref='warehouse', foreign_keys=[player_id])
-#    planet = db.relationship("Planet", backref='warehouse', foreign_keys=[planet_id])
+    planet = db.relationship("Planet", backref='warehouse', foreign_keys=[planet_id])
     item = db.relationship("Item",  foreign_keys=[item_id])
 
     db.PrimaryKeyConstraint('item_id', 'player_id', 'planet_id', name='warehouse_pk')
+    def __repr__(self):
+        """ return a tag for the warehouse"""
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id,self.item_player, self.planet_id)
+
+    def __unicode__(self):
+        """ return the unicode name """
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id,self.item_player, self.planet_id)
 
 

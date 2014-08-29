@@ -4,7 +4,7 @@
 
 
 from mm import db
-from mm.models import Item, Ingredient, Category, Planet, Player
+from mm.models import Item, Ingredient, Category, Planet, Player, PlanetLoot
 import json
 
 
@@ -31,7 +31,7 @@ for itemid in jsonitems:
     dbitems= Item.query.filter_by(id=itemid)
 
     if dbitems.first():
-        print "%s already exists in db, updating..." % itemid
+        #print "%s already exists in db, updating..." % itemid
         newitem=dbitems.first()
 
 
@@ -65,7 +65,7 @@ for categoryname in categories:
         """ """
         #print "%s already exists... ignoring" % categoryname
     else:
-        print "%s not found in DB... creating..." % categoryname
+        #print "%s not found in DB... creating..." % categoryname
         category = Category( id=categoryname, name=categoryname)
 
         db.session.add(category)
@@ -89,7 +89,7 @@ for itemid in jsonitems:
 
     # grab the db category that matches the json
     dbcategory= Category.query.filter_by(id=jsonitem['category']).first()
-    print "assigning category %s to %s" % (jsonitem['category'], itemid)
+    #print "assigning category %s to %s" % (jsonitem['category'], itemid)
     dbitem.category=dbcategory
 
     # If there is a craft cost, process it.
@@ -116,7 +116,7 @@ for itemid in jsonitems:
                     db.session.add(dbrecipe)
                     db.session.commit()
                 else:
-                    print "%s requires %s %s to be added." % (itemid, amount, ingredientname)
+                    #print "%s requires %s %s to be added." % (itemid, amount, ingredientname)
                     dbrecipe=Ingredient(item=dbingredient,recipe=dbitem,  amount=amount)
                     db.session.add(dbrecipe)
                     db.session.commit()
@@ -148,7 +148,7 @@ for planetid in jsonplanets:
     dbplanets= Planet.query.filter_by(id=planetid)
 
     if dbplanets.first():
-        print "%s already exists in db, updating..." % planetid
+        #print "%s already exists in db, updating..." % planetid
         newplanet=dbplanets.first()
         # This is a summation of all the existing json fields that it could possibly have.
 
@@ -172,16 +172,19 @@ for planetid in jsonplanets:
 
             if dbmaterial.first():
                 dbmaterial=dbmaterial.first();
-                print "good news, %s was found in the db" % dbmaterial.name
+                #print "good news, %s was found in the db" % dbmaterial.name
 
                 #print "checking for %s having %s " % (planetid, dbingredient.id)
-                if dbmaterial in newplanet.items:
-                    print "planet already has %s, moving on." % dbmaterial.name
+                loot=PlanetLoot.query.filter_by(item_id=material['item_id'], planet_id=newplanet.id)
+                if loot.first():
+                    loot=loot.first()
+                    loot.droprate=material['droprate']
+                    db.session.add(loot)
+                    #print "planet already has %s, moving on." % dbmaterial.name
                 else:
-                    print "%s wasn't found on planet, adding." % dbmaterial.name
-                    print newplanet#items.append(dbmaterial)
-                    db.session.add(dbmaterial)
-                    db.session.commit()
+                    #print "%s wasn't found on planet, adding." % dbmaterial.name
+                    db.session.add(PlanetLoot(planet_id=newplanet.id, item_id=dbmaterial.id, droprate=material['droprate']))
+                db.session.commit()
             else:
                 print "!!! strange... %s was not in the db." % material['item_id']
 
@@ -210,7 +213,7 @@ for playerid in jsonplayers:
     dbplayers= Player.query.filter_by(username=playerid)
 
     if dbplayers.first():
-        print "%s already exists in db, updating..." % playerid
+        #print "%s already exists in db, updating..." % playerid
         newplayer=dbplayers.first()
         # This is a summation of all the existing json fields that it could possibly have.
 

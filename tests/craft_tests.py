@@ -45,7 +45,6 @@ class CraftTestCase(TestCase):
         db.session.add(Inventory(player=bob, item=ironore,amount=200))
         db.session.add(Inventory(player=bob, item=gold,amount=200))
 
-
         db.session.commit()
         mm.login.authomatic = Mock(Authomatic)
         mm.login.authomatic.login = MagicMock(return_value=result)
@@ -53,8 +52,6 @@ class CraftTestCase(TestCase):
         response = self.app.get("/login/google/")
         self.assertTemplateUsed('account.html')
         self.assertIn('Welcome back, bob dole.', response.data)
-
-
 
 
     def tearDown(self):

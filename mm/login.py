@@ -13,7 +13,7 @@ from models import Player
 import datetime
 
 # TODO add login exceptions?
-# from mm.exceptions import CraftingException 
+# from mm.exceptions import CraftingException
 
 
 authomatic = Authomatic(CONFIG, BaseConfiguration.SECRET_KEY)

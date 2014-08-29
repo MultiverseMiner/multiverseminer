@@ -71,6 +71,7 @@ assets.register('css_all', css)
 @app.route('/collect/<collectiontype>', methods=['GET', 'POST'])
 def collect(collectiontype):
     """Place a request to collect data."""
+    print session
     if 'oauth_id' in session:
         app.logger.debug('session oauth id:'+session['oauth_id'])
         player = Player.query.filter_by(oauth_id=session['oauth_id']).first()

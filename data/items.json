@@ -723,6 +723,14 @@
             "steel": 10
         }
     },
+    "dirt": {
+        "category": "component",
+        "id": "dirt",
+        "icon": "stone.png",
+        "name": "Dirt",
+        "description": "great for growing",
+        "value": 100
+    },
     "stone": {
         "category": "component",
         "id": "stone",

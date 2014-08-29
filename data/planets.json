@@ -18,6 +18,7 @@
         "loot": [
                     {"item_id": "gold", "droprate": 0.0001},
                     {"item_id": "stone", "droprate": 0.01},
+                    {"item_id": "dirt", "droprate": 0.1},
                     {"item_id": "ironOre", "droprate": 0.001},
                     {"item_id": "copperOre", "droprate": 0.001},
                     {"item_id": "coal", "droprate": 0.001}
