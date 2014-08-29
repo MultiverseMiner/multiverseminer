@@ -3,9 +3,9 @@ from mock import MagicMock, Mock
 from authomatic import Authomatic
 from flask.ext.testing import TestCase
 
-from mm import app, db
+from mm import app, db, login
 import mm
-from mm.models import Item, Player, Category, Ingredient, Inventory, Warehouse, Planet, PlanetLoot
+from mm.models import Item, Player, Ingredient, Inventory, Planet, PlanetLoot
 
 
 class MmTestCase(TestCase):
@@ -23,11 +23,11 @@ class MmTestCase(TestCase):
         app.testing = True
 
         # create items and recipes
-        gold = Item(id='gold',name='Gold' )
-        ironore = Item(id='ironOre',name='Iron Ore' )
-        ironbar = Item(id='ironBar',name='Iron Bar' )
-        refinery = Item(id='refinery',name='Refinery' )
-        earth= Planet(id='earth',name='Earth')
+        gold = Item(id='gold', name='Gold')
+        ironore = Item(id='ironOre', name='Iron Ore')
+        ironbar = Item(id='ironBar', name='Iron Bar')
+        refinery = Item(id='refinery', name='Refinery')
+        earth = Planet(id='earth', name='Earth')
 
         self.oldauth = mm.login.authomatic
         result = Mock()
@@ -36,7 +36,7 @@ class MmTestCase(TestCase):
         result.user.name = 'bob dole'
         result.user.id = '123123123'
         result.user.email = 'foo@bar.com'
-        bob= Player(oauth_id=result.user.id, username=result.user.name, email=result.user.email, planet=earth)
+        bob = Player(oauth_id=result.user.id, username=result.user.name, email=result.user.email, planet=earth)
 
         db.session.add(gold)
         db.session.add(ironore)
@@ -44,11 +44,11 @@ class MmTestCase(TestCase):
         db.session.add(refinery)
         db.session.add(Ingredient(item=ironore, recipe=ironbar, amount=5))
         db.session.add(bob)
-        db.session.add(Inventory(player=bob, item=ironore,amount=200))
-        db.session.add(Inventory(player=bob, item=gold,amount=200))
+        db.session.add(Inventory(player=bob, item=ironore, amount=200))
+        db.session.add(Inventory(player=bob, item=gold, amount=200))
         db.session.add(earth)
-        db.session.add(PlanetLoot(planet=earth,item=gold,droprate=.1))
-        db.session.add(PlanetLoot(planet=earth,item=ironore,droprate=.1))
+        db.session.add(PlanetLoot(planet=earth, item=gold, droprate=.1))
+        db.session.add(PlanetLoot(planet=earth, item=ironore, droprate=.1))
 
         db.session.commit()
         mm.login.authomatic = Mock(Authomatic)

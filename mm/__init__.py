@@ -2,23 +2,20 @@
 
 # Import the stuffs!
 from flask import Flask, render_template, request, session, jsonify
-from flask import make_response, send_from_directory
+from flask import send_from_directory
 from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from logging.handlers import TimedRotatingFileHandler
 import logging
 import logging.config
-import datetime
 import os
-
-from config import BaseConfiguration
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 from mm.models import Player
 
-import mm.admin, mm.craft, mm.login
+from mm import craft, login, admin
 
 ###############################################################################
 # Set up Logging
@@ -66,8 +63,6 @@ assets.register('css_all', css)
 #########################################################################
 
 
-
-
 @app.route('/collect/<collectiontype>', methods=['GET', 'POST'])
 def collect(collectiontype):
     """Place a request to collect data."""
@@ -108,6 +103,7 @@ def indexpage():
 def miningpage():
     """This is the first page anyone sees."""
     return render_template('minegame.html')
+
 
 @app.route('/chat/<message>')
 def chatpage(message):

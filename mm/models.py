@@ -38,13 +38,14 @@ class Player(db.Model):
                 raise CraftingException("%s is a base material and non-craftable." % itemid)
             for ingredient in newitem.ingredients:
                 amount_needed = count * ingredient.amount
-                if not self.in_inventory(ingredient.item,amount_needed):
-                    raise CraftingException("cannot craft %s %s without %s %s" % (count, itemid, amount_needed, ingredient.item.id))
+                if not self.in_inventory(ingredient.item, amount_needed):
+                    raise CraftingException("cannot craft %s %s without %s %s"
+                                            % (count, itemid, amount_needed, ingredient.item.id))
             # remove items from inventory now that we know all exist
             app.logger.debug("Crafting %s %s " % (count, itemid))
             for ingredient in newitem.ingredients:
                 amount_needed = count * ingredient.amount
-                self.adjust_inventory(ingredient.item,-amount_needed)
+                self.adjust_inventory(ingredient.item, -amount_needed)
 
             self.adjust_inventory(newitem, count)
             return newitem
@@ -62,16 +63,17 @@ class Player(db.Model):
         """placeholder"""
         for inventory_item in self.inventory:
             if inventory_item.item == item:
-                if inventory_item.amount+ amount >=0:
-                    inventory_item.amount=inventory_item.amount + amount
+                if inventory_item.amount + amount >= 0:
+                    inventory_item.amount = inventory_item.amount + amount
                     return inventory_item.amount
                 else:
-                    raise CraftingException("You have %s %s, but need %s" % (amount, inventory_item.item.id, inventory_item.amount))
-        if amount >0:
-            self.inventory.append(Inventory(player=self,item=item,amount=amount))
+                    raise CraftingException("You have %s %s, but need %s"
+                                            % (amount, inventory_item.item.id, inventory_item.amount))
+        if amount > 0:
+            self.inventory.append(Inventory(player=self, item=item, amount=amount))
             return amount
 
-        raise CraftingException("Item %s not found in inventory??" % itemid)
+        raise CraftingException("Item %s not found in inventory??" % item.id)
 
     def update_collection(self, collectiontype):
         """ This method will verify the collectiontype is valid,
@@ -79,19 +81,19 @@ class Player(db.Model):
         curtime = datetime.utcnow()
         waittime = timedelta(0, 5)  # 5 seconds
         collectionlastfield = 'last_'+collectiontype
-        successlist={}
+        successlist = {}
         if hasattr(self, collectionlastfield):
             oldtime = getattr(self, collectionlastfield)
             if oldtime + waittime < curtime:
                 oldtime = curtime
                 setattr(self, collectionlastfield, oldtime)
                 for loot in self.planet.loot:
-                    chance = loot.droprate * 100000;
-                    x = randint(0, 10000);
-                    app.logger.debug('is %s less than %s for %s?' %(x, chance, loot.item.name))
+                    chance = loot.droprate * 100000
+                    x = randint(0, 10000)
+                    app.logger.debug('is %s less than %s for %s?' % (x, chance, loot.item.name))
                     if x <= chance:
-                        amount = randint(1,5)
-                        self.adjust_inventory( loot.item,amount)
+                        amount = randint(1, 5)
+                        self.adjust_inventory(loot.item, amount)
                         successlist[loot.item.id] = amount
                 if successlist:
                     return jsonify(collectiontype=collectiontype,
@@ -126,15 +128,16 @@ class Planet(db.Model):
 
     mineable_max = db.Column(db.Integer, default=100000, nullable=False)
     mineable_remaining = db.Column(db.Integer, default=100000, nullable=False)
-    mineable_replenish =  db.Column(db.Float, default=1.1, nullable=False)
+    mineable_replenish = db.Column(db.Float, default=1.1, nullable=False)
 
     gatherable_max = db.Column(db.Integer, default=100000, nullable=False)
     gatherable_remaining = db.Column(db.Integer, default=100000, nullable=False)
-    gatherable_replenish =  db.Column(db.Float, default=1.1, nullable=False)
+    gatherable_replenish = db.Column(db.Float, default=1.1, nullable=False)
 
     scavengable_max = db.Column(db.Integer, default=100000, nullable=False)
     scavengable_remaining = db.Column(db.Integer, default=100000, nullable=False)
-    scavengable_replenish =  db.Column(db.Float, default=1.1, nullable=False)
+    scavengable_replenish = db.Column(db.Float, default=1.1, nullable=False)
+
     def __repr__(self):
         """ return a tag for the planet"""
         return '<Planet %r>' % (self.name)
@@ -154,8 +157,7 @@ class PlanetLoot(db.Model):
 
     droprate = db.Column(db.Float, default=0, nullable=False)
 
-    planet = db.relationship("Planet", backref='loot',
-                             foreign_keys=[planet_id])
+    planet = db.relationship("Planet", backref='loot', foreign_keys=[planet_id])
 
     item = db.relationship("Item", backref='found_on', foreign_keys=[item_id])
 
@@ -163,8 +165,7 @@ class PlanetLoot(db.Model):
 
     def __repr__(self):
         """ return a tag for the planet items"""
-        return '<PlanetLoot %s %s on %s>' % (self.droprate,
-                                              self.item_id, self.planet_id)
+        return '<PlanetLoot %s %s on %s>' % (self.droprate, self.item_id, self.planet_id)
 
     def __eq__(self, itm):
         return self.planet_id == itm.planet_id and self.item_id == itm.item_id
@@ -260,7 +261,10 @@ class Ingredient(db.Model):
                                               self.item_id, self.recipe_id)
 
     def __eq__(self, itm):
-        return hasattr(itm, 'recipe_id') and hasattr(itm, 'item_id') and self.recipe_id == itm.recipe_id and self.item_id == itm.item_id
+        return (hasattr(itm, 'recipe_id') and
+                hasattr(itm, 'item_id') and
+                self.recipe_id == itm.recipe_id and
+                self.item_id == itm.item_id)
 
     def __unicode__(self):
         """ return the unicode name """
@@ -312,7 +316,7 @@ class Item(db.Model):
         return False
 
     def __eq__(self, other):
-        return hasattr(other,'id') and self.id == other.id
+        return hasattr(other, 'id') and self.id == other.id
 
     def __repr__(self):
         """ return a tag for the item"""
@@ -321,6 +325,7 @@ class Item(db.Model):
     def __unicode__(self):
         """ return the unicode name """
         return self.name
+
 
 class Inventory(db.Model):
     # This table is personal inventory only.
@@ -333,13 +338,15 @@ class Inventory(db.Model):
     item = db.relationship("Item", foreign_keys=[item_id])
 
     db.PrimaryKeyConstraint('item_id', 'player_id', name='inventory_pk')
+
     def __repr__(self):
         """ return a tag for the inventory"""
-        return '<Inventory %s %s for %s>' % (self.amount, self.item_id,self.item_player)
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.item_player)
 
     def __unicode__(self):
         """ return the unicode name """
-        return '<Inventory %s %s for %s>' % (self.amount, self.item_id,self.item_player)
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.item_player)
+
 
 class Warehouse(db.Model):
     # This table is planetary inventory only.
@@ -355,12 +362,11 @@ class Warehouse(db.Model):
     item = db.relationship("Item",  foreign_keys=[item_id])
 
     db.PrimaryKeyConstraint('item_id', 'player_id', 'planet_id', name='warehouse_pk')
+
     def __repr__(self):
         """ return a tag for the warehouse"""
-        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id,self.item_player, self.planet_id)
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.item_player, self.planet_id)
 
     def __unicode__(self):
         """ return the unicode name """
-        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id,self.item_player, self.planet_id)
-
-
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.item_player, self.planet_id)

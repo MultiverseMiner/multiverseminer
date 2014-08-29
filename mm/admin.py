@@ -60,5 +60,3 @@ admin.add_view(sqla.ModelView(Inventory, db.session))
 admin.add_view(sqla.ModelView(Warehouse, db.session))
 admin.add_view(sqla.ModelView(Planet, db.session))
 admin.add_view(sqla.ModelView(PlanetLoot, db.session))
-
-
