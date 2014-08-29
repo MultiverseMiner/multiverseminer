@@ -3,8 +3,9 @@ from mock import MagicMock, Mock
 from authomatic import Authomatic
 from flask.ext.testing import TestCase
 
-from mm import app, db
+from mm import app, db, login
 import mm
+from mm.models import Item, Player, Ingredient, Inventory, Planet, PlanetLoot
 
 
 class MmTestCase(TestCase):
@@ -21,6 +22,13 @@ class MmTestCase(TestCase):
         db.create_all()
         app.testing = True
 
+        # create items and recipes
+        gold = Item(id='gold', name='Gold')
+        ironore = Item(id='ironOre', name='Iron Ore')
+        ironbar = Item(id='ironBar', name='Iron Bar')
+        refinery = Item(id='refinery', name='Refinery')
+        earth = Planet(id='earth', name='Earth')
+
         self.oldauth = mm.login.authomatic
         result = Mock()
         result.user = Mock()
@@ -28,10 +36,27 @@ class MmTestCase(TestCase):
         result.user.name = 'bob dole'
         result.user.id = '123123123'
         result.user.email = 'foo@bar.com'
+        bob = Player(oauth_id=result.user.id, username=result.user.name, email=result.user.email, planet=earth)
 
+        db.session.add(gold)
+        db.session.add(ironore)
+        db.session.add(ironbar)
+        db.session.add(refinery)
+        db.session.add(Ingredient(item=ironore, recipe=ironbar, amount=5))
+        db.session.add(bob)
+        db.session.add(Inventory(player=bob, item=ironore, amount=200))
+        db.session.add(Inventory(player=bob, item=gold, amount=200))
+        db.session.add(earth)
+        db.session.add(PlanetLoot(planet=earth, item=gold, droprate=.1))
+        db.session.add(PlanetLoot(planet=earth, item=ironore, droprate=.1))
+
+        db.session.commit()
         mm.login.authomatic = Mock(Authomatic)
         mm.login.authomatic.login = MagicMock(return_value=result)
         self.app = app.test_client()
+        response = self.app.get("/login/google/")
+        self.assertTemplateUsed('account.html')
+        self.assertIn('Welcome back, bob dole.', response.data)
 
     def tearDown(self):
         """ clean up after ourselves. """
@@ -67,6 +92,8 @@ class MmTestCase(TestCase):
 
     def test_provider_newaccount_route(self):
         """ create an account"""
+        db.drop_all()
+        db.create_all()
         response = self.app.get("/login/google/")
         self.assertTemplateUsed('account.html')
         self.assertIn('Welcome to Multiverse Miner, bob dole.', response.data)
@@ -108,27 +135,20 @@ class MmTestCase(TestCase):
 
     def test_collect_valid_type(self):
         """ collect a valid mine type """
-        response = self.app.get("/login/google/")
-        self.assertTemplateUsed('account.html')
-        self.assertIn('Welcome to Multiverse Miner, bob dole.', response.data)
-
         response = self.app.get("/collect/mine")
         self.assertIn('success', response.data)
-        newresponse = self.app.get("/collect/mine")
-        self.assertEquals(newresponse.data, response.data)
 
     def test_collect_invalid_type(self):
-        """ collect a valid mine type """
-        response = self.app.get("/login/google/")
-        self.assertTemplateUsed('account.html')
-        self.assertIn('Welcome to Multiverse Miner, bob dole.', response.data)
-
+        """ collect invalid type """
         response = self.app.get("/collect/mined")
         self.assertIn('failure', response.data)
         self.assertIn("Invalid collection type.", response.data)
 
     def test_collect_w_no_acct(self):
-        """ collect a valid mine type """
+        """ collect with no account type """
+
+        response = self.app.get("/logout")
+        self.assertTemplateUsed('index.html')
 
         response = self.app.get("/collect/mine")
         self.assertIn('failure', response.data)

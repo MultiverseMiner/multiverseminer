@@ -7,7 +7,7 @@ from mm import app, db
 from flask.ext import admin
 from flask.ext.admin.contrib import sqla
 
-from models import Player, Item, Category, Ingredient, Character, Inventory, Warehouse
+from models import Player, Item, Category, Ingredient, Character, Inventory, Warehouse, Planet, PlanetLoot
 
 
 class ItemAdmin(sqla.ModelView):
@@ -58,5 +58,5 @@ admin.add_view(CategoryView(Category, db.session))
 
 admin.add_view(sqla.ModelView(Inventory, db.session))
 admin.add_view(sqla.ModelView(Warehouse, db.session))
-
-
+admin.add_view(sqla.ModelView(Planet, db.session))
+admin.add_view(sqla.ModelView(PlanetLoot, db.session))

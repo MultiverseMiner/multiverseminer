@@ -4,16 +4,14 @@
 from authomatic.adapters import WerkzeugAdapter
 from authomatic import Authomatic
 from config import BaseConfiguration, CONFIG
-from flask.ext.assets import Environment, Bundle
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, request, session, jsonify
-from flask import make_response, send_from_directory
-from mm import app, db, session, jsonify
+from flask import render_template, request
+from flask import make_response
+from mm import app, db, session
 from models import Player
 import datetime
 
 # TODO add login exceptions?
-# from mm.exceptions import CraftingException 
+# from mm.exceptions import CraftingException
 
 
 authomatic = Authomatic(CONFIG, BaseConfiguration.SECRET_KEY)

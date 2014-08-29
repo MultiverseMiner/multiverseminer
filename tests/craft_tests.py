@@ -3,9 +3,10 @@ from mock import MagicMock, Mock
 from authomatic import Authomatic
 from flask.ext.testing import TestCase
 
-from mm import app, db, craft
+from mm import app, db, craft, login
 import mm
-from mm.models import Item, Player, Category, Ingredient, Inventory, Warehouse
+from mm.models import Item, Player, Ingredient, Inventory
+
 
 class CraftTestCase(TestCase):
 
@@ -22,10 +23,10 @@ class CraftTestCase(TestCase):
         app.testing = True
 
         # create items and recipes
-        gold = Item(id='gold',name='Gold' )
-        ironore = Item(id='ironOre',name='Iron Ore' )
-        ironbar = Item(id='ironBar',name='Iron Bar' )
-        refinery = Item(id='refinery',name='Refinery' )
+        gold = Item(id='gold', name='Gold')
+        ironore = Item(id='ironOre', name='Iron Ore')
+        ironbar = Item(id='ironBar', name='Iron Bar')
+        refinery = Item(id='refinery', name='Refinery')
 
         # create player and inventory
         self.oldauth = mm.login.authomatic
@@ -35,16 +36,15 @@ class CraftTestCase(TestCase):
         result.user.name = 'bob dole'
         result.user.id = '123123123'
         result.user.email = 'foo@bar.com'
-        bob= Player(oauth_id=result.user.id, username=result.user.name, email=result.user.email)
+        bob = Player(oauth_id=result.user.id, username=result.user.name, email=result.user.email)
         db.session.add(gold)
         db.session.add(ironore)
         db.session.add(ironbar)
         db.session.add(refinery)
         db.session.add(Ingredient(item=ironore, recipe=ironbar, amount=5))
         db.session.add(bob)
-        db.session.add(Inventory(player=bob, item=ironore,amount=200))
-        db.session.add(Inventory(player=bob, item=gold,amount=200))
-
+        db.session.add(Inventory(player=bob, item=ironore, amount=200))
+        db.session.add(Inventory(player=bob, item=gold, amount=200))
 
         db.session.commit()
         mm.login.authomatic = Mock(Authomatic)
@@ -54,9 +54,6 @@ class CraftTestCase(TestCase):
         self.assertTemplateUsed('account.html')
         self.assertIn('Welcome back, bob dole.', response.data)
 
-
-
-
     def tearDown(self):
         """ clean up after ourselves. """
         # remove the cookie
@@ -64,7 +61,6 @@ class CraftTestCase(TestCase):
         # remove the DB.
         db.drop_all()
         mm.login.authomatic = self.oldauth
-
 
     def test_craft_one_valid_item(self):
         """ successfully craft one valid item """
@@ -92,4 +88,3 @@ class CraftTestCase(TestCase):
         response = self.app.get("/craft/ironBar/100")
         self.assertIn('failure', response.data)
         self.assertIn('cannot craft 100 ironBar without 500 ironOre', response.data)
-

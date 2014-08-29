@@ -3,7 +3,7 @@
 # Import the stuffs!
 
 from mm import app, db, session, jsonify
-from models import Player, Item, Category, Ingredient, Character
+from models import Player
 from mm.exceptions import CraftingException
 
 
@@ -20,7 +20,7 @@ def craft_item(itemid, count=1):
             db.session.add(player)
             db.session.commit()
             return jsonify(itemid=itemid, result='success',
-                           message="%s %s crafted!" % ( count, newitem.name ))
+                           message="%s %s crafted!" % (count, newitem.name))
         except CraftingException as e:
             db.session.rollback()
             return jsonify(itemid=itemid, count=count, result='failure',
@@ -28,7 +28,7 @@ def craft_item(itemid, count=1):
         except Exception as e:
             db.session.rollback()
             return jsonify(itemid=itemid, count=count, result='failure',
-                           message="There was an unknown problem crafting: %s" %e)
+                           message="There was an unknown problem crafting: %s" % e)
     else:
         return jsonify(itemid=itemid, count=count, result='failure',
                        message="User not logged in.")

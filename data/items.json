@@ -723,6 +723,14 @@
             "steel": 10
         }
     },
+    "dirt": {
+        "category": "component",
+        "id": "dirt",
+        "icon": "stone.png",
+        "name": "Dirt",
+        "description": "great for growing",
+        "value": 100
+    },
     "stone": {
         "category": "component",
         "id": "stone",
@@ -3949,7 +3957,16 @@
         "icon": "copper.png",
         "name": "Copper",
         "description": "Copper is a chemical element with the symbol Cu and atomic number 29. ",
-        "el": "Cu"
+        "el": "Cu",
+        "craftCost": {
+            "copperOre":1
+        }
+    },
+    "copperOre": {
+        "category": "rawMaterial",
+        "id": "copperOre",
+        "name": "Copper Ore",
+        "description": "Copper Ore comes in many different forms."
     },
     "crudeOil": {
         "category": "rawMaterial",
@@ -3988,7 +4005,17 @@
         "icon": "gold.png",
         "name": "Gold",
         "description": "Gold is a chemical element with the symbol Au and atomic number 79.",
-        "el": "Au"
+        "el": "Au",
+        "craftCost": {
+            "goldOre": 1
+        }
+    },
+    "goldOre": {
+        "category": "rawMaterial",
+        "id": "goldOre",
+        "name": "Gold Ore",
+        "description": "Gold Ore comes in many different forms."
+
     },
     "helium": {
         "category": "rawMaterial",
@@ -4015,12 +4042,22 @@
         "el": "Ir"
     },
     "iron": {
-        "category": "rawMaterial",
+        "category": "Component",
         "id": "iron",
         "icon": "iron.png",
         "name": "Iron",
         "description": "Iron is a chemical element with the symbol Fe and atomic number 26.",
-        "el": "Fe"
+        "el": "Fe",
+        "craftCost": {
+            "ironOre": 1
+        }
+
+    },
+    "ironOre": {
+        "category": "rawMaterial",
+        "id": "ironOre",
+        "name": "Iron Ore",
+        "description": "Iron Ore comes in many different forms"
     },
     "krypton": {
         "category": "rawMaterial",
