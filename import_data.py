@@ -157,6 +157,8 @@ for planetid in jsonplanets:
         if field in planetjson:
             setattr(newplanet, field, planetjson[field])
 
+    db.session.add(newplanet)
+    db.session.commit()
     # If there is a craft cost, process it.
     if 'loot' in planetjson:
         # print "craftCost for %s" % planetid
