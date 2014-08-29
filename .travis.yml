@@ -10,7 +10,6 @@ before_script:
   - ./db_migrate.py db init
   - ./db_migrate.py db migrate
   - ./db_migrate.py db upgrade
-  - ./import_data.py
 script: nosetests
 after_success:
   coveralls
