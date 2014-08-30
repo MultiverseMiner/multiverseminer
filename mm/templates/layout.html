@@ -35,10 +35,10 @@
                             <a class="item menu-pop" data-window-type="triumphs"> <img src="/static/images/icons/achievements.png" > <label>Triumphs</label> </a>
                             <a class="item menu-pop" data-window-type="mail"> <img src="/static/images/icons/mail.png" > <label>Mail</label> <span class="unread-msg">23</span></a>
                             <a class="item menu-pop" data-window-type="options"> <i class="fa fa-wrench"></i> <label>Options</label> </a>
-                            {% if not session.oauth_id %}
-                                <a href="/login/google/" class="item menu-pop" data-window-type="logon"> <i class="fa fa-power-off"></i> <label>Log in</label></a>
-                            {% else %}
+                            {% if session.oauth_id %}
                                 <a href="/logout" class="item menu-pop" data-window-type="logout"> <i class="fa fa-power-off"></i> <label>Log out</label></a>
+                            {% else %}
+                                <a href="/login" class="item menu-pop" data-window-type="logon"> <i class="fa fa-power-off"></i> <label>Log in</label></a>
                             {% endif %}
                         </div>
                     </div>
