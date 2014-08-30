@@ -5,7 +5,7 @@ from flask.ext.testing import TestCase
 
 from mm import app, db, craft, login
 import mm
-from mm.models import Item, Player, Ingredient, Inventory
+from mm.models import Item, Player, Ingredient, Inventory, RecipeBook
 
 
 class CraftTestCase(TestCase):
@@ -42,10 +42,12 @@ class CraftTestCase(TestCase):
         db.session.add(ironbar)
         db.session.add(refinery)
         db.session.add(Ingredient(item=ironore, recipe=ironbar, amount=5))
+        db.session.add(Ingredient(item=ironbar, recipe=refinery, amount=1))
+        db.session.add(RecipeBook(player=bob, item=ironbar))
         db.session.add(bob)
         db.session.add(Inventory(player=bob, item=ironore, amount=200))
+        db.session.add(Inventory(player=bob, item=ironbar, amount=1))
         db.session.add(Inventory(player=bob, item=gold, amount=200))
-
         db.session.commit()
         mm.login.authomatic = Mock(Authomatic)
         mm.login.authomatic.login = MagicMock(return_value=result)
@@ -64,10 +66,15 @@ class CraftTestCase(TestCase):
 
     def test_craft_one_valid_item(self):
         """ successfully craft one valid item """
-        print "testing"
         response = self.app.get("/craft/ironBar/1")
         self.assertIn('success', response.data)
         self.assertIn('1 Iron Bar crafted!', response.data)
+
+    def test_craft_with_no_recipe(self):
+        """ successfully craft one valid item """
+        response = self.app.get("/craft/refinery/1")
+        self.assertIn('failure', response.data)
+        self.assertIn("You don't have the refinery recipe!", response.data)
 
     def test_craft_one_invalid_item(self):
         """ fail to craft one invalid item """
