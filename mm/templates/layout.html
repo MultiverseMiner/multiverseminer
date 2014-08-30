@@ -20,6 +20,8 @@
             </div>
             <div class="large-6 large-offset-2 columns">
                 <div class="row">
+                  {% if session.oauth_id %}
+                    {# FIXME: there's gotta be a better way. #}
                     <div class="no-gutter large-6 columns">
                         <div class="icon-bar five-up">
                             <a class="item menu-pop" data-window-type="hero"> <img src="/static/images/icons/equipment.png">  <label>You</label> </a>
@@ -35,13 +37,16 @@
                             <a class="item menu-pop" data-window-type="triumphs"> <img src="/static/images/icons/achievements.png" > <label>Triumphs</label> </a>
                             <a class="item menu-pop" data-window-type="mail"> <img src="/static/images/icons/mail.png" > <label>Mail</label> <span class="unread-msg">23</span></a>
                             <a class="item menu-pop" data-window-type="options"> <i class="fa fa-wrench"></i> <label>Options</label> </a>
-                            {% if not session.oauth_id %}
-                                <a href="/login/google/" class="item menu-pop" data-window-type="logon"> <i class="fa fa-power-off"></i> <label>Log in</label></a>
-                            {% else %}
-                                <a href="/logout" class="item menu-pop" data-window-type="logout"> <i class="fa fa-power-off"></i> <label>Log out</label></a>
-                            {% endif %}
+                            <a href="/logout" class="item menu-pop" data-window-type="logout"> <i class="fa fa-power-off"></i> <label>Log out</label></a>
                         </div>
                     </div>
+                  {% else %}
+                    <div class="no-gutter large-6 columns">
+                        <div class="icon-bar 1-up">
+                            <a href="/login" class="item menu-pop" data-window-type="logon"> <i class="fa fa-power-off"></i> <label>Log in</label></a>
+                        </div>
+                    </div>
+                  {%endif%}
                 </div>
             </div>
         </div>
