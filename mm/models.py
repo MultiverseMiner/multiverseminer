@@ -25,20 +25,20 @@ class Player(db.Model):
     planet_id = db.Column(db.ForeignKey('planet.id'))
     planet = db.relationship("Planet", backref='players')
 
-    # associated with player so the player can't create
-    # multiple chars and have them all running at the same time.
-    characters = db.relationship("Character", backref='player')
-
     def craft_item(self, itemid, count):
         newitem = Item.query.filter_by(id=itemid)
+        # verify it's a valid item
         if newitem.first():
             newitem = newitem.first()
             # verify all ingredients are in inventory.
             if not newitem.ingredients:
                 raise CraftingException("%s is a base material and non-craftable." % itemid)
+
+            if not self.has_recipe(itemid):
+                raise CraftingException("You don't have the %s recipe!" % itemid)
             for ingredient in newitem.ingredients:
                 amount_needed = count * ingredient.amount
-                if not self.in_inventory(ingredient.item, amount_needed):
+                if not self.in_inventory(ingredient.item.id, amount_needed):
                     raise CraftingException("cannot craft %s %s without %s %s"
                                             % (count, itemid, amount_needed, ingredient.item.id))
             # remove items from inventory now that we know all exist
@@ -52,17 +52,24 @@ class Player(db.Model):
         else:
             raise CraftingException("Item %s doesn't exist in DB" % itemid)
 
-    def in_inventory(self, item, amount):
+    def has_recipe(self, itemid):
+        """placeholder"""
+        for recipe in self.recipebook:
+            if recipe.item.id == itemid:
+                return True
+        return False
+
+    def in_inventory(self, itemid, amount):
         """placeholder"""
         for inventory_item in self.inventory:
-            if inventory_item.item == item and inventory_item.amount > amount:
+            if inventory_item.item.id == itemid and inventory_item.amount > amount:
                 return True
         return False
 
     def adjust_inventory(self, item, amount):
         """placeholder"""
         for inventory_item in self.inventory:
-            if inventory_item.item == item:
+            if inventory_item.item.id == item.id:
                 if inventory_item.amount + amount >= 0:
                     inventory_item.amount = inventory_item.amount + amount
                     return inventory_item.amount
@@ -341,16 +348,15 @@ class Inventory(db.Model):
 
     def __repr__(self):
         """ return a tag for the inventory"""
-        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.item_player)
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.player_id)
 
     def __unicode__(self):
         """ return the unicode name """
-        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.item_player)
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.player_id)
 
 
 class Warehouse(db.Model):
     # This table is planetary inventory only.
-    # TODO add planet to warehouse
     __tablename__ = 'warehouse'
     player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
     planet_id = db.Column(db.ForeignKey('planet.id'), primary_key=True)
@@ -365,8 +371,29 @@ class Warehouse(db.Model):
 
     def __repr__(self):
         """ return a tag for the warehouse"""
-        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.item_player, self.planet_id)
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.player_id, self.planet_id)
 
     def __unicode__(self):
         """ return the unicode name """
-        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.item_player, self.planet_id)
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.player_id, self.planet_id)
+
+
+class RecipeBook(db.Model):
+    # This table represents which recipes a player knows
+    __tablename__ = 'recipebook'
+    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+    item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
+    mastered = db.Column(db.Integer, default=1, nullable=False)
+
+    player = db.relationship("Player", backref='recipebook', foreign_keys=[player_id])
+    item = db.relationship("Item", foreign_keys=[item_id])
+
+    db.PrimaryKeyConstraint('item_id', 'player_id', name='recipebook_pk')
+
+    def __repr__(self):
+        """ return a tag for the recipe"""
+        return '<Recipe for %s owned by %s>' % (self.item_id, self.player_id)
+
+    def __unicode__(self):
+        """ return the unicode name """
+        return '<Recipe for %s owned by %s>' % (self.item_id, self.player_id)

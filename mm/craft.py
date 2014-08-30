@@ -26,6 +26,7 @@ def craft_item(itemid, count=1):
             return jsonify(itemid=itemid, count=count, result='failure',
                            message=e.message)
         except Exception as e:
+            app.logger.exception('unknown exception while crating %s' % itemid)
             db.session.rollback()
             return jsonify(itemid=itemid, count=count, result='failure',
                            message="There was an unknown problem crafting: %s" % e)

@@ -20,6 +20,7 @@ authomatic = Authomatic(CONFIG, BaseConfiguration.SECRET_KEY)
 def login():
     return render_template('require_login.html')
 
+
 @app.route('/login/<provider>/', methods=['GET', 'POST'])
 def loginProvider(provider):
     response = make_response()
@@ -39,9 +40,7 @@ def loginProvider(provider):
                     message = "Welcome back, %s." % player.username
                     app.logger.debug(message)
                 else:
-                    player = Player(oauth_id=result.user.id,
-                                  email=result.user.email,
-                                  username=result.user.name)
+                    player = Player(oauth_id=result.user.id, email=result.user.email, username=result.user.name)
                     app.logger.debug("new account %s created" % player.username)
                     message = "Welcome to Multiverse Miner, %s." % player.username
                 player.last_login = datetime.datetime.utcnow()
@@ -64,10 +63,12 @@ def loginProvider(provider):
         # This should be a redirect to google set by WerkzeugAdapter
         return response
 
+
 @app.route('/logout')
 def logout():
     session.clear()
     return render_template('index.html')
+
 
 def login_required(f):
     @wraps(f)
