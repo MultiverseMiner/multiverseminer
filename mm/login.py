@@ -7,6 +7,8 @@ from config import BaseConfiguration, CONFIG
 from flask import render_template, request
 from flask import make_response
 from mm import app, db, session
+from functools import wraps
+
 from models import Player
 import datetime
 
@@ -73,7 +75,7 @@ def logout():
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session['logged_in']:
+        if 'logged_in' not in session:
             return render_template('require_login.html')
         return f(*args, **kwargs)
     return decorated_function

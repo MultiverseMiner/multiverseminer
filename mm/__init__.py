@@ -13,9 +13,9 @@ import os
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
-from mm.models import Player
 
-from mm import craft, login, admin
+from mm.models import Player
+from mm import login, craft, admin, player
 
 ###############################################################################
 # Set up Logging
@@ -66,7 +66,6 @@ assets.register('css_all', css)
 @app.route('/collect/<collectiontype>', methods=['GET', 'POST'])
 def collect(collectiontype):
     """Place a request to collect data."""
-    print session
     if 'oauth_id' in session:
         app.logger.debug('session oauth id:'+session['oauth_id'])
         player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
@@ -117,6 +116,16 @@ def chatpage(message):
 def page_not_found(error):
     """Return a custom 404 error."""
     return render_template("404.html", request=request, e=error), 404
+
+
+# Error Handlers
+@app.errorhandler(403)
+def page_forbidden(error):
+    """Return a custom 403 error."""
+    if 'logged_in' not in session:
+        return render_template('require_login.html')
+    else:
+        return render_template('invalid_permissions.html')
 
 
 @app.errorhandler(500)
