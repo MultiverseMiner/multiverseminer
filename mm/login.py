@@ -36,11 +36,20 @@ def loginProvider(provider):
             if (result.user.name and result.user.id):
                 app.logger.debug('%s has logged in with an id of %s' % (result.user.name, result.user.id))
                 account = Account.query.filter_by(oauth_id=result.user.id)
-                if account.first() and account.first().character:
+                print account
+                if account.first():
                     account = account.first()
-                    message = "Welcome back, %s." % account.realname
+                    if account.character:
+                        message = "Welcome back, %s." % account.realname
+                    else:
+                        session['oauth_id'] = result.user.id
+                        session['logged_in'] = True
+                        account.last_login = datetime.datetime.utcnow()
+                        db.session.add(account)
+                        db.session.commit()
+                        return render_template('index.html', message='No character created', account=account)
                 else: # If you attempt to log in without a valid account or character
-                    account=Account(oauth_id=result.user.id, email=result.user.email, provider=result.user.provider,
+                    account=Account(oauth_id=result.user.id, email=result.user.email, provider=result.provider.name,
                                     username=result.user.id,realname=result.user.name)
                 session['oauth_id'] = result.user.id
                 session['logged_in'] = True
