@@ -7,15 +7,15 @@ from mm import app, db, session
 from flask.ext import admin
 from flask.ext.admin.contrib import sqla
 from mm.login import login_required
-from models import Player, Item, Category, Ingredient, Character, Inventory, Warehouse, Planet, PlanetLoot
+from models import Account, Item, Category, Ingredient, Character, Inventory, Warehouse, Planet, PlanetLoot
 
 
 class BaseAdmin(sqla.ModelView):
     def is_accessible(self):
         app.logger.debug('is accessable %s' % session )
         if 'logged_in' in session and 'oauth_id' in session:
-            player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
-            if player.access_level > 0:
+            account = Account.query.filter_by(oauth_id=session['oauth_id']).first()
+            if account.access_level > 0:
                 return True
             return False
         return False
@@ -49,7 +49,7 @@ class ItemAdmin(BaseAdmin):
 admin = admin.Admin(app, 'Admin Interface')
 
 # Add views
-admin.add_view(BaseAdmin(Player, db.session))
+admin.add_view(BaseAdmin(Account, db.session))
 admin.add_view(BaseAdmin(Character, db.session))
 admin.add_view(BaseAdmin(Ingredient, db.session))
 admin.add_view(BaseAdmin(Category, db.session))

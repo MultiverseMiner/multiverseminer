@@ -1,8 +1,10 @@
 
-{   
+{
     "Jesse Morgan": {
             "oauth_id": "116446263320800781067",
-			"username": "Jesse Morgan",
+			"username": "morgajel",
+			"realname": "Jesse Morgan",
+			"provider": "google",
 			"email": "morgajel@gmail.com",
 			"created": "2014-08-27 13:48:37.267148",
 			"last_login": "2014-08-28 20:09:40.098005",

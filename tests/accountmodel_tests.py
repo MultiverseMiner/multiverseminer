@@ -1,4 +1,3 @@
-
 from mock import MagicMock, Mock
 from authomatic import Authomatic
 from flask.ext.testing import TestCase
@@ -29,7 +28,6 @@ class MmTestCase(TestCase):
         refinery = Item(id='refinery', name='Refinery')
         earth = Planet(id='earth', name='Earth')
 
-        # create account, character and inventory
         self.oldauth = mm.login.authomatic
         result = Mock()
         result.user = Mock()
@@ -55,7 +53,6 @@ class MmTestCase(TestCase):
         db.session.add(earth)
         db.session.add(PlanetLoot(planet=earth, item=gold, droprate=.1))
         db.session.add(PlanetLoot(planet=earth, item=ironore, droprate=.1))
-
         db.session.commit()
         mm.login.authomatic = Mock(Authomatic)
         mm.login.authomatic.login = MagicMock(return_value=result)
@@ -102,6 +99,10 @@ class MmTestCase(TestCase):
 #        db.create_all()
 #        response = self.app.get("/login/google/")
 #        self.assertTemplateUsed('index.html')
+#        self.assertIn('Welcome to Multiverse Miner, bob dole.', response.data)
+#
+#        response = self.app.get("/login/google/")
+#        self.assertTemplateUsed('account.html')
 #        self.assertIn('Welcome back, bob dole.', response.data)
 
     def test_provider_bad_return_user_route(self):
@@ -155,3 +156,4 @@ class MmTestCase(TestCase):
         response = self.app.get("/collect/mine")
         self.assertTemplateUsed('require_login.html')
         self.assertIn('Select an authentication provider:', response.data)
+
