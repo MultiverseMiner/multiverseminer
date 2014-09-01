@@ -14,9 +14,9 @@ app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 
-from mm.models import Player
-from mm import login, craft, admin, player
-
+from mm.models import Account
+from mm import login, craft, admin, account
+from mm.login import login_required, character_required
 ###############################################################################
 # Set up Logging
 
@@ -64,14 +64,16 @@ assets.register('css_all', css)
 
 
 @app.route('/collect/<collectiontype>', methods=['GET', 'POST'])
+@login_required
+@character_required
 def collect(collectiontype):
     """Place a request to collect data."""
     if 'oauth_id' in session:
         app.logger.debug('session oauth id:'+session['oauth_id'])
-        player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
-        json = player.update_collection(collectiontype)
-        app.logger.info(player.username+' is attempting to '+collectiontype)
-        db.session.add(player)
+        account = Account.query.filter_by(oauth_id=session['oauth_id']).first()
+        json = account.character.update_collection(collectiontype)
+        app.logger.info(account.username+' is attempting to '+collectiontype)
+        db.session.add(account)
         db.session.commit()
         return json
     else:

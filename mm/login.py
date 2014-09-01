@@ -9,7 +9,7 @@ from flask import make_response
 from mm import app, db, session
 from functools import wraps
 
-from models import Player
+from models import Account
 import datetime
 
 # TODO add login exceptions?
@@ -34,25 +34,21 @@ def loginProvider(provider):
             # ensure that the user is up to date....
             result.user.update()
             if (result.user.name and result.user.id):
-                app.logger.debug('%s has logged in with an id of %s' %
-                                 (result.user.name, result.user.id))
-                player = Player.query.filter_by(oauth_id=result.user.id)
-                if player.first():
-                    player = player.first()
-                    message = "Welcome back, %s." % player.username
-                    app.logger.debug(message)
-                else:
-                    player = Player(oauth_id=result.user.id, email=result.user.email, username=result.user.name)
-                    app.logger.debug("new account %s created" % player.username)
-                    message = "Welcome to Multiverse Miner, %s." % player.username
-                player.last_login = datetime.datetime.utcnow()
+                app.logger.debug('%s has logged in with an id of %s' % (result.user.name, result.user.id))
+                account = Account.query.filter_by(oauth_id=result.user.id)
+                if account.first() and account.first().character:
+                    account = account.first()
+                    message = "Welcome back, %s." % account.realname
+                else: # If you attempt to log in without a valid account or character
+                    account=Account(oauth_id=result.user.id, email=result.user.email, provider=result.user.provider,
+                                    username=result.user.id,realname=result.user.name)
+                session['oauth_id'] = result.user.id
                 session['logged_in'] = True
-                session['oauth_id'] = player.oauth_id
-
-                db.session.add(player)
+                account.last_login = datetime.datetime.utcnow()
+                db.session.add(account)
                 db.session.commit()
-                return render_template('account.html', player=player,
-                                       message=message)
+                message="Welcome back, %s." % account.realname
+                return render_template('index.html', account=account, message=message)
             else:
                 message = "There is an issue with your account. Contact us."
                 app.logger.error(message)
@@ -77,5 +73,17 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'logged_in' not in session:
             return render_template('require_login.html')
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def character_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session or 'oauth_id' not in session:
+            return render_template('require_login.html')
+        account = Account.query.filter_by(oauth_id=session['oauth_id']).first()
+        if not account.character:
+            return render_template('index.html', message='No character created', account=account)
         return f(*args, **kwargs)
     return decorated_function

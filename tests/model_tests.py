@@ -2,7 +2,7 @@
 from flask.ext.testing import TestCase
 
 from mm import app, db
-from mm.models import Player
+from mm.models import Account
 
 
 class ModelsTestCase(TestCase):
@@ -27,13 +27,3 @@ class ModelsTestCase(TestCase):
         # remove the DB.
         db.drop_all()
 
-    def test_player_creation(self):
-        """ Make sure player can be created and saved to the DB """
-        user = Player(oauth_id='12345', email='garbage@example.com', username='garbage')
-        db.session.add(user)
-        db.session.commit()
-        user = Player(oauth_id='12345', email='garbage@example.com', username='garbage')
-
-        newuser = Player.query.filter_by(oauth_id='12345').first()
-
-        self.assertEqual(user.email, newuser.email)

@@ -7,12 +7,15 @@ from random import randint
 from mm.exceptions import CraftingException
 
 
-class Player(db.Model):
-    """ Player object represents an individual user"""
+class Account(db.Model):
+    """ Account object represents an individual user"""
+
     time = datetime.utcnow()
     id = db.Column(db.Integer, primary_key=True)
     oauth_id = db.Column(db.String(120), unique=True, nullable=False)
     username = db.Column(db.String(64), unique=True, nullable=False)
+    realname = db.Column(db.String(64), nullable=False)
+    provider = db.Column(db.String(64))
     email = db.Column(db.String(120), unique=True, nullable=False)
     created = db.Column(db.DateTime, default=time, nullable=False)
     last_login = db.Column(db.DateTime)
@@ -22,106 +25,17 @@ class Player(db.Model):
     last_scavenge = db.Column(db.DateTime, default=time, nullable=False)
     last_gather = db.Column(db.DateTime, default=time, nullable=False)
 
+    character_id = db.Column(db.ForeignKey('character.name', name="fk_acc_id"))
+    character = db.relationship("Character", uselist=False , remote_side=[character_id])
+
+#    characters = db.relationship("Character", backref="account", uselist=True, remote_side=[Character.name] )
+
     planet_id = db.Column(db.ForeignKey('planet.id'))
     planet = db.relationship("Planet", backref='players')
 
-    def craft_item(self, itemid, count):
-        newitem = Item.query.filter_by(id=itemid)
-        # verify it's a valid item
-        if newitem.first():
-            newitem = newitem.first()
-            # verify all ingredients are in inventory.
-            if not newitem.ingredients:
-                raise CraftingException("%s is a base material and non-craftable." % itemid)
-
-            if not self.has_recipe(itemid):
-                raise CraftingException("You don't have the %s recipe!" % itemid)
-            for ingredient in newitem.ingredients:
-                amount_needed = count * ingredient.amount
-                if not self.in_inventory(ingredient.item.id, amount_needed):
-                    raise CraftingException("cannot craft %s %s without %s %s"
-                                            % (count, itemid, amount_needed, ingredient.item.id))
-            # remove items from inventory now that we know all exist
-            app.logger.debug("Crafting %s %s " % (count, itemid))
-            for ingredient in newitem.ingredients:
-                amount_needed = count * ingredient.amount
-                self.adjust_inventory(ingredient.item, -amount_needed)
-
-            self.adjust_inventory(newitem, count)
-            return newitem
-        else:
-            raise CraftingException("Item %s doesn't exist in DB" % itemid)
-
-    def has_recipe(self, itemid):
-        """placeholder"""
-        for recipe in self.recipebook:
-            if recipe.item.id == itemid:
-                return True
-        return False
-
-    def in_inventory(self, itemid, amount):
-        """placeholder"""
-        for inventory_item in self.inventory:
-            if inventory_item.item.id == itemid and inventory_item.amount > amount:
-                return True
-        return False
-
-    def adjust_inventory(self, item, amount):
-        """placeholder"""
-        for inventory_item in self.inventory:
-            if inventory_item.item.id == item.id:
-                if inventory_item.amount + amount >= 0:
-                    inventory_item.amount = inventory_item.amount + amount
-                    return inventory_item.amount
-                else:
-                    raise CraftingException("You have %s %s, but need %s"
-                                            % (amount, inventory_item.item.id, inventory_item.amount))
-        if amount > 0:
-            self.inventory.append(Inventory(player=self, item=item, amount=amount))
-            return amount
-
-        raise CraftingException("Item %s not found in inventory??" % item.id)
-
-    def update_collection(self, collectiontype):
-        """ This method will verify the collectiontype is valid,
-            then see if it's been long enough to update."""
-        curtime = datetime.utcnow()
-        waittime = timedelta(0, 5)  # 5 seconds
-        collectionlastfield = 'last_'+collectiontype
-        successlist = {}
-        if hasattr(self, collectionlastfield):
-            oldtime = getattr(self, collectionlastfield)
-            if oldtime + waittime < curtime:
-                oldtime = curtime
-                setattr(self, collectionlastfield, oldtime)
-                for loot in self.planet.loot:
-                    chance = loot.droprate * 100000
-                    x = randint(0, 10000)
-                    app.logger.debug('is %s less than %s for %s?' % (x, chance, loot.item.name))
-                    if x <= chance:
-                        amount = randint(1, 5)
-                        self.adjust_inventory(loot.item, amount)
-                        successlist[loot.item.id] = amount
-                if successlist:
-                    return jsonify(collectiontype=collectiontype,
-                                   message="You found something.",
-                                   data=successlist,
-                                   lastrun=oldtime, result='success')
-                else:
-                    return jsonify(collectiontype=collectiontype,
-                                   message="nothing found.",
-                                   data=successlist,
-                                   lastrun=oldtime, result='success')
-            else:
-                return jsonify(collectiontype=collectiontype, message="too soon",
-                               lastrun=oldtime, result='success')
-        else:
-            return jsonify(collectiontype=collectiontype, result='failure',
-                           message="Invalid collection type.")
-
     def __repr__(self):
         """ return a tag for the player"""
-        return '<Player %s>' % (self.username)
+        return '<Account %s>' % (self.username)
 
     def __unicode__(self):
         """ return the unicode name """
@@ -185,9 +99,8 @@ class PlanetLoot(db.Model):
 class Character(db.Model):
     """ Character is the actual in-game PC."""
     name = db.Column(db.String(64), primary_key=True, nullable=False)
-    player_id = db.Column(db.ForeignKey('player.oauth_id'))
+    account = db.relationship("Account", backref="characters", uselist=False, remote_side=[name] )
 
-    # primary
     constitution = db.Column(db.Integer, default=1, nullable=False)
     dexterity = db.Column(db.Integer, default=1, nullable=False)
     luck = db.Column(db.Integer, default=1, nullable=False)
@@ -217,6 +130,102 @@ class Character(db.Model):
     loot_experience = db.Column(db.Integer, default=1, nullable=False)
     mining_experience = db.Column(db.Integer, default=1, nullable=False)
     scavenging_experience = db.Column(db.Integer, default=1, nullable=False)
+
+    def update_collection(self, collectiontype):
+        """ This method will verify the collectiontype is valid,
+            then see if it's been long enough to update."""
+        curtime = datetime.utcnow()
+        waittime = timedelta(0, 5)  # 5 seconds
+        collectionlastfield = 'last_'+collectiontype
+        successlist = {}
+        if hasattr(self.account, collectionlastfield):
+            oldtime = getattr(self.account, collectionlastfield)
+            if oldtime + waittime < curtime:
+                oldtime = curtime
+                setattr(self.account, collectionlastfield, oldtime)
+                for loot in self.planet.loot:
+                    chance = loot.droprate * 100000
+                    x = randint(0, 10000)
+                    app.logger.debug('is %s less than %s for %s?' % (x, chance, loot.item.name))
+                    if x <= chance:
+                        amount = randint(1, 5)
+                        self.character.adjust_inventory(loot.item, amount)
+                        successlist[loot.item.id] = amount
+                if successlist:
+                    return jsonify(collectiontype=collectiontype,
+                                   message="You found something.",
+                                   data=successlist,
+                                   lastrun=oldtime, result='success')
+                else:
+                    return jsonify(collectiontype=collectiontype,
+                                   message="nothing found.",
+                                   data=successlist,
+                                   lastrun=oldtime, result='success')
+            else:
+                return jsonify(collectiontype=collectiontype, message="too soon",
+                               lastrun=oldtime, result='success')
+        else:
+            return jsonify(collectiontype=collectiontype, result='failure',
+                           message="Invalid collection type.")
+
+
+    def craft_item(self, itemid, count):
+        newitem = Item.query.filter_by(id=itemid)
+        # verify it's a valid item
+        if newitem.first():
+            newitem = newitem.first()
+            # verify all ingredients are in inventory.
+            if not newitem.ingredients:
+                raise CraftingException("%s is a base material and non-craftable." % itemid)
+
+            if not self.has_recipe(itemid):
+                raise CraftingException("You don't have the %s recipe!" % itemid)
+            for ingredient in newitem.ingredients:
+                amount_needed = count * ingredient.amount
+                if not self.in_inventory(ingredient.item.id, amount_needed):
+                    raise CraftingException("cannot craft %s %s without %s %s"
+                                            % (count, itemid, amount_needed, ingredient.item.id))
+            # remove items from inventory now that we know all exist
+            app.logger.debug("Crafting %s %s " % (count, itemid))
+            for ingredient in newitem.ingredients:
+                amount_needed = count * ingredient.amount
+                self.adjust_inventory(ingredient.item, -amount_needed)
+
+            self.adjust_inventory(newitem, count)
+            return newitem
+        else:
+            raise CraftingException("Item %s doesn't exist in DB" % itemid)
+
+    def has_recipe(self, itemid):
+        """placeholder"""
+        for recipe in self.recipebook:
+            if recipe.item.id == itemid:
+                return True
+        return False
+
+    def in_inventory(self, itemid, amount):
+        """placeholder"""
+        for inventory_item in self.inventory:
+            if inventory_item.item.id == itemid and inventory_item.amount > amount:
+                return True
+        return False
+
+    def adjust_inventory(self, item, amount):
+        """placeholder"""
+        for inventory_item in self.inventory:
+            if inventory_item.item.id == item.id:
+                if inventory_item.amount + amount >= 0:
+                    inventory_item.amount = inventory_item.amount + amount
+                    return inventory_item.amount
+                else:
+                    raise CraftingException("You have %s %s, but need %s"
+                                            % (amount, inventory_item.item.id, inventory_item.amount))
+        if amount > 0:
+            self.inventory.append(Inventory(character=self, item=item, amount=amount))
+            return amount
+
+        raise CraftingException("Item %s not found in inventory??" % item.id)
+
 
     # tbd
     # skills
@@ -263,7 +272,7 @@ class Ingredient(db.Model):
     db.PrimaryKeyConstraint('recipe_id', 'item_id', name='ingredient_pk')
 
     def __repr__(self):
-        """ return a tag for the player"""
+        """ return a tag for the ingredient"""
         return '<Ingredient %s %s for %s>' % (self.amount,
                                               self.item_id, self.recipe_id)
 
@@ -337,63 +346,63 @@ class Item(db.Model):
 class Inventory(db.Model):
     # This table is personal inventory only.
     __tablename__ = 'inventory'
-    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+    character_name = db.Column(db.ForeignKey('character.name'), primary_key=True)
     item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
     amount = db.Column(db.Integer, default=1, nullable=False)
 
-    player = db.relationship("Player", backref='inventory', foreign_keys=[player_id])
+    character = db.relationship("Character", backref='inventory', foreign_keys=[character_name])
     item = db.relationship("Item", foreign_keys=[item_id])
 
-    db.PrimaryKeyConstraint('item_id', 'player_id', name='inventory_pk')
+    db.PrimaryKeyConstraint('item_id', 'character_name', name='inventory_pk')
 
     def __repr__(self):
         """ return a tag for the inventory"""
-        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.player_id)
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.character_name)
 
     def __unicode__(self):
         """ return the unicode name """
-        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.player_id)
+        return '<Inventory %s %s for %s>' % (self.amount, self.item_id, self.character_name)
 
 
 class Warehouse(db.Model):
     # This table is planetary inventory only.
     __tablename__ = 'warehouse'
-    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+    character_name = db.Column(db.ForeignKey('character.name'), primary_key=True)
     planet_id = db.Column(db.ForeignKey('planet.id'), primary_key=True)
     item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
     amount = db.Column(db.Integer, default=1, nullable=False)
 
-    player = db.relationship("Player", backref='warehouse', foreign_keys=[player_id])
+    character = db.relationship("Character", backref='warehouse', foreign_keys=[character_name])
     planet = db.relationship("Planet", backref='warehouse', foreign_keys=[planet_id])
     item = db.relationship("Item",  foreign_keys=[item_id])
 
-    db.PrimaryKeyConstraint('item_id', 'player_id', 'planet_id', name='warehouse_pk')
+    db.PrimaryKeyConstraint('item_id', 'character_name', 'planet_id', name='warehouse_pk')
 
     def __repr__(self):
         """ return a tag for the warehouse"""
-        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.player_id, self.planet_id)
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.character_name, self.planet_id)
 
     def __unicode__(self):
         """ return the unicode name """
-        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.player_id, self.planet_id)
+        return '<Warehouse %s %s for %s on %s>' % (self.amount, self.item_id, self.character_name, self.planet_id)
 
 
 class RecipeBook(db.Model):
-    # This table represents which recipes a player knows
+    # This table represents which recipes a character knows
     __tablename__ = 'recipebook'
-    player_id = db.Column(db.ForeignKey('player.oauth_id'), primary_key=True)
+    character_name = db.Column(db.ForeignKey('character.name'), primary_key=True)
     item_id = db.Column(db.ForeignKey('item.id'), primary_key=True)
     mastered = db.Column(db.Integer, default=1, nullable=False)
 
-    player = db.relationship("Player", backref='recipebook', foreign_keys=[player_id])
+    character = db.relationship("Character", backref='recipebook', foreign_keys=[character_name])
     item = db.relationship("Item", foreign_keys=[item_id])
 
-    db.PrimaryKeyConstraint('item_id', 'player_id', name='recipebook_pk')
+    db.PrimaryKeyConstraint('item_id', 'character_name', name='recipebook_pk')
 
     def __repr__(self):
         """ return a tag for the recipe"""
-        return '<Recipe for %s owned by %s>' % (self.item_id, self.player_id)
+        return '<Recipe for %s owned by %s>' % (self.item_id, self.character_name)
 
     def __unicode__(self):
         """ return the unicode name """
-        return '<Recipe for %s owned by %s>' % (self.item_id, self.player_id)
+        return '<Recipe for %s owned by %s>' % (self.item_id, self.character_name)

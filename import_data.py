@@ -4,7 +4,7 @@
 
 
 from mm import db
-from mm.models import Item, Ingredient, Category, Planet, Player, PlanetLoot
+from mm.models import Item, Ingredient, Category, Planet, Account, Character, PlanetLoot
 import json
 
 #######################################
@@ -194,7 +194,7 @@ print "planets imported."
 
 # ######################################
 # import our items
-text = open('data/players.json').read()
+text = open('data/accounts.json').read()
 jsonplayers = json.loads(text)
 
 # #######################
@@ -203,10 +203,10 @@ for playerid in jsonplayers:
     playerjson = jsonplayers[playerid]
 
     # create an empty newitem which we may or may not use
-    newplayer = Player(oauth_id=playerjson['oauth_id'], username=playerjson['username'], email=playerjson['email'])
+    newplayer = Account(oauth_id=playerjson['oauth_id'], username=playerjson['oauth_id'], realname=playerjson['username'], email=playerjson['email'])
 
     # Check to see if any pre-existing items in the db match the item ID
-    dbplayers = Player.query.filter_by(username=playerid)
+    dbplayers = Account.query.filter_by(username=playerjson['oauth_id'])
 
     if dbplayers.first():
         # print "%s already exists in db, updating..." % playerid
