@@ -1,0 +1,72 @@
+
+
+{
+    "earth": {
+        "id":"earth",
+        "name": "Earth",
+        "mineable_max": 100000000,
+        "mineable_remaining": 100000000,
+        "mineable_replenish": 1,
+
+        "gatherable_max": 10000000,
+        "gatherable_remaining": 10000000,
+        "gatherable_replenish": 1,
+
+        "scavengable_max": 1000000000,
+        "scavengable_remaining": 1000000000,
+        "scavengable_replenish": 1,
+        "loot": [
+                    {"item_id": "gold", "droprate": 0.0001},
+                    {"item_id": "stone", "droprate": 0.01},
+                    {"item_id": "dirt", "droprate": 0.1},
+                    {"item_id": "ironOre", "droprate": 0.001},
+                    {"item_id": "copperOre", "droprate": 0.001},
+                    {"item_id": "coal", "droprate": 0.001}
+        ]
+    },
+    "moon": {
+        "id":"moon",
+        "name": "Moon",
+        "mineable_max": 12000000,
+        "mineable_remaining": 12000000,
+        "mineable_replenish": 1,
+
+        "gatherable_max": 0,
+        "gatherable_remaining": 0,
+        "gatherable_replenish": 0,
+
+        "scavengable_max": 0,
+        "scavengable_remaining": 0,
+        "scavengable_replenish": 0
+    },
+    "mars": {
+        "id":"mars",
+        "name": "Mars",
+        "mineable_max": 380000000,
+        "mineable_remaining": 380000000,
+        "mineable_replenish": 1,
+
+        "gatherable_max": 60000,
+        "gatherable_remaining": 60000,
+        "gatherable_replenish": 0,
+
+        "scavengable_max": 0,
+        "scavengable_remaining": 0,
+        "scavengable_replenish": 0
+    },
+    "venus": {
+        "id":"venus",
+        "name": "Venus",
+        "mineable_max": 81000000,
+        "mineable_remaining": 81000000,
+        "mineable_replenish": 1,
+
+        "gatherable_max": 920000000,
+        "gatherable_remaining": 920000000,
+        "gatherable_replenish": 1,
+
+        "scavengable_max": 0,
+        "scavengable_remaining": 0,
+        "scavengable_replenish": 0
+    }
+}
