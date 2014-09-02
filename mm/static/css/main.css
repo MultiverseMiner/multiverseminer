@@ -5494,6 +5494,9 @@ label {
 .chat .messages .single-msg.private {
   color: #de006f; }
 
+.chat .messages .single-msg.error {
+	color: #de0003; }
+
 .chat .messages .timestamp {
   opacity: 0.5;
   font-weight: 400 !important; }
@@ -5520,7 +5523,7 @@ label {
   padding: 0.5rem 0 0.5rem 0.5rem;
   position: relative;
   height: 120px;
-  overflow: hidden; }
+  overflow: scroll; }
 
 .prompt {
   margin-top: 0.3rem; }

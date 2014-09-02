@@ -30,7 +30,7 @@ $('.accordion').on('click', 'dd', function (event) {
 });
 
 /*Custom scrollbar for slider, allows to move it around and style the way one pleases*/
-$('.chat .tabs-content > .content').jScrollPane();
+// $('.chat .tabs-content > .content').jScrollPane(); Too buggy for now
 
 /*Chat is there, just hit enter and type*/
 $(window).bind('keypress', function(e) {
@@ -182,6 +182,78 @@ $(document).on('dblclick', '.player-item', function(e){
 
 });
 
-$.ajaxSetup ({
-	cache: false
+$('.prompt-line').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        $(this).trigger("chat");
+    }
 });
+
+//screwing up Flask URL matching
+$.ajaxSetup ({
+	//cache: false,
+	timeout: 1000
+});
+connected=false;
+logged_in=true;
+
+$('.prompt-line').bind("chat",function(e){
+   $.ajax({url: "/chat/"+$('.prompt-line').val()});
+});
+
+setInterval(function() {
+	if(logged_in) {
+		if(connected) {
+	        $.ajax({url: "/chat/poll/global"}).done(function(obj) {
+				results = obj.results
+				htmlOut = "";
+				results.forEach(function(message) {
+					// <li class="single-msg">
+	// 					<span class="timestamp">[18:35]</span><span class="player-id">Remus</span><span class="message">m</span>
+	// 				</li>
+					htmlOut = ""
+					htmlOut+='<li class="single-msg">';
+					date = new Date(message.date);
+					hours = date.getHours();
+					minutes = date.getMinutes();
+					htmlOut+='<span class="timestamp">['+hours+':'+minutes+']</span>';
+					htmlOut+='<span class="player-id">'+message.name+'</span>';
+					htmlOut+='<span class="message">'+message.message+'</span>';
+					htmlOut+='</li>';
+				})
+				$(".messages.general").append(htmlOut);
+				$('.chat .tabs-content > .content.active').scrollTop($('.chat .tabs-content > .content.active')[0].scrollHeight);
+			}).error(function() {
+				htmlOut = ""
+				htmlOut+='<li class="single-msg error">';
+				date = new Date();
+				hours = date.getHours();
+				minutes = date.getMinutes();
+				htmlOut+='<span class="timestamp">['+hours+':'+minutes+']</span>';
+				htmlOut+='<span class="message">Could not connect to server!</span>';
+				htmlOut+='</li>';
+				$(".messages.general").append(htmlOut);
+				$('.chat .tabs-content > .content.active').scrollTop($('.chat .tabs-content > .content.active')[0].scrollHeight);
+				connected = false;
+			})
+		} else {
+			$.ajax({url: "/chat/join"}).done(function() {
+				connected = true;
+			}).error(function(jqxhr) {
+				console.log(jqxhr.statusCode());
+				console.log(jqxhr);
+				htmlOut = ""
+				htmlOut+='<li class="single-msg error">';
+				date = new Date();
+				hours = date.getHours();
+				minutes = date.getMinutes();
+				htmlOut+='<span class="timestamp">['+hours+':'+minutes+']</span>';
+				htmlOut+='<span class="message">User not logged in!</span>';
+				htmlOut+='</li>';
+				$(".messages.general").append(htmlOut);
+				$('.chat .tabs-content > .content.active').scrollTop($('.chat .tabs-content > .content.active')[0].scrollHeight);
+				logged_in = false;
+			});
+		}
+	}
+}, 200);

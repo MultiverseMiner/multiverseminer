@@ -30,6 +30,8 @@ class ChatHandler():
         user.authenticated = True
         self._connected_users.append(user)
     def get_new_messages(self, username, channel):
+        if not self.get_user(username):
+            return ""
         if self.get_user(username).authenticated:
             if not username in self._userlastchecked.keys():
                 thingy = self.get_channel(channel).generate_messages(datetime.datetime.min)

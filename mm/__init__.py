@@ -2,7 +2,7 @@
 
 # Import the stuffs!
 from flask import Flask, render_template, request, session, jsonify
-from flask import make_response, send_from_directory
+from flask import make_response, send_from_directory, abort
 from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from logging.handlers import TimedRotatingFileHandler
@@ -112,12 +112,16 @@ def miningpage():
 
 @app.route('/chat/<message>')
 def chatpage(message):
+    if not session['oauth_id']:
+        return "USER ERROR", 404
     player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
     chathandler.chat(player.username, message)
     return ""
 
 @app.route('/chat/join')
 def join():
+    if not 'oauth_id' in session.keys():
+        return "USER ERROR", 404
     player = Player.query.filter_by(oauth_id=session['oauth_id']).first()
     chathandler.join(player.username)
     return ""
@@ -140,7 +144,6 @@ def page_borked(error):
     """Return a custom 500 error. Only hit when debugging is off."""
     db.session.rollback()
     return render_template("500.html", request=request, e=error), 500
-
 
 if __name__ == '__main__':
     app.debug = False
