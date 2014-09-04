@@ -6,7 +6,7 @@
 Multiverse Miner
 ====
 
-Note: This game is open source, however the icons (art) are not. Please message antlong on irc.freenode.net for license details.
+[Dev Wiki](https://github.com/antlong/multiverseminer/wiki)
 
 ### Backstory
 
