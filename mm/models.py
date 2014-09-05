@@ -7,6 +7,12 @@ from random import randint
 from mm.exceptions import CraftingException
 
 
+class BetaSignup(db.Model):
+    time = datetime.utcnow()
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    name = db.Column(db.String(120), nullable=False)
+
+
 class Account(db.Model):
     """ Account object represents an individual user"""
 
@@ -26,7 +32,7 @@ class Account(db.Model):
     last_gather = db.Column(db.DateTime, default=time, nullable=False)
 
     character_id = db.Column(db.ForeignKey('character.name', name="fk_acc_id"))
-    character = db.relationship("Character", uselist=False , remote_side=[character_id])
+    character = db.relationship("Character", uselist=False, remote_side=[character_id])
 
 #    characters = db.relationship("Character", backref="account", uselist=True, remote_side=[Character.name] )
 
@@ -99,7 +105,7 @@ class PlanetLoot(db.Model):
 class Character(db.Model):
     """ Character is the actual in-game PC."""
     name = db.Column(db.String(64), primary_key=True, nullable=False)
-    account = db.relationship("Account", backref="characters", uselist=False, remote_side=[name] )
+    account = db.relationship("Account", backref="characters", uselist=False, remote_side=[name])
 
     constitution = db.Column(db.Integer, default=1, nullable=False)
     dexterity = db.Column(db.Integer, default=1, nullable=False)
@@ -168,7 +174,6 @@ class Character(db.Model):
             return jsonify(collectiontype=collectiontype, result='failure',
                            message="Invalid collection type.")
 
-
     def craft_item(self, itemid, count):
         newitem = Item.query.filter_by(id=itemid)
         # verify it's a valid item
@@ -225,7 +230,6 @@ class Character(db.Model):
             return amount
 
         raise CraftingException("Item %s not found in inventory??" % item.id)
-
 
     # tbd
     # skills
