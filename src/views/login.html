@@ -38,6 +38,7 @@
 
 						</div>
 						<div class="large-4 columns">
+
 							<form name="betaSign" class="simple-form" novalidate>
 								<div class="name-field field">
 									<label>Name
@@ -47,13 +48,13 @@
 								</div>
 								<div class="mail-field field">
 									<label>E-mail
-										<input ng-model="beta.mail" type="email" required>
+										<input ng-model="beta.email" type="email" required>
 									</label>
 									<small class="error hide">Name is required and must be a string.</small>
 								</div>
 								<div class="row">
 									<div class="large-12 columns">
-										<a ng-click="update(beta)" ng-disabled="betaSign.$invalid || isUnchanged(beta)" href="#" class="small button right">Sign Up</a>
+										<a ng-click="update(beta)" ng-disabled="betaSign.$invalid" href="#" class="small button right">Sign Up</a>
 									</div>
 								</div>
 								<div class="row" ng-show="submitAction == true">
