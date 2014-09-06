@@ -8,8 +8,9 @@ from mm.exceptions import CraftingException
 
 
 class BetaSignup(db.Model):
+    __tablename__ = "BetaSignup"
     time = datetime.utcnow()
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False, primary_key=True)  # this is for an error fix
     name = db.Column(db.String(120), nullable=False)
 
 
