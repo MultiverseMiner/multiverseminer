@@ -1,0 +1,38 @@
+{
+  "name": "multiverseminer-front",
+  "version": "0.0.0",
+  "description": "Frontend for multiverse miner",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "chai": "~1.9.1",
+    "grunt": "~0.4.5",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-sass": "~0.8.1",
+    "grunt-contrib-uglify": "~0.5.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "mocha": "~1.21.4",
+    "grunt-contrib-connect": "~0.8.0",
+    "grunt-contrib-imagemin": "~0.8.1",
+    "grunt-newer": "~0.7.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.21.4",
+    "load-grunt-tasks": "~0.6.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MultiverseMiner/multiverseminer-front.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MultiverseMiner/multiverseminer-front/issues"
+  }
+}

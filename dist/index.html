@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Multiverse Miner - Beta</title>
+
+		<link href='//fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="css/foundation.css" />
+		<link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/third_party.css" />
+	</head>
+	<body>
+
+		<div class="row">
+			<div class="large-4 columns">
+				<img class="logo" src="img/logo_placeholder.png">
+			</div>
+			<div class="large-6 large-offset-2 columns">
+				<div class="row">
+					<div class="no-gutter large-6 columns"> 
+						<div class="icon-bar five-up"> 
+							<a class="item menu-pop" data-window-type="hero"> <img src="img/icons/equipment.png">  <label>You</label> </a>
+							<a class="item menu-pop" data-window-type="inventory"> <img src="img/icons/inventory.png" > <label>Inventory</label> </a>
+							<a class="item menu-pop"> <img src="img/icons/spaceship.png" > <label>Fleet</label> </a>
+							<a class="item menu-pop"> <img src="img/icons/empire.png" > <label>Empire</label> </a>
+							<a class="item menu-pop" data-window-type="crafting"> <img src="img/icons/crafting.png" > <label>Crafting</label> </a>
+						</div>
+					</div>
+					<div class="no-gutter large-6 columns"> 
+						<div class="icon-bar five-up"> 
+							<a class="item menu-pop"> <img src="img/icons/questlog.png" > <label>Quests</label> </a>
+							<a class="item menu-pop"> <img src="img/icons/achievements.png" > <label>Triumphs</label> </a>
+							<a class="item menu-pop"> <img src="img/icons/mail.png" > <label>Mail</label> <span class="unread-msg">23</span></a>
+							<a class="item menu-pop" data-window-type="options"> <i class="fa fa-wrench"></i> <label>Options</label> </a> 
+							<a class="item menu-pop" data-window-type="logout"> <i class="fa fa-power-off"></i> <label>Log out</label> </a> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="large-3 columns obstacle">
+				<dl class="accordion" data-accordion>
+					<dd class="accordion-navigation">
+						<a class="left_underline" href="#economy-stats"><span class="accordion-indicator"><i class="fa fa-minus"></i></span> Economy stats</a>
+						<div id="economy-stats" class="content active">
+							<div class="row">
+								<div class="stats-stack clearfix">
+									<div class="large-2 columns text-center">
+										<img src="img/icons/mining.png" >
+										<p class="skill-lvl sea-green">123</p>
+									</div>
+									<div class="stats-column large-10 columns">
+										<p>Auto-mining: 128.25 ups</p>
+										<p>Manual diggs: 143</p>
+										<p>Mining exp.: 10 pps</p>
+										<p>Gem find: +15% <span data-tooltip data-options="disable_for_touch:true" class="buff has-tip tip-right" title="Company buff Lvl 2">(+5%)</span></p>
+										<p>Ore find: +73% <span data-tooltip data-options="disable_for_touch:true" class="buff has-tip tip-right" title="Ore boost Lvl 3">(+10%)</span></p>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="stats-stack clearfix">
+									<div class="large-2 columns text-center">
+										<img src="img/icons/gathering.png" >
+										<p class="skill-lvl sunny-yellow">23</p>
+									</div>
+									<div class="stats-column large-10 columns">
+										<p>Auto-gathering: 75.5 ups</p>
+										<p>Manual diggs: 75</p>
+										<p>Gathering exp.: 25 pps</p>
+										<p>Parts find: <span data-tooltip data-options="disable_for_touch:true" class="buff has-tip tip-right" title="Company buff Lvl 2">+3%</span></p>
+										<p>Minerals find: <span data-tooltip data-options="disable_for_touch:true" class="buff has-tip tip-right" title="Minerals boost Lvl 2">+12%</span></p>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="stats-stack clearfix">
+									<div class="large-2 columns text-center">
+										<img src="img/icons/scavenging.png" >
+										<p class="skill-lvl salmon-red">123</p>
+									</div>
+									<div class="stats-column large-10 columns">
+										<p>Auto-scavenging: 75.5 ups</p>
+										<p>Manual diggs: 124</p>
+										<p>Scavenging exp.: 25 pps</p>
+										<p>Items find: +15% <span data-tooltip data-options="disable_for_touch:true" class="buff has-tip tip-right" title="Company buff Lvl 2">(+5%)</span></p>
+										<p>Digital find: +73% <span data-tooltip data-options="disable_for_touch:true" class="buff has-tip tip-right" title="Quest buff">(+10%)</span></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</dd>
+					<dd class="accordion-navigation">
+						<a class="left_underline" href="#ongoing-research"><span class="accordion-indicator"><i class="fa fa-minus"></i></span> Ongoing research</a>
+						<div id="ongoing-research" class="content active">
+							<ul class="ongoing-research">
+								<li>
+									<div class="row">
+										<div class="large-9 columns">
+											<span>Motor Oil recycling Lvl 5</span>
+										</div>
+										<div class="large-3 columns text-right">
+											<span>35:23</span>
+										</div>
+									</div>
+									<div class="progress small">
+										<span class="meter" style="width:35%"></span>
+									</div>
+								</li>
+								<li>
+									<div class="row">
+										<div class="large-9 columns">
+											<span>High-Power All-Spark Storage Unit</span>
+										</div>
+										<div class="large-3 columns text-right">
+											<span>&#062;234d</span>
+										</div>
+									</div>
+									<div class="progress small">
+										<span class="meter" style="width:10%"></span>
+									</div>
+								</li>
+								<li>
+									<div class="row">
+										<div class="large-9 columns">
+											<span>Fixed Gravity Converter</span>
+										</div>
+										<div class="large-3 columns text-right">
+											<span>&#062;1h</span>
+										</div>
+									</div>
+									<div class="progress small">
+										<span class="meter" style="width:95%"></span>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</dd>
+				</dl>
+
+			</div>
+			<div class="large-3 large-offset-2 columns text-center">
+				<div class="planet-info">
+					<img class="planet-presentation" src="img/planets/molten_giant.png">
+					<h2>Raval</h2>
+					<h5><em>molten planet</em></h5>
+					<div class="row"> 
+						<div class="keybind-row"> 
+							<div class="large-4 columns">
+								<a href="#" class="button">
+									<span class="keybind">D</span>
+									<img class="keybind-icon" src="img/icons/mining.png">
+								</a>
+								<p class="skill-label">mining</p>
+							</div>
+							<div class="large-4 columns">
+								<a href="#" class="button">
+									<span class="keybind">G</span>
+									<img class="keybind-icon" src="img/icons/gathering.png">
+								</a>
+								<p class="skill-label">gathering</p>
+							</div>
+							<div class="large-4 columns">
+								<a href="#" class="button">
+									<span class="keybind">S</span>
+									<img class="keybind-icon" src="img/icons/scavenging.png">
+								</a>
+								<p class="skill-label">scavenging</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 columns">
+				<dl class="accordion" data-accordion>
+					<dd class="accordion-navigation">
+						<a class="right_underline text-right" href="#panel3">Quests & Triumphs <span class="accordion-indicator"><i class="fa fa-minus"></i></span></a>
+						<div id="panel3" class="content active text-right">
+							<div class="row">
+								<div class="large-12 columns">
+									<ul class="quests">
+										<li><span class="easy">The Grand Explorer of a Galaxy</span> 84%</li>
+										<li><span class="medium">Development is the Key</span> 25%</li>
+										<li><span class="easy">The Grand Explorer of a Galaxy</span> 35%</li>
+										<li><span class="hard">The Grand Explorer of a Galaxy</span> 84%</li>
+									</ul>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-12 columns">
+									<ul class="triumphs">
+										<li><span class="easy">Build a Spaceship</span> 0/1</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</dd>
+				</dl>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="large-4 columns">
+				<div class="chat">
+					<ul class="tabs" data-tab> 
+						<li class="tab-title"><a href="#"><i class="fa fa-cogs"></i></a></li> 
+						<li class="tab-title active"><a href="#channel1">General</a></li> 
+						<li class="tab-title"><a href="#channel2">Trade</a></li> 
+						<li class="tab-title"><a href="#channel3">Company</a></li> 
+						<li class="tab-title"><a href="#channel4">Log</a></li> 
+						<li class="tab-title"><a class="new-tab" href="#"><i class="fa fa-plus"></i></a></li> 
+					</ul> 
+					<div class="tabs-content"> 
+						<div class="content active" id="channel1"> 
+							<ul class="messages general">
+								<li class="single-msg">
+									<span class="timestamp">[18:45]</span><span class="player-id">Remus</span><span class="message">WTS 1,000,000 crude. No swap, 100MMs/10k.</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:46]</span><span class="player-id">Garry Jenkins Spacebreaker IV</span><span class="message">Pirate w/ 20lvl exploration, higher ship, colonies LF clan - active, flying center, war upgrades.</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:45]</span><span class="player-id">Pete</span><span class="message">How many battles up?</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:45]</span><span class="player-id">Garry Jenkins Spacebreaker IV</span><span class="message">Over 200 up, 320 sum.</span>
+								</li>
+								<li class="single-msg private">
+									<span class="timestamp">[18:45]</span><span class="player-id">Travis Power</span><span class="message">Hi, saw your ad, you may be interested in our clan. Check out <span class="resource-link">Space Landlubbers [SL]</span></span>
+								</li>
+							</ul>
+						</div> 
+						<div class="content" id="channel2"> 
+							<ul class="messages general">
+								<li class="single-msg">
+									<span class="timestamp">[18:45]</span><span class="player-id">Remus</span><span class="message">WTS 1,000,000 crude. No swap, 100MMs/10k.</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:55]</span><span class="player-id">PirateJack</span><span class="message">WTS copper, aluminum, rubber, iron, crude oil, fuel, methanol - up to 100k units, higher amount on demend - low prices</span>
+								</li>
+							</ul> 
+						</div> 
+						<div class="content" id="channel3"> 
+							<ul class="messages general">
+								<li class="single-msg">
+									<span class="timestamp">[18:35]</span><span class="player-id">Remus</span><span class="message">Hi, everyone!</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:36]</span><span class="player-id">Lucy</span><span class="message">Hello</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:36]</span><span class="player-id">Taz</span><span class="message">Whats up?</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:37]</span><span class="player-id">Korr</span><span class="message">Hi</span>
+								</li>
+							</ul> 
+						</div> 
+						<div class="content" id="channel4"> 
+							<ul class="messages general">
+								<li class="single-msg">
+									<span class="timestamp">[18:35]</span><span class="message">You've mined nothing.</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:36]</span><span class="message mine">You've mined coal (234), iron (100), copper (4312).</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:36]</span><span class="message">You've mined nothing.</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:37]</span><span class="message gather">You've gathered oxygen.</span>
+								</li>
+								<li class="single-msg">
+									<span class="timestamp">[18:37]</span><span class="message scavenge">You've scavenged diningRoomTable.</span>
+								</li>
+							</ul> 
+						</div>
+					</div>
+					<div class="row">
+						<div class="prompt">
+							<div class="small-2 columns no-gutter">
+								<label for="right-label" class="right inline"><i class="fa fa-comment"></i> [General]:</label>
+							</div>
+							<div class="small-10 columns">
+								<input type="text" id="right-label" class="prompt-line" placeholder="Message...">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="outters">
+			<div class="menu-pop-window pattern hide">
+				<div class="title-bar">
+					<div class="row">
+						<div class="large-12 columns">
+							<span class="window-title"></span>
+							<span class="window-close right"><i class="fa fa-times"></i></span>
+						</div>
+					</div>
+				</div>
+				<div class="pop-window-body">
+				</div>
+			</div>
+		</div>
+		<div class="global-close"><i class="fa fa-level-up"></i></div>
+
+		<script src="js/base.min.js"></script>
+
+	</body>
+</html>

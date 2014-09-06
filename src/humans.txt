@@ -1,0 +1,16 @@
+/* humanstxt.org */
+
+/* Foundation */
+/* Foundation was made by ZURB, an interaction design and design strategy firm in Campbell, CA */
+	Standards: HTML5, CSS3
+	Components: jQuery, Orbit, Reveal
+	Software: Sublime, Git, Sass
+  
+/* Development */
+	Standards: HTML5, CSS3
+	Components: jQuery
+	Software: Adobe Brackets, Git, Sass
+	
+/* Resources:
+	Game icons - http://game-icons.net/
+	Planet renders - http://ocd1c-stock.deviantart.com/

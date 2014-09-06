@@ -1,0 +1,686 @@
+//custom part by Belar
+/*custom*/
+
+.row{
+  max-width: 100%;
+}
+
+/*generals*/
+
+$custom_white: rgba(255,255,255, 0.9);
+$sea_green: #13a89e;
+$salmon_red: #e25942;
+$sunny_yellow: #ffae00;
+$light_blue: #92c5f1;
+$navy_blue: #0b151c;
+
+$avg_green: #24b311;
+
+$roboto_font: Roboto, Arial, sans-serif;
+$central_fontsize: 0.8rem;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+@mixin inner-shadow-5($color){
+  -webkit-box-shadow: inset 0 0 5px $color;
+  -moz-box-shadow: inset 0 0 5px $color;
+  box-shadow: inset 0 0 5px $color;
+}
+@mixin outer-shadow-5($color){
+  -webkit-box-shadow: 0 0 5px $color;
+  -moz-box-shadow: 0 0 5px $color;
+  box-shadow: 0 0 5px $color;
+}
+@mixin transition($option, $time){
+  -o-transition: $option $time linear;
+  -webkit-transition: $option $time linear;
+  -moz-transition: $option $time linear;
+  transition: $option $time linear;
+}
+
+
+body{
+  background-color: #101d25;
+  background-image: url('../img/bg_fade.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  color: $custom_white;
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+}
+h1,h2,h3,h4,h5,h6{
+  color: $custom_white;
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+}
+p{
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+  font-size: $central_fontsize;
+}
+ul{
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+  font-size: $central_fontsize;
+}
+label{
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+  font-size: $central_fontsize;
+  color: $custom_white;
+}
+hr{
+  height: 1px;
+  border: 0;
+  background: rgba($light_blue, 0.25);
+  width: 80%;
+
+  margin-left: auto;margin-right:auto;
+}
+a{
+  color: $light_blue;
+}
+a:hover{
+  color: $custom_white;
+}
+.no-gutter{
+  padding: 0;
+}
+.has-tip{
+  font-weight: 300;
+}
+.light-blue{
+  color: $light_blue;
+}
+.sea-green{
+  color: $sea_green;
+}
+.salmon-red{
+  color: $salmon_red;
+}
+.sunny-yellow{
+  color: $sunny_yellow;
+}
+.button, .button-group > li > button, .button-group > li .button{
+  background: $navy_blue;
+  border: 1px solid rgba($light_blue, 0.25);
+  color: $custom_white;
+
+  @include transition(background, 0.2s);
+}
+.button:hover, .button:focus{
+  background: rgba($light_blue, 0.25);
+}
+.button.tiny{
+  padding: 0.2rem 0.35rem;
+  border: 1px solid rgba($light_blue, 0.25);
+  color: $custom_white;
+  margin: 0.25rem 0.5rem;
+}
+.button.tiny:hover{
+  background: rgba($light_blue, 0.25);
+}
+.button.small{
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba($light_blue, 0.25);
+  color: $custom_white;
+  margin: 0.25rem 0.5rem;
+}
+.button.small:hover{
+  background: rgba($light_blue, 0.25);
+}
+
+.v-center{
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.hide {
+  display: none !important;
+}
+
+.signin-form input.ng-invalid.ng-dirty {
+	border: 1px solid $salmon_red;
+}
+
+.signin-form input.ng-valid.ng-dirty {
+	border: 1px solid $sea_green;
+}
+
+/*elements*/
+
+.logo{
+  padding: 1rem 0 2rem;
+}
+.icon-bar{
+  background: none;
+}
+.icon-bar .item{
+  padding: 1rem 0 2rem;
+}
+.icon-bar .item:hover {
+  background:none;
+  border-top: 0.4rem solid $light_blue;
+  padding-bottom: 0.4rem;
+}
+.icon-bar .item label{
+  font-size: $central_fontsize;
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+}
+.unread-msg{
+  position: absolute;
+  top: 2rem;
+  background: $salmon_red;
+  @include border-radius(2px);
+  color: $custom_white;
+
+  padding: 0.1rem;
+  line-height: 0.85rem;
+  font-size: $central_fontsize;
+}
+.tooltip{
+  background: rgba(10, 20, 30, 0.75);
+}
+.tooltip.tip-right > .nub, .tooltip.tip-left > .nub, .tooltip.tip-top > .nub, .tooltip.tip-bottom > .nub{
+  border-color: transparent $light_blue transparent transparent;
+}
+/*economy and research sidebar*/
+.accordion .accordion-navigation > a, .accordion dd > a, .accordion .accordion-navigation.active > a, .accordion dd.active > a,.accordion .accordion-navigation > a:hover, .accordion .accordion-navigation > .content, .accordion dd > .content, .accordion .accordion-navigation > .content.active {
+  background: none;
+  color: $custom_white;
+}
+.accordion .accordion-navigation > a, .accordion dd > a{
+  padding: 0 1rem;
+  font-size: 0.95rem;
+}
+.accordion .accordion-indicator > i{
+  font-size: $central_fontsize;
+  padding: 0 0.15rem;
+  background: rgba(255,255,255,0.1);
+}
+.accordion .accordion-navigation > a.left_underline:after{
+  content: url('../img/underline_gradient_left.png');
+  position: absolute;
+  margin-top: 0.5rem;
+  left:0;
+}
+.accordion .accordion-navigation > a.right_underline:after{
+  content: url('../img/underline_gradient_right.png');
+  position: absolute;
+  margin-top: 0.5rem;
+  right:0;
+}
+.accordion .accordion-navigation > .content, .accordion dd > .content, .accordion .accordion-navigation > .content.active{
+  font-size: $central_fontsize;
+}
+.stats-stack{
+  margin-bottom: 1rem;
+}
+.stats-column p{
+  font-size: $central_fontsize;
+  margin:0;
+}
+.skill-lvl{
+  font-size: $central_fontsize;
+}
+.buff{
+  color: $avg_green;
+}
+.ongoing-research{
+  list-style: none;
+  font-size: $central_fontsize;
+  margin: 0 0 1rem 0;
+}
+.ongoing-research .progress {
+  background-color: #324756;
+  border: none;
+  height: 0.15rem;
+  padding:0;
+}
+.ongoing-research .meter{
+  background: $light_blue;
+}
+
+
+
+/*planet info*/
+.planet-info{
+  margin-top: 5rem;
+}
+.planet-info h2{
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.planet-info .button{
+  padding: 1.6rem;
+  @include border-radius(5px);
+  position: relative;
+  background: none;
+
+  border: 1px solid $custom-white;
+  margin: 0;
+}
+.keybind-row{
+  margin: 1rem 0 0 0;
+}
+.keybind{
+  position: absolute;
+  top: 0.2rem;
+  left: 0.4rem;
+
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+  font-size: 0.75rem;
+
+}
+.keybind-icon{
+  width: 32px;
+  height: 32px;
+
+  position: absolute;
+  bottom: 0.25rem;
+  right: 0.25rem;
+}
+.skill-label{
+  margin: 0.2rem 0 0 0;
+  font-size: $central_fontsize;
+}
+
+/*quests & trimphs*/
+.quests, .triumphs{
+  list-style: none;
+}
+.quests .easy, .triumphs .easy{
+  color: $avg_green;
+}
+.quests .medium, .triumphs .medium{
+  color: $sunny_yellow;
+}
+.quests .hard, .triumphs .hard{
+  color: $salmon_red;
+}
+
+/*chat*/
+.chat{
+  width: 100%;
+}
+.chat .tabs:after{
+  content: url('../img/underline_gradient_left.png');
+  position: absolute;
+  margin-top: 0.5rem;
+  left:0;
+  pointer-events:none;
+}
+.chat .tabs dd > a, .chat .tabs .tab-title > a{
+  background: none;
+  padding: 0.1rem 0.5rem;
+
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+  font-size: $central_fontsize;
+  color: $custom_white;
+
+}
+.chat .tabs dd > a.new-tab, .chat .tabs .tab-title > a.new-tab{
+  opacity: 0.5;
+
+  -o-transition: opacity .2s linear;
+  -webkit-transition: opacity .2s linear;
+  -moz-transition: opacity .2s linear;
+  transition: opacity .2s linear;
+}
+.chat .tabs dd > a.new-tab:hover, .chat .tabs .tab-title > a.new-tab:hover{
+  opacity: 1;
+}
+.chat .messages{
+  list-style: none;
+  margin: 0;
+}
+.chat .messages .single-msg.private{
+  color: #de006f;
+}
+
+.chat .messages .timestamp{
+  opacity: 0.5;
+  font-weight: 400 !important;
+}
+.chat .messages .player-id{
+  padding: 0 0.35rem;
+}
+.chat .messages .player-id:after{
+  content: ':';
+}
+.chat .message.mine{
+
+}
+.chat .message.mine{
+  color: $sea_green;
+}
+.chat .message.gather{
+  color: $sunny_yellow;
+}
+.chat .message.scavenge{
+  color: $salmon_red;
+}
+.chat .tabs-content{
+  margin: 0.2rem 0;
+}
+.chat .tabs-content > .content {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+}
+.prompt{
+  margin-top: 0.3rem;
+}
+.prompt label{
+  font-family: $roboto-font !important;
+  font-weight: 300 !important;
+  font-size: $central_fontsize;
+  color: $custom_white;
+  margin:0;
+  padding: 0 0.2rem;
+}
+.prompt input{
+  background: none;
+  border-style: none;
+  color: $custom_white;
+  display: block;
+  font-family: inherit;
+  font-size: $central_fontsize;
+  height: 1.2rem;
+  margin: 0;
+  padding: 0 0.2rem;
+  transition: box-shadow 0.45s ease 0s, border-color 0.45s ease-in-out 0s;
+  width: 100%;
+}
+.prompt input:focus{
+  background: none;
+  box-shadow: none;
+}
+/*outters*/
+
+.outters{
+  position: absolute;
+  top:20vh;
+  left:20vw;
+}
+.global-close{
+  width: 20px;
+  height: 20px;
+  background: rgba($light_blue,0.15);
+
+  position: fixed;
+  right:5px;
+  bottom: 5px;
+  z-index: 200;
+
+  text-align: center;
+}
+.global-close i{
+  margin: 0;
+  padding: 0;
+  color: $custom_white;
+}
+.menu-pop-window{
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 380px;
+  min-height: 380px;
+  width: 390px;
+  height: 380px;
+  max-height: 100vh;
+  max-width: 100vw;
+
+  padding-bottom: 0.25rem;
+
+  z-index: 100;
+  background: rgba(10, 20, 30, 0.8);
+
+  overflow: hidden;
+}
+.front-window{
+  background: none repeat scroll 0 0 rgba(10, 20, 30, 1);
+  z-index: 110;
+}
+.title-bar{
+  padding: 0.2rem 0;
+}
+.title-bar:hover{
+  background: rgba(255,255,255, 0.05);
+}
+.window-close:hover{
+  cursor: pointer;
+}
+.pop-window-body{
+  height: 100%;
+}
+.pop-window-toolbar input{
+  padding: 0.5rem 0;
+}
+.pop-window-footer{
+  padding: 0.25rem 0;
+}
+.internal-section{
+  position: relative;
+  min-height: 200px;
+  overflow: scroll;
+  padding: 0.25rem 0 !important;
+}
+/*storage*/
+.storage-socket{
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255,255,255, 0.05);
+  float: left;
+}
+.storage-socket:hover{
+  @include inner-shadow-5($light_blue);
+}
+.game-item{
+  width: 50px;
+  height: 50px;
+}
+.game-item img{
+  max-width: 100%;
+  max-height: 100%;
+}
+.game-item:hover{
+  cursor: grab;
+
+}
+.game-item .ui-draggable-dragging{
+  position: absolute !important;
+  cursor: grabbing;
+  z-index: 200;
+}
+/*hero*/
+.hero{
+  width: 380px;
+  height: 550px;
+}
+.hero .internal-section{
+  overflow: hidden;
+}
+.inventory-socket{
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255,255,255, 0.05);
+}
+.inventory-socket:hover{
+  @include inner-shadow-5($light_blue);
+}
+.stat-row{
+  font-size: $central-fontsize;
+}
+.player-equipment{
+  margin: 0.5rem 0;
+}
+.player-name{
+  font-size: 1rem;
+  margin: 0.25rem 0 0 0;
+}
+.player-class{
+  font-style: italic;
+  margin: 0 0 0.25rem 0;
+}
+.player-lvl{
+  color: $light_blue;
+}
+.player-stats{
+  margin: 1rem 0;
+}
+/*options*/
+.settings-stack{
+  margin: 1rem 0;
+}
+.settings-stack p{
+  font-size: $central_fontsize;
+}
+.options-header{
+  color: $light_blue;
+}
+.switch-label{
+  font-size: 0.875rem;
+}
+div.switch input:checked + label {
+  opacity:1;
+}
+/*crafting*/
+.crafting{
+}
+.crafting .craft-search{
+  height: 1.5rem;
+  padding: 0rem 0.5rem;
+  border: 1px solid rgba($light_blue, 0.5);
+  background: none;
+  color: $light_blue;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+.crafting .craft-search:focus{
+  border: 1px solid $light_blue;
+  background: none;
+}
+
+.crafting .recipes{
+  list-style: none;
+  margin: auto 0;
+}
+.crafting .recipes li{
+  border-bottom: 1px solid $light_blue;
+  padding: 0.5rem 0;
+}
+.crafting .recipes li:hover{
+  background: rgba($light_blue, 0.05);
+}
+.crafting .recipes img, .recipe-preview .head img{
+  max-width: 32px;
+  margin-right: 0.5rem;
+}
+.crafting .recipe-preview .head{
+  padding: 0.5rem 0.9375rem;
+  border-top: 1px solid $light_blue;
+  border-bottom: 1px solid $light_blue;
+  background: rgba($light_blue, 0.05);
+}
+.crafting .recipe-preview .head .recipe-name{
+  margin-top: 0.4rem;
+}
+.crafting .recipe-preview .head .close-recipe{
+  color: $custom_white;
+  margin-top: 0.5rem;
+
+  -o-transition: color .2s linear;
+  -webkit-transition: color .2s linear;
+  -moz-transition: color .2s linear;
+  transition: color .2s linear;
+}
+.crafting .recipe-preview .head .close-recipe:hover{
+  color: $light_blue;
+}
+.crafting .recipe-preview .body{
+  padding: 0.75rem 0.9375rem;
+}
+.crafting .recipe-preview .recipe-info{
+  list-style: none;
+  margin-left: 0;
+}
+.crafting .recipe-preview .recipe-requirements .title{
+  margin-bottom: 0.5rem;
+}
+.crafting .recipe-preview .recipe-requirements img{
+  margin: 0 0.25rem;
+}
+
+
+/*scrollbar styling*/
+.jspVerticalBar, .jspTrack{
+  background: none;
+  width: 4px;
+  left:0;
+}
+.jspDrag{
+  background-color: $light_blue;
+  width: 4px;
+}
+.jspPane{
+  margin: 0 !important;
+  padding-left: 6px !important;
+}
+
+/*login page*/
+.signin-form{
+  padding: 1rem 2rem;
+}
+.signin-form .field{
+  margin: 0 auto 0.5rem;
+}
+.signin-form span.error, .signin-form small.error{
+  background: none;
+  color: $salmon_red;
+  font-style: normal;
+  font-weight: 300;
+
+  padding: 0 0.25rem;
+}
+.signin-form label{
+  color: $light_blue;
+}
+.signin-form input{
+  background: rgba($navy_blue, 0.75);
+  border: 1px solid rgba($light_blue, 0.25);
+  box-shadow: none;
+  color: $custom_white;
+  margin: 0;
+
+  @include transition(box-shadow, 0.2s);
+}
+.signin-form input:focus, .signin-form input:active {
+  background: rgba($navy_blue, 0.75);
+  border: 1px solid rgba($light_blue, 0.25);
+
+  @include outer-shadow-5(rgba($light_blue, 0.5));
+}
+
+/*footer*/
+
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.foot-menu{
+  opacity: 0.75;
+}
