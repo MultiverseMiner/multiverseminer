@@ -17,6 +17,7 @@ app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 
 from mm.models import Account
+from mm.models import BetaSignup
 from mm import login, craft, admin, account
 from mm.login import login_required, character_required
 ###############################################################################
@@ -161,13 +162,11 @@ if __name__ == '__main__':
 @app.errorhandler(404)
 @app.route('/register_beta', methods=['POST'])
 def register_beta(channel):
-  	from models import BetaSignup
-    
     reg = BetaSignup.query.filter_by(email=session['email']).first()  # this should return a record or None
     if reg:
       return jsonify(response="email already registered"), 404
     else:
       new_signup = BetaSignup(email=session['email'], name=session['name'])
-      db.session.add(new_signup)  # This is where you should insert the record... sorry for the chaining :)
+      db.session.add(new_signup)
       db.session.commit()
       return jsonify(response="OK")
