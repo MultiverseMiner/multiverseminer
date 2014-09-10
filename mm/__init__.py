@@ -157,3 +157,17 @@ def page_borked(error):
 if __name__ == '__main__':
     app.debug = False
     app.run(debug=False, port=8000)
+
+@app.errorhandler(404)
+@app.route('/register_beta', methods=['POST'])
+def register_beta(channel):
+  	from models import BetaSignup
+    
+    reg = BetaSignup.query.filter_by(email=session['email']).first()  # this should return a record or None
+    if reg:
+      return jsonify(response="email already registered"), 404
+    else:
+      new_signup = BetaSignup(email=session['email'], name=session['name'])
+      db.session.add(new_signup)  # This is where you should insert the record... sorry for the chaining :)
+      db.session.commit()
+      return jsonify(response="OK")
