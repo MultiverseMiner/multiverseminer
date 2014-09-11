@@ -5,11 +5,36 @@ from flask import jsonify
 from datetime import datetime, timedelta
 from random import randint
 from mm.exceptions import CraftingException
+from flask_wtf import Form
+from wtforms.validators import DataRequired, Email, Length
+from wtforms import StringField
 
+class BetaForm(Form):
+    # The TextField alias for StringField has been deprecated and will be removed in WTForms 3.0
+    name = StringField('Name', validators=[DataRequired(), Length(min=3, max=25)])
+    email = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=40)])
+
+    def __init__(self, *args, **kwargs):
+        super(BetaForm, self).__init__(*args, **kwargs)
+        self.user = None
+
+    def validate(self):
+        initial_validation = super(BetaForm, self).validate()
+        if not initial_validation:
+            return False
+
+        user = BetaSignup.query.filter_by(email=self.email.data).first()
+        if user:
+            self.user.errors.append("Email already registered")
+            return False
+
+        self.user = user
+        return True
 
 class BetaSignup(db.Model):
-    __tablename__ = "BetaSignup"
-    time = datetime.utcnow()
+    __tablename__ = "beta_signup"
+
+    time = db.Column(db.DateTime(timezone=False))
     email = db.Column(db.String(120), unique=True, nullable=False, primary_key=True)  # this is for an error fix
     name = db.Column(db.String(120), nullable=False)
 
