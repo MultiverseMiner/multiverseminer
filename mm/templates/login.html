@@ -39,22 +39,25 @@
 						</div>
 						<div class="large-4 columns">
 
-							<form name="betaSign" class="simple-form" novalidate>
+							<form name="betaSign" class="simple-form" method="POST" action="" novalidate>
+                                {{ form.hidden_tag() }}
 								<div class="name-field field">
 									<label>Name
-										<input ng-model="beta.name" type="text" required>
+                                        {{form.name(placeholder="Name", class_="form-control")}}
+{#										<input ng-model="beta.name" type="text" required>#}
 									</label>
 									<small class="error hide">Name is required and must be a string.</small>
 								</div>
 								<div class="mail-field field">
 									<label>E-mail
-										<input ng-model="beta.email" type="email" required>
+                                        {{form.email(placeholder="Email", class_="form-control")}}
+{#										<input ng-model="beta.email" type="email" required>#}
 									</label>
 									<small class="error hide">Name is required and must be a string.</small>
 								</div>
 								<div class="row">
 									<div class="large-12 columns">
-										<a ng-click="update(beta)" ng-disabled="betaSign.$invalid" href="#" class="small button right">Sign Up</a>
+{#										<a href="#" class="small button right" type="submit"">Sign Up</a>#}
 									</div>
 								</div>
 								<div class="row" ng-show="submitAction == true">
@@ -65,6 +68,7 @@
 										</div>
 									</div>
 								</div>
+                                <p><input class="btn btn-default btn-submit" type="submit" value="Sign up"></p>
 							</form>
 						</div>
 					</div>
@@ -84,6 +88,6 @@
 				</div>
 			</div>
 		</footer>
-		<script src="js/base.min.js"></script>
+{#		<script src="js/base.min.js"></script>#}
 	</body>
 </html>
