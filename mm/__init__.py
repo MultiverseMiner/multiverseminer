@@ -16,10 +16,10 @@ app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 db = SQLAlchemy(app)
 
-from mm.models import Account
-from mm.models import BetaSignup
+from mm.models import Account, BetaSignup, BetaForm
 from mm import login, craft, admin, account
 from mm.login import login_required, character_required
+from datetime import datetime
 ###############################################################################
 # Set up Logging
 
@@ -155,18 +155,23 @@ def page_borked(error):
     db.session.rollback()
     return render_template("500.html", request=request, e=error), 500
 
+@app.route('/register_beta', methods=['GET', 'POST'])
+def register_beta():
+    form = BetaForm(request.form, csrf_enabled=False)
+    if form.validate_on_submit():
+        new_user = BetaSignup(time=datetime.utcnow(),
+                                name=form.name.data,
+                               email=form.email.data)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"signup_ok":True})
+    else:
+        print form.errors
+
+    return render_template('login.html', form=form)
+
+
 if __name__ == '__main__':
     app.debug = False
     app.run(debug=False, port=8000)
 
-@app.errorhandler(404)
-@app.route('/register_beta', methods=['POST'])
-def register_beta(channel):
-    reg = BetaSignup.query.filter_by(email=session['email']).first()  # this should return a record or None
-    if reg:
-      return jsonify(response="email already registered"), 404
-    else:
-      new_signup = BetaSignup(email=session['email'], name=session['name'])
-      db.session.add(new_signup)
-      db.session.commit()
-      return jsonify(response="OK")
