@@ -2,14 +2,14 @@ language: python
 python:
   - "2.7"
 install:
-  - pip install -r requirements.txt -r Testing-requirements.txt
+  - pip install -r requirements/dev.txt
 # command to run tests
 before_script:
   - cp config.py.test config.py
   - psql -c 'create database mm;' -U postgres
-  - ./db_migrate.py db init
-  - ./db_migrate.py db migrate
-  - ./db_migrate.py db upgrade
+  - ./manage.py db init
+  - ./manage.py db migrate
+  - ./manage.py db upgrade
 script: nosetests
 after_success:
   coveralls
