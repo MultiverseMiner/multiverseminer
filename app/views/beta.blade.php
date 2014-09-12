@@ -80,11 +80,11 @@
 			<div class="row">
 				<div class="large-12 columns">
 					<ul class="foot-menu right inline-list"> 
-						<li><a href="#">About</a></li> 
-						<li><a href="#">Twitter</a></li> 
-						<li><a href="#">GitHub</a></li> 
-						<li><a href="#">Chat</a></li> 
-						<li><a href="#">Changelog</a></li>  
+						<li><a target="_blank" href="https://github.com/MultiverseMiner/multiverseminer/wiki">Wiki / About</a></li> 
+						<li><a target="_blank" href="http://twitter.com/multiverseminer">Twitter</a></li> 
+						<li><a target="_blank" href="http://github.com/multiverseminer/multiverseminer">GitHub</a></li> 
+						<li><a target="_blank" href="http://webchat.freenode.net/?channels=%23multiverseminer&uio=d4">Chat</a></li> 
+						<li><a target="_blank" href="https://github.com/MultiverseMiner/multiverseminer/wiki/Changes">Changes</a></li>  
 					</ul>
 				</div>
 			</div>
