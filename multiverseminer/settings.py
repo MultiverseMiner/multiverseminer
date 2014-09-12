@@ -18,7 +18,7 @@ class ProdConfig(Config):
     """Production configuration."""
     ENV = 'prod'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgres://root:iUCwTyUlKyvT1rkW@172.17.42.1:49153/db'  # TODO: Change me
+    SQLALCHEMY_DATABASE_URI = 'postgres://root:iUCwTyUlKyvT1rkW@172.17.42.1:49153/db'#TODO: Add your own db
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
 
 
